@@ -1,0 +1,603 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package testGUI;
+
+import com.quartzwater.medicalglossary.*;
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.text.DefaultCaret;
+
+/**
+ *
+ * @author BRIN
+ */
+public class GraysAnatomyForm extends javax.swing.JFrame {
+    
+    // Used for creating folders in root Folder
+    private final String filePath = "GraysAnatomy"; 
+    //method to get filePath
+    public String getFilePath(){
+        return filePath;
+    }
+    
+    //--------------------------------------------------------------------------
+    private String hyperlink_1;
+    
+    public String getEncapsulated_1(){
+        return encapsulatedLabel_1.getText();
+    }
+    
+    public String getHyperlink_1(){
+        return hyperlink_1;
+    }
+    //--------------------------------------------------------------------------
+    private String hyperlink_2;
+    
+    public String getEncapsulated_2(){
+        return encapsulatedLabel_2.getText();
+    }
+    
+    public String getHyperlink_2(){
+        return hyperlink_2;
+    }
+    //--------------------------------------------------------------------------
+    private String hyperlink_3;
+    
+    public String getEncapsulated_3(){
+        return encapsulatedLabel_3.getText();
+    }
+    
+    public String getHyperlink_3(){
+        return hyperlink_3;
+    }
+    //--------------------------------------------------------------------------
+    
+    //Following methods are created with respect to GraysAnatomyCreate JFrame Form
+    private boolean hyperlinkCheckmark_1_ENABLED = false;
+    private boolean hyperlinkCheckmark_2_ENABLED = false;
+    private boolean hyperlinkCheckmark_3_ENABLED = false;
+    public boolean shouldHyperlinkCheckMarkBeEnabled(int whichCheckMark){
+        switch (whichCheckMark) {
+            case 1:
+                return hyperlinkCheckmark_1_ENABLED;
+            case 2:
+                return hyperlinkCheckmark_2_ENABLED;
+            case 3:
+                return hyperlinkCheckmark_3_ENABLED;
+            default:{
+                System.err.println("Whatever the F happened here. THIS NEEDS IMMEDIATE ATTENTION: shouldHyperlinkCheckMarkBeEnabled in GraysAnatomyForm.java");
+                System.err.println("Also check constructor method of GraysAnatomyCreate.java");
+                return false;
+            }
+        }
+    }
+    
+    /**
+     * Creates new form GraysAnatomyForm
+     */
+    public GraysAnatomyForm() {
+        initComponents();
+        encapsulatedLabel_1.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        encapsulatedLabel_2.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        encapsulatedLabel_3.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        
+        new File(new mainFrame().getRootFolder() + this.getFilePath() + "\\").mkdirs();
+        
+        //The following code prevents auto scroll of text area to bottom when
+        //Application programmatically sets the text of termDefiningTextArea (jTextArea) 
+        //in case of vertical text overflow
+        
+        //Avoid this mistake: ALWAYS ADD THIS CODE **BEFORE** ANY CODE THAT SETS THE TEXT OF TEXT AREA
+        //Otherwise this code would be useless
+        DefaultCaret caret = (DefaultCaret)termDefiningTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        /**-------------------------------------------------------------------**/
+        
+        
+    }
+    
+    //directly access the private field termSpellingTextArea
+    public void setSearchBoxText(String toSet){
+        
+        this.termSpellingTextBox.setText(toSet);
+    }
+    
+    //Directly set contents of private field termSpellingTextArea
+    public String getSearchBoxText(){
+        
+        return this.termSpellingTextBox.getText();
+    }
+    
+    //Directly access the private field termDefiningTextArea
+    public void setDefiningText(String toSet){
+        
+        this.termDefiningTextArea.setText(toSet);
+    }
+    
+    //Directly set contents of private field termDifiningTextArea
+    public String getDefiningText(){
+        
+        return this.termDefiningTextArea.getText();
+    }
+
+    public void callTermSpellingTextBoxKeyReleased(KeyEvent evt){
+        
+        termSpellingTextBoxKeyReleased(evt);
+    }
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        termSpellingTextBox = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        create_editButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        termDefiningTextArea = new javax.swing.JTextArea();
+        encapsulatedLabel_1 = new javax.swing.JLabel();
+        encapsulatedLabel_2 = new javax.swing.JLabel();
+        encapsulatedLabel_3 = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Medical Glossary : Gray's Anatomy");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
+        termSpellingTextBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        termSpellingTextBox.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        termSpellingTextBox.setText("Brain");
+        termSpellingTextBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                termSpellingTextBoxKeyReleased(evt);
+            }
+        });
+
+        jButton1.setText("Search");
+
+        create_editButton.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        create_editButton.setText("Create");
+        create_editButton.setAlignmentY(0.0F);
+        create_editButton.setFocusPainted(false);
+        create_editButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        create_editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_editButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Status:");
+
+        termDefiningTextArea.setEditable(false);
+        termDefiningTextArea.setBackground(new java.awt.Color(255, 255, 255));
+        termDefiningTextArea.setColumns(20);
+        termDefiningTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        termDefiningTextArea.setLineWrap(true);
+        termDefiningTextArea.setRows(5);
+        termDefiningTextArea.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(termDefiningTextArea);
+
+        encapsulatedLabel_1.setText("<Hyperlink 1 for given term is not available>");
+        encapsulatedLabel_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        encapsulatedLabel_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_1MouseExited(evt);
+            }
+        });
+
+        encapsulatedLabel_2.setText("<Hyperlink 2 for given term is not available>");
+        encapsulatedLabel_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        encapsulatedLabel_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_2MouseExited(evt);
+            }
+        });
+
+        encapsulatedLabel_3.setText("<Hyperlink 3 for given term is not available>");
+        encapsulatedLabel_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        encapsulatedLabel_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                encapsulatedLabel_3MouseExited(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Chapter:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Pelvis and Perineum");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Subtopic:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("Chapter:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setText("Page:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("Chapter:");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Major Topic:");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("Major Topic:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2)
+                            .addComponent(encapsulatedLabel_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(encapsulatedLabel_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(encapsulatedLabel_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(termSpellingTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(create_editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(termSpellingTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(create_editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(encapsulatedLabel_1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(encapsulatedLabel_2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(encapsulatedLabel_3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new mainFrame().setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
+    private void create_editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_editButtonActionPerformed
+        this.setVisible(false);
+        new GraysAnatomyCreate(this).setVisible(true);
+    }//GEN-LAST:event_create_editButtonActionPerformed
+
+    private void termSpellingTextBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_termSpellingTextBoxKeyReleased
+        // TODO add your handling code here:
+        
+        //System.out.println(searchBoxText);
+        encapsulatedLabel_1.setText("<Hyperlink 1 for given term is not available>");
+        encapsulatedLabel_2.setText("<Hyperlink 2 for given term is not available>");
+        encapsulatedLabel_3.setText("<Hyperlink 3 for given term is not available>");
+        
+        String inputFilePath = new mainFrame().getRootFolder() + new GraysAnatomyForm().getFilePath() + "\\";
+        File inputFile = new File(inputFilePath + this.getSearchBoxText() + ".txt");
+        
+        if(!inputFile.exists()){
+            statusLabel.setForeground(Color.red);
+            statusLabel.setText("Input text :" + "'" + this.getSearchBoxText() + "'" + " was not found");
+            termDefiningTextArea.setText("");
+            create_editButton.setText("Create");
+            
+            /**
+            encapsulatedLabel_1.setText("<Hyperlink 1 for given term is not available>");
+            encapsulatedLabel_2.setText("<Hyperlink 2 for given term is not available>");
+            encapsulatedLabel_3.setText("<Hyperlink 3 for given term is not available>");
+            **/
+        }
+        else{
+            statusLabel.setText("");
+            create_editButton.setText("Edit");
+            try{
+            BufferedReader buffInput = new BufferedReader(new FileReader(inputFile));
+            String readText = "";
+            String readLine;
+            while((readLine = buffInput.readLine()) != null){
+                readText = readText + readLine + "\n";
+                System.out.println(readLine);
+            }
+            buffInput.close();
+            
+            termDefiningTextArea.setText(readText);
+            
+            Properties inputProperties = new Properties();
+            FileInputStream propIn = new FileInputStream(new File(inputFilePath + this.getSearchBoxText() + "_properties.properties"));
+            inputProperties.load(propIn);
+            
+            String encap1 = inputProperties.getProperty("encapsulated_1");
+            String hyper1 = inputProperties.getProperty("hyperlink_1");
+            
+            if(encap1 != null || hyper1 != null){
+                encapsulatedLabel_1.setText(encap1);
+                hyperlink_1 = hyper1;
+                hyperlinkCheckmark_1_ENABLED = true;
+            }
+            else {
+                hyperlinkCheckmark_1_ENABLED = false;
+            }
+            
+            
+            String encap2 = inputProperties.getProperty("encapsulated_2");
+            String hyper2 = inputProperties.getProperty("hyperlink_2");
+            
+            if(encap2 != null || hyper2 != null){
+                encapsulatedLabel_2.setText(encap2);
+                hyperlink_2 = hyper2;
+                hyperlinkCheckmark_2_ENABLED = true;
+            }
+            else {
+                hyperlinkCheckmark_2_ENABLED = false;
+            }
+            
+            String encap3 = inputProperties.getProperty("encapsulated_3");
+            String hyper3 = inputProperties.getProperty("hyperlink_3");
+            if(encap3 != null || hyper3 != null){
+                encapsulatedLabel_3.setText(encap3);
+                hyperlink_3 = hyper3;
+                hyperlinkCheckmark_3_ENABLED = true;
+            }
+            else{
+                hyperlinkCheckmark_3_ENABLED = false;
+            }
+            
+            
+            propIn.close();
+            
+            }
+            
+            catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_termSpellingTextBoxKeyReleased
+
+    private void internetBrowse(String url, MouseEvent evt){
+        if (evt.getClickCount() > 0){
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    URI uri = new URI(url);
+                    desktop.browse(uri);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (URISyntaxException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+    private void encapsulatedLabel_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_1MouseClicked
+        // TODO add your handling code here:
+        if(shouldHyperlinkCheckMarkBeEnabled(1))
+        internetBrowse(hyperlink_1, evt);
+    }//GEN-LAST:event_encapsulatedLabel_1MouseClicked
+
+    private void encapsulatedLabel_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_2MouseClicked
+        // TODO add your handling code here:
+        if(shouldHyperlinkCheckMarkBeEnabled(2))
+        internetBrowse(hyperlink_2, evt);
+    }//GEN-LAST:event_encapsulatedLabel_2MouseClicked
+
+    private void encapsulatedLabel_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_3MouseClicked
+        // TODO add your handling code here:
+        if(shouldHyperlinkCheckMarkBeEnabled(3))
+        internetBrowse(hyperlink_3, evt);
+    }//GEN-LAST:event_encapsulatedLabel_3MouseClicked
+
+    private void turnBlueAndBold(JLabel jlabel){
+        jlabel.setForeground(Color.blue);
+        jlabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // IF YOU HAPPEN TO CHANGE DEFAULT FONT SIZE THEN CHANGE THIS TOO!!
+    }
+    
+    private void turnNormal(JLabel jlabel){
+        jlabel.setForeground(Color.black);
+        jlabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); //SAME HERE
+    }
+    private void encapsulatedLabel_1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_1MouseEntered
+        // TODO add your handling code here:
+        turnBlueAndBold(encapsulatedLabel_1);
+    }//GEN-LAST:event_encapsulatedLabel_1MouseEntered
+
+    private void encapsulatedLabel_2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_2MouseEntered
+        // TODO add your handling code here:
+        turnBlueAndBold(encapsulatedLabel_2);
+    }//GEN-LAST:event_encapsulatedLabel_2MouseEntered
+
+    private void encapsulatedLabel_3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_3MouseEntered
+        // TODO add your handling code here:
+        turnBlueAndBold(encapsulatedLabel_3);
+    }//GEN-LAST:event_encapsulatedLabel_3MouseEntered
+
+    private void encapsulatedLabel_1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_1MouseExited
+        // TODO add your handling code here:
+        turnNormal(encapsulatedLabel_1);
+    }//GEN-LAST:event_encapsulatedLabel_1MouseExited
+
+    private void encapsulatedLabel_2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_2MouseExited
+        // TODO add your handling code here:
+        turnNormal(encapsulatedLabel_2);
+    }//GEN-LAST:event_encapsulatedLabel_2MouseExited
+
+    private void encapsulatedLabel_3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_encapsulatedLabel_3MouseExited
+        // TODO add your handling code here:
+        turnNormal(encapsulatedLabel_3);
+    }//GEN-LAST:event_encapsulatedLabel_3MouseExited
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+      UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+    
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GraysAnatomyForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GraysAnatomyForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GraysAnatomyForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GraysAnatomyForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GraysAnatomyForm().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton create_editButton;
+    private javax.swing.JLabel encapsulatedLabel_1;
+    private javax.swing.JLabel encapsulatedLabel_2;
+    private javax.swing.JLabel encapsulatedLabel_3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTextArea termDefiningTextArea;
+    private javax.swing.JTextField termSpellingTextBox;
+    // End of variables declaration//GEN-END:variables
+}
