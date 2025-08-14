@@ -4,7 +4,6 @@
  */
 package testGUI;
 
-import com.quartzwater.medicalglossary.*;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.UIManager;

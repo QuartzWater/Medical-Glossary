@@ -6,8 +6,8 @@ package frontend;
 
 import book.bookpicker.Book;
 import book.bookpicker.bookConstructor;
-import com.quartzwater.medicalglossary.AfterEventCode;
-import com.quartzwater.medicalglossary.BehaviourForSwing;
+import legacy.AfterEventCode;
+import legacy.BehaviourForSwing;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;

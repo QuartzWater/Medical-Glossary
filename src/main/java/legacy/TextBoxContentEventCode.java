@@ -2,24 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.quartzwater.medicalglossary;
+package legacy;
 
 /**
  *
- * @author BRINpublic class MouseReleaseCode implements AfterEventCode{
-    
-    @Override
-    public void runCode(){
-        
-    };
-
-}
+ * @author BRIN
  */
-public class MouseReleaseCode implements AfterEventCode{
+public class TextBoxContentEventCode implements AfterEventCode {
     
     @Override
     public void runCode(){
         
-    };
-
+    }
 }

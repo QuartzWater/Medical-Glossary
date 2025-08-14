@@ -6,8 +6,8 @@ package book.bookpicker;
 
 import backend.ContentConstructor;
 import backend.TermDataManagement;
-import com.quartzwater.medicalglossary.AfterEventCode;
-import com.quartzwater.medicalglossary.ButtonActionCode;
+import legacy.AfterEventCode;
+import legacy.ButtonActionCode;
 import frontend.SourceFrame;
 import java.awt.Color;
 import java.nio.file.Path;

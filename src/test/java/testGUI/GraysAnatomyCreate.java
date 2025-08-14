@@ -4,7 +4,6 @@
  */
 package testGUI;
 
-import com.quartzwater.medicalglossary.*;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.KeyEvent;

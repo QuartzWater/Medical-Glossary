@@ -10,7 +10,7 @@ import backend.State;
 import backend.Term;
 import backend.TermDataManagement;
 import book.bookpicker.Book;
-import com.quartzwater.medicalglossary.NumericAndFirstDigitFilter;
+import legacy.NumericAndFirstDigitFilter;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -7,9 +7,9 @@ package frontend;
 import backend.Term;
 import backend.TermDataManagement;
 import book.bookpicker.Book;
-import com.quartzwater.medicalglossary.BehaviourForSwing;
-import com.quartzwater.medicalglossary.ButtonActionCode;
-import com.quartzwater.medicalglossary.TextBoxContentEventCode;
+import legacy.BehaviourForSwing;
+import legacy.ButtonActionCode;
+import legacy.TextBoxContentEventCode;
 import java.awt.Color;
 import javax.swing.JTextField;
 
