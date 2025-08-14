@@ -158,14 +158,15 @@ public class definitionEditFrame extends javax.swing.JFrame {
 
           Term newTerm = new Term(getSpellingBox().getText());
           newTerm.setDefinition(getDefinitionTextArea().getText());
-          
+          referenceEditFrame ref = new referenceEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, getMyself());
           new Thread(){
               
               @Override
               public void run(){
                   
-                  new referenceEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, getMyself()).setVisible(true);
-                    getMyself().dispose();;
+                  ref.setVisible(true);
+                    
+                  getMyself().dispose();
               }
           }.start();
           

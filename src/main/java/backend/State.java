@@ -32,6 +32,12 @@ public class State {
         this.currentState = ComponentState.DEFAULT_AND_VALID;
     }
     
+    public State(JComponent jc, ComponentState sType){
+        
+        this(jc);
+        this.currentState = sType;
+    }
+    
     public void setState(ComponentState state){
         
         this.currentState = state;

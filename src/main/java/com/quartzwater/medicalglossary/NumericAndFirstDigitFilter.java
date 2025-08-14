@@ -24,34 +24,34 @@ public class NumericAndFirstDigitFilter extends DocumentFilter {
     }
 
     @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+    public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         // Validate the incoming string
         if(isValidInput(fb, offset, 0, string)) {
             super.insertString(fb, offset, string, attr);
         }
         
-        System.out.println("inserted String: " + string);
+        //System.out.println("inserted String: " + string);
     }
 
     @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
         // Validate the replacement text
         if (isValidInput(fb, offset, length, text)) {
             super.replace(fb, offset, length, text, attrs);
         }
        
-        System.out.println("replaced String: " + text);
-        System.out.println(length);
+        //System.out.println("replaced String: " + text);
+        //System.out.println(length);
     }
 
     @Override
-    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+    public void remove(DocumentFilter.FilterBypass fb, int offset, int length) throws BadLocationException {
         // Allow removal of characters
         super.remove(fb, offset, length);
-        System.out.println("Something removed");
+        //System.out.println("Something removed");
     }
 
-    private boolean isValidInput(FilterBypass fb, int offset, int length, String text) throws BadLocationException {
+    protected boolean isValidInput(DocumentFilter.FilterBypass fb, int offset, int length, String text) throws BadLocationException {
         if (text == null || text.isEmpty()) {
             return true; // Allow empty input (e.g., when deleting)
         }

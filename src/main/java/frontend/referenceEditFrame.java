@@ -19,6 +19,9 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
@@ -48,10 +51,11 @@ public class referenceEditFrame extends javax.swing.JFrame {
         this.existingTerm = existingTerm;
         this.newTerm = newTerm;
         this.termFound = termFound;
+        this.parentFrame = def;
         
         initComponents();
         
-        
+        new referenceEditFrameGUIBehaviour(this);
     }
     
     public Book getInitialisedBook(){
@@ -84,6 +88,50 @@ public class referenceEditFrame extends javax.swing.JFrame {
         return parentFrame;
     }
     
+    public JTextField getPageBox(){
+        
+        return pageBox;
+    }
+    
+    public JLabel getBookField(){
+        
+        return bookTextBox;
+    }
+    
+    public JLabel getChapterField(){
+        
+        return chapterTextBox;
+    }
+    
+    public JLabel getMajorTopicField(){
+        
+        return majorTopicTextBox;
+    }
+    
+    public JTextArea getSubtopicField(){
+        
+        return subtopicTextArea;
+    }
+    
+    public RoundedButton getBackButton(){
+        
+        return backButton;
+    }
+    
+    public RoundedButton getNextButton(){
+        
+        return nextButton;
+    }
+    
+    public JLabel getStatusLabel(){
+        
+        return statusLabel;
+    }
+    
+    public JLabel getHeaderLabel(){
+        
+        return headerLabel;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

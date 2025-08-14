@@ -96,12 +96,13 @@ public class hyperlinkEditFrameGUIBehaviour {
         for(JTextField jtf : encapFields){
             encapFieldStateMap.put(jtf, new State(jtf));
             encapHyperlinkFieldsMap.put(jtf, hyperlinkFields[getIndexFromObjectArray_MemCompare(encapFields, jtf)]);
+            jtf.setForeground(textFieldColorScheme.getDefaultColor());
         }
         
         for(JTextField jtf : hyperlinkFields){
             hyperlinkFieldStateMap.put(jtf, new State(jtf));
             hyperlinkAdjacentButtonMap.put(jtf, adjacentButtons[getIndexFromObjectArray_MemCompare(hyperlinkFields, jtf)]);
-            
+            jtf.setForeground(textFieldColorScheme.getDefaultColor());
         }
         
         for(RoundedButton rdb : adjacentButtons){
@@ -543,7 +544,7 @@ public class hyperlinkEditFrameGUIBehaviour {
                     if(event.getSource() == saveButton)
                     {
                         if(saveButton.isEnabled())
-                        saveButton.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
+                            saveButton.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
                     }
                     else if(event.getSource() == save_skipButton){
                         save_skipButton.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
@@ -556,7 +557,7 @@ public class hyperlinkEditFrameGUIBehaviour {
                     if(event.getSource() == saveButton)
                     {
                         if(saveButton.isEnabled())
-                        saveButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
+                            saveButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
                     }
                     else if(event.getSource() == save_skipButton){
                         save_skipButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
