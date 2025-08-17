@@ -39,7 +39,10 @@ public enum Book{
                 public void runCode(){
                     
                     System.out.println("THIS RAN");
-                    new SourceFrame(Book.GRAYS_ANATOMY).setVisible(true);
+                    SourceFrame sf = SourceFrame.generateInstance(GRAYS_ANATOMY);
+                    sf.setVisible(true);
+                    sf.requestFocusInWindow();
+                    
                 }
             }
             

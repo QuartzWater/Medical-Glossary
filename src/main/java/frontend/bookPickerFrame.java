@@ -5,12 +5,13 @@
 package frontend;
 
 import book.bookpicker.Book;
-import book.bookpicker.bookConstructor;
+import book.bookpicker.BookConstructor;
 import legacy.AfterEventCode;
 import legacy.BehaviourForSwing;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JLabel;
 
 /**
  *
@@ -28,7 +29,8 @@ public class bookPickerFrame extends javax.swing.JFrame {
     
     private RoundedButton[] selectionButtonArray;
     
-    
+    // LEGACY
+    /*
     
     private void initializeSelectionButtons(){
         
@@ -37,7 +39,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
             BehaviourForSwing.removeRoundedButtonActionBehaviour(selectionButtonArray[i]);
         }
         
-        List<Book> bookList = bookConstructor.getBooksByYear(currentYear);
+        List<Book> bookList = BookConstructor.getBooksByYear(currentYear);
         int size = bookList.size();
         
         for(int index = 0; index < Math.min(size, 6); index++){
@@ -55,9 +57,9 @@ public class bookPickerFrame extends javax.swing.JFrame {
         
     }
     
+    */
     
-    
-    public bookPickerFrame() {
+    private bookPickerFrame() {
         initComponents();
         selectionButtonArray = new RoundedButton[]{
         
@@ -68,9 +70,55 @@ public class bookPickerFrame extends javax.swing.JFrame {
         selectionButton5,
         selectionButton6
     };
-        initializeSelectionButtons();
+        
+        // LEGACY :: initializeSelectionButtons();
     }
-
+    
+    public static bookPickerFrame generateInstance(){
+        
+        bookPickerFrame bpf = new bookPickerFrame();
+        bookPickerController.initializeController(bpf);
+        return bpf;
+    }
+    
+    public static bookPickerFrame generateInstanceWithoutController(){
+     
+        bookPickerFrame bpf = new bookPickerFrame();
+        return bpf;
+    }
+    
+    
+    protected RoundedButton[] getSelectionButtonArray(){
+        
+        return selectionButtonArray;
+    }
+    
+    protected JLabel getLeftRotateLabel(){
+        
+        return leftRotateLabel;
+    }
+    
+    protected JLabel getRightRotateLabel(){
+        
+        return rightRotateLabel;
+    }
+    
+    protected JLabel getOrdinalNumberLabel(){
+        
+        return ordinalNumberLabel;
+    }
+    
+    protected JLabel getOrdinalIndicatorLabel(){
+        
+        return ordinalIndicatorLabel;
+    }
+    
+    protected JLabel getYearLabel(){
+        
+        return yearLabel;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,8 +143,9 @@ public class bookPickerFrame extends javax.swing.JFrame {
         leftRotateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 550));
+        setTitle("Medical Glossary - Choose A Book");
         setMinimumSize(new java.awt.Dimension(800, 550));
+        setResizable(false);
         setSize(new java.awt.Dimension(800, 550));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -106,7 +155,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Pick A Book");
+        titleLabel.setText("Choose A Book");
         jPanel1.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 280, -1));
 
         selectionButton3.setText("-");
@@ -142,7 +191,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
         rightRotateLabel.setFont(new java.awt.Font("PMingLiU-ExtB", 1, 60)); // NOI18N
         rightRotateLabel.setForeground(new java.awt.Color(255, 255, 255));
         rightRotateLabel.setText(">");
-        rightRotateLabel.setToolTipText("");
+        rightRotateLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(rightRotateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 260, -1, 80));
 
         ordinalIndicatorLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -164,7 +213,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
         leftRotateLabel.setFont(new java.awt.Font("PMingLiU-ExtB", 1, 60)); // NOI18N
         leftRotateLabel.setForeground(new java.awt.Color(255, 255, 255));
         leftRotateLabel.setText("<");
-        leftRotateLabel.setToolTipText("");
+        leftRotateLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(leftRotateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, 80));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
@@ -206,7 +255,9 @@ public class bookPickerFrame extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new bookPickerFrame().setVisible(true);
+                bookPickerFrame bpf = bookPickerFrame.generateInstance();
+                bpf.setVisible(true);
+                bpf.requestFocusInWindow();
             }
         });
     }

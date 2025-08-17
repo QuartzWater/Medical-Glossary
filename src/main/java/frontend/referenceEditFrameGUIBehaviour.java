@@ -99,12 +99,18 @@ public class referenceEditFrameGUIBehaviour {
         
         @Override
         protected boolean isValidInput(DocumentFilter.FilterBypass fb, int offset, int length, String text) throws BadLocationException{
+            boolean warningEnabled = false;
             if (text == null || text.isBlank() || text.equals(DEFAULT_PAGE_BOX_TEXT)) {
                 
                 
                 return true;
             }
-            return super.isValidInput(fb, offset, length, text);
+            
+            
+            warningEnabled = !super.isValidInput(fb, offset, length, text);
+            
+            updateWarningOnStatusLabel(warningEnabled, text);
+            return !warningEnabled;
         }
     }
     
@@ -136,7 +142,8 @@ public class referenceEditFrameGUIBehaviour {
         this.pageContentState = new PageContentState(pageBox,PageContentState.StateType.NOT_FOUND);
         this.pageValidityState = new State(pageBox, State.ComponentState.DEFAULT_AND_INVALID);
         this.nextButtonValidityState = new State(nextButton, State.ComponentState.DEFAULT_AND_INVALID);
-        this.pageBox.setText(DEFAULT_PAGE_BOX_TEXT);
+        
+        
         addPageBoxBehaviour();
         addBackButtonbehaviour();
         addNextButtonBehaviour();
@@ -168,10 +175,6 @@ public class referenceEditFrameGUIBehaviour {
         
                 parentFrame.pack();
                 parentFrame.setVisible(true);
-
-                
-               
-                
             }
         };
         
@@ -213,13 +216,22 @@ public class referenceEditFrameGUIBehaviour {
         
         nextButton.setCurrentColor(nextCS.getDefaultColor());
         
+        
         ActionListener nextActListen = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ref.dispose();
                 
-                hyperlinkEditFrame hef = new hyperlinkEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, ref);
-                    hef.setVisible(true);
+                if(searchPageWaitGroup.activeCount() == 0){
+                    newTerm.setPage(Integer.parseInt(pageBox.getText()));
+                    newTerm.setChapter(chapterField.getText());
+                    newTerm.setMajorTopic(majorTopicField.getText());
+                    newTerm.setSubtopic(subtopicField.getText());
+                    ref.dispose();
+
+                    hyperlinkEditFrame hef = new hyperlinkEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, ref);
+                        hef.setVisible(true);
+                        hef.requestFocusInWindow();
+                }
                 
             }
         };
@@ -276,18 +288,18 @@ public class referenceEditFrameGUIBehaviour {
         DocumentListener pageDocListen = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                update();
+                waitForStabilization(300);
                 
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                update();
+                waitForStabilization(300);
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                update();
+                waitForStabilization(300);
             }
         };
         
@@ -345,9 +357,116 @@ public class referenceEditFrameGUIBehaviour {
         
         inputMap.put(downKeyStroke, downActionName);
         actionMap.put(downActionName, downAction);
-               
-                
+    }
+    
+    private ThreadGroup statusClearThreads = new ThreadGroup("statusClearThreads");
+    
+    int currentThreadCount = 0;
+    
+    private void clearStatusLabelAfterInterval(long milliseconds){
         
+        if(statusClearThreads.activeCount() > 0){
+        statusClearThreads.interrupt();
+        }
+        //currentThreadCount++;
+        
+        Thread statusClear  = new Thread(statusClearThreads, new Runnable() {
+            @Override
+            public void run(){
+                try{
+                    Thread.sleep(milliseconds);
+                    SwingUtilities.invokeLater(new Runnable(){
+                        
+                        @Override
+                        public void run() {
+                            if(!statusLabel.getText().equals("")){
+                                if(pageBox.getText().equals("")){
+                                    statusLabel.setText("You can enter numbers only, and first digit cant be 0.");
+                                }else{
+                                    statusLabel.setText("");
+                                }
+                            }
+                        }
+                        
+                    });
+                    
+                }
+                catch(InterruptedException e){
+                    System.out.println("ClearThread_referenceEditGUI" + Integer.toString(currentThreadCount) +" Interrupted: process clearing statusLabel cancelled. Restarted timer.");
+                    
+                }
+            }
+        }, "StatusClearThread" + Integer.toString(currentThreadCount));
+        
+        statusClear.start();
+        
+    }
+    
+    private void updateWarningOnStatusLabel(boolean toEnable, String invalidInput){
+        
+        if(toEnable){
+            String toSetText;
+            if(invalidInput.length() > 1){
+                invalidInput = "This particular set of characters";
+                toSetText = "Warning: " + invalidInput + " is not allowed in spelling text.";
+            }
+            else if(invalidInput.equals("0")){
+                toSetText = "First digit can't be zero.";
+            }
+            else{
+                invalidInput = "'" + invalidInput + "'";
+                toSetText = "Warning: " + invalidInput + " is not allowed in spelling text.";
+            }
+            statusLabel.setText(toSetText);
+            clearStatusLabelAfterInterval(5000);
+        }
+        else{
+            if(statusClearThreads.activeCount() > 0){
+                statusClearThreads.interrupt();
+            }
+            if(!statusLabel.getText().equals("")){
+                statusLabel.setText("");
+            }
+        }
+    }
+    
+    ThreadGroup searchPageWaitGroup = new ThreadGroup("searchSpellingWaitGroup");
+    int currentWaitThread = 0;
+    
+    private void waitForStabilization(long milliseconds){
+        
+        statusLabel.setText("Loading Configuration...");
+        if(statusClearThreads.activeCount() > 0){ // This ensures that update GUI thread is at highest priority and interrupts any status clear thread.
+                                                  // because we don't want to clear status when showing message related to term found or not.
+            statusClearThreads.interrupt();
+            
+        }
+        if(searchPageWaitGroup.activeCount() > 0){
+            searchPageWaitGroup.interrupt();
+        }
+        Thread searchWaitThread = new Thread(searchPageWaitGroup, new Runnable() {
+            @Override
+            public void run() {
+                
+                try {
+                    Thread.sleep(milliseconds);
+                    
+                    SwingUtilities.invokeLater(new Runnable(){
+                        @Override
+                        public void run() {
+                            
+                            update(); // maybe in future add a more generic runnable instance instead.
+                        }
+                        
+                        
+                    });
+                } catch (InterruptedException ex) {
+                    System.out.println("WaitThread_referenceEditGUI" + Integer.toString(currentThreadCount) + " was interrupted due to quick user input.");
+                }
+            }
+        }, "WaitThread" + Integer.toString(currentThreadCount));
+        
+        searchWaitThread.start();
     }
     
     private void update(){
@@ -522,9 +641,9 @@ public class referenceEditFrameGUIBehaviour {
     private String getStatusLabelText(PageContentState pcs, State st, Map<Integer, String[]> content){
         
         String defaultString = "You can enter numbers only, and first digit cant be 0.";
-        String noContentFound = "No Entry found for specified page number.";
-        String singleEntryFound = "Single entry found!";
-        String multiEntryFound = "Multiple entries (&) found! Use 'Up' and 'Down' arrow to navigate.";
+        String noContentFound = "No configuration found for specified page number.";
+        String singleEntryFound = "Single configuration found!";
+        String multiEntryFound = "Multiple configurations (&) found! Use 'Up' and 'Down' arrow to navigate.";
         
         
         if(!st.isValid()){
@@ -559,7 +678,7 @@ public class referenceEditFrameGUIBehaviour {
        //
        
        
-       return defaultString; // todo: remove this
+       return defaultString; // todo: remove this - UPDATE : I forgot why though...
     }
     
     

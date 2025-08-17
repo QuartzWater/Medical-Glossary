@@ -11,6 +11,7 @@ import legacy.AfterEventCode;
 import legacy.BehaviourForSwing;
 import legacy.ButtonActionCode;
 import java.awt.Color;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -48,19 +49,28 @@ public class definitionEditFrame extends javax.swing.JFrame {
         
         initComponents();
         
+        nextButton.setEnabled(true);
+        
         if(termFound){
             
             titleLabel.setText("Edit Mode");
             spellingTextBox.setText(textComponents[0].getText());
             definitionTextArea.setText(textComponents[1].getText());
+            this.setTitle("Edit Mode: '" + textComponents[0].getText() + "'");
             
         }
         else{
             
             titleLabel.setText("Create new term");
             spellingTextBox.setText(textComponents[0].getText());
+            this.setTitle("Create new term: '" + textComponents[0].getText() + "'");
         }
         
+        new definitionEditFrameGUIBehaviour(this);
+        
+        
+        // ********* LEGACY CODE *********
+        /*
         Document doc = spellingTextBox.getDocument();
         AfterEventCode anonymousAEC = new AfterEventCode() {
             @Override
@@ -103,12 +113,14 @@ public class definitionEditFrame extends javax.swing.JFrame {
         }
         );
         validateSpelling();
+        */
         
+        // ******* LEGACY CODE ENDS ********
     }
     
-    
-    
-    
+    public static definitionEditFrame generateInstance(Book initialisedBook, TermDataManagement tdm, Term existingTerm, boolean  termFound, JTextComponent[] textComponents){
+        return new definitionEditFrame(initialisedBook, tdm, existingTerm, termFound, textComponents);
+    }
     
     
     public JTextField getSpellingBox(){
@@ -136,14 +148,43 @@ public class definitionEditFrame extends javax.swing.JFrame {
         return this.existingTerm;
     }
     
+    public Term getNewTerm(){
+        
+        return newTerm;
+    }
+    
     public boolean getTermFound(){
         
         return this.termFound;
     }
     
+    public RoundedButton getNextButton(){
+        
+        return this.nextButton;
+    }
+    
+    public RoundedButton getBackButton(){
+        
+        return backButton;
+    }
+    
+    public JLabel getStatusLabel(){
+        
+        return statusLabel;
+    }
+    
     public JTextComponent[] getPassedInTextComponent(){
         
         return this.textComponents;
+    }
+    
+    public String[] getSpellingDefinitionArray(){ // of parent fram and not this one
+        
+        return new String[]{
+                
+            getPassedInTextComponent()[0].getText(), // 0th index is Spelling Box text
+            getPassedInTextComponent()[1].getText() // 1st index is Definition text
+       };
     }
     
     private definitionEditFrame getMyself(){

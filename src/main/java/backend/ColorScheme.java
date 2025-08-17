@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  * @author BRIN
  */
-public class ColorScheme {
+public class ColorScheme{
     
     private final Color DEFAULT_COLOR;
     private final Color HOVER_COLOR;

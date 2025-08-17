@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.AppConstants;
 import backend.ColorScheme;
 import backend.State;
 import backend.Term;
@@ -42,7 +43,7 @@ public class hyperlinkEditFrameGUIBehaviour {
     
     private Book initialisedBook;
     private TermDataManagement tdm;
-    private Term exisitingTerm;
+    private Term existingTerm;
     private Term newTerm;
     private boolean termFound;
     private hyperlinkEditFrame hef;
@@ -71,7 +72,7 @@ public class hyperlinkEditFrameGUIBehaviour {
     public hyperlinkEditFrameGUIBehaviour(hyperlinkEditFrame hef){
         this.initialisedBook = hef.getInitialisedBook();
         this.tdm = hef.getTDM();
-        this.exisitingTerm = hef.getExistingTerm();
+        this.existingTerm = hef.getExistingTerm();
         this.newTerm = hef.getNewTerm();
         this.termFound = hef.getTermFound();
         this.ref = hef.getREFParent();
@@ -96,13 +97,13 @@ public class hyperlinkEditFrameGUIBehaviour {
         for(JTextField jtf : encapFields){
             encapFieldStateMap.put(jtf, new State(jtf));
             encapHyperlinkFieldsMap.put(jtf, hyperlinkFields[getIndexFromObjectArray_MemCompare(encapFields, jtf)]);
-            jtf.setForeground(textFieldColorScheme.getDefaultColor());
+            
         }
         
         for(JTextField jtf : hyperlinkFields){
             hyperlinkFieldStateMap.put(jtf, new State(jtf));
             hyperlinkAdjacentButtonMap.put(jtf, adjacentButtons[getIndexFromObjectArray_MemCompare(hyperlinkFields, jtf)]);
-            jtf.setForeground(textFieldColorScheme.getDefaultColor());
+            
         }
         
         for(RoundedButton rdb : adjacentButtons){
@@ -112,6 +113,38 @@ public class hyperlinkEditFrameGUIBehaviour {
             rdb.setEnabled(false);
         }
         
+        if(termFound){
+            int size = existingTerm.getHyperlinks().size();
+
+            for(int i = 0; i < size ; i++){
+                
+                String testString = existingTerm.getHyperlinkByIndex(i);
+                String constString = AppConstants.HYPERLINK_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", existingTerm.getSpelling());
+                
+                if(testString.equals(constString)){
+                    break;
+                }
+                
+                JTextField hyperlink = hyperlinkFields[i];
+                RoundedButton adjacentBtn = hyperlinkAdjacentButtonMap.get(hyperlink);
+                JTextField encap = encapFields[i];
+                
+                State newStateH = new State(hyperlink, State.ComponentState.NON_DEFAULT_AND_VALID);
+                State newStateE = new State(encap, State.ComponentState.NON_DEFAULT_AND_VALID);
+                State newStateA = new State(adjacentBtn, State.ComponentState.NON_DEFAULT_AND_VALID);
+                
+                hyperlink.setText(existingTerm.getHyperlinkByIndex(i));
+                hyperlink.setForeground(Color.WHITE);
+                encap.setText(existingTerm.getHyperlinkEncapsulationByIndex(i));
+                encap.setForeground(Color.WHITE);
+                
+                hyperlinkFieldStateMap.put(hyperlink, newStateH);
+                adjacentButtonStateMap.put(adjacentBtn, newStateA);
+                encapFieldStateMap.put(encap, newStateE);
+                
+                updateAdjacentButton(adjacentBtn);
+            }
+        }
         
         addEncapFieldsBehaviour();
         addHyperlinkFieldsBehaviour();
@@ -619,13 +652,13 @@ public class hyperlinkEditFrameGUIBehaviour {
             newTerm.setHyperlinksEncapsulation(hyperlinkEncapsulation);
             System.out.println(newTerm.toString());
             if(termFound)
-            tdm.flush(exisitingTerm, newTerm);
+            tdm.flush(existingTerm, newTerm);
             else
                 tdm.flush(null, newTerm);
         }
         else if(stype == saveType.SKIP_AND_SAVE){
             if(termFound)
-            tdm.flush(exisitingTerm, newTerm);
+            tdm.flush(existingTerm, newTerm);
             else
                 tdm.flush(null, newTerm);
         }

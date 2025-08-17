@@ -42,6 +42,7 @@ public class referenceEditFrame extends javax.swing.JFrame {
     private boolean termFound;
     
     private definitionEditFrame parentFrame;
+    private final String DEFAULT_PAGE_BOX_TEXT = "<Enter Page Number>";
     
     public referenceEditFrame(Book initialisedBook, TermDataManagement tdm, Term existingTerm, Term newTerm, boolean  termFound, definitionEditFrame def) {
         
@@ -55,7 +56,34 @@ public class referenceEditFrame extends javax.swing.JFrame {
         
         initComponents();
         
+        if(termFound){
+            pageBox.setText(Integer.toString(existingTerm.getPage()));
+            chapterTextBox.setText(existingTerm.getChapter());
+            majorTopicTextBox.setText(existingTerm.getMajorTopic());
+            subtopicTextArea.setText(existingTerm.getSubtopic());
+            this.setTitle("Editing Reference for: '" + existingTerm.getSpelling() +"'");
+            titleLabel.setText("Edit Reference");
+            statusLabel.setText("Edit page number to load a new configuration.");
+            nextButton.setEnabled(true);
+        }
+        else{
+            pageBox.setText(DEFAULT_PAGE_BOX_TEXT);
+            chapterTextBox.setText(" -");
+            majorTopicTextBox.setText(" -");
+            subtopicTextArea.setText(" -");
+            this.setTitle("Creating Reference for: '" + newTerm.getSpelling() +"'");
+            titleLabel.setText("Create Reference");
+            statusLabel.setText("Enter page number to load a configuration.");
+            nextButton.setEnabled(false);
+        }
+        
         new referenceEditFrameGUIBehaviour(this);
+    }
+    
+    public static referenceEditFrame generateInstance(Book initialisedBook, TermDataManagement tdm, Term existingTerm, Term newTerm, boolean  termFound, definitionEditFrame def){
+        
+        referenceEditFrame ref = new referenceEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, def);
+        return ref;
     }
     
     public Book getInitialisedBook(){

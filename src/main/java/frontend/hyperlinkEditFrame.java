@@ -7,10 +7,10 @@ package frontend;
 import backend.Term;
 import backend.TermDataManagement;
 import book.bookpicker.Book;
+import java.awt.Color;
 import legacy.BehaviourForSwing;
 import legacy.ButtonActionCode;
 import legacy.TextBoxContentEventCode;
-import java.awt.Color;
 import javax.swing.JTextField;
 
 /**
@@ -36,6 +36,9 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         this.termFound = termFound;
         this.ref = ref;
         initComponents();
+        
+        
+        
         hyperlinkEditFrameGUIBehaviour hyperlinkEditFrameGUIBehaviour = new hyperlinkEditFrameGUIBehaviour(this);
     }
     
@@ -69,7 +72,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         return this.ref;
     }
             
-    
+    // DO NOT OVERRIDE
     public JTextField[] getHyperlinkBoxes(){
         
         return new JTextField[]{
@@ -83,6 +86,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         };
     }
     
+    //DO NOT OVERRIDE
     public JTextField[] getEncapBoxes(){
         
         return new JTextField[]{
@@ -269,7 +273,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox1.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox1.setForeground(new java.awt.Color(204, 204, 204));
+        hyperlinkBox1.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox1.setText("<Links to...>");
         hyperlinkBox1.setBorder(null);
         hyperlinkBox1.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -285,7 +289,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         encapBox2.setBackground(new java.awt.Color(57, 75, 92));
         encapBox2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        encapBox2.setForeground(new java.awt.Color(255, 255, 255));
+        encapBox2.setForeground(new java.awt.Color(153, 153, 153));
         encapBox2.setText("<Enter Encapsulating Text>");
         encapBox2.setBorder(null);
         encapBox2.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -293,7 +297,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox2.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox2.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkBox2.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox2.setText("<Links to...>");
         hyperlinkBox2.setBorder(null);
         hyperlinkBox2.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -301,7 +305,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         encapBox3.setBackground(new java.awt.Color(57, 75, 92));
         encapBox3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        encapBox3.setForeground(new java.awt.Color(255, 255, 255));
+        encapBox3.setForeground(new java.awt.Color(153, 153, 153));
         encapBox3.setText("<Enter Encapsulating Text>");
         encapBox3.setBorder(null);
         encapBox3.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -309,7 +313,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox3.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox3.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkBox3.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox3.setText("<Links to...>");
         hyperlinkBox3.setBorder(null);
         hyperlinkBox3.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -317,7 +321,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         encapBox4.setBackground(new java.awt.Color(57, 75, 92));
         encapBox4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        encapBox4.setForeground(new java.awt.Color(255, 255, 255));
+        encapBox4.setForeground(new java.awt.Color(153, 153, 153));
         encapBox4.setText("<Enter Encapsulating Text>");
         encapBox4.setBorder(null);
         encapBox4.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -325,7 +329,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox4.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox4.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkBox4.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox4.setText("<Links to...>");
         hyperlinkBox4.setBorder(null);
         hyperlinkBox4.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -333,7 +337,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         encapBox5.setBackground(new java.awt.Color(57, 75, 92));
         encapBox5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        encapBox5.setForeground(new java.awt.Color(255, 255, 255));
+        encapBox5.setForeground(new java.awt.Color(153, 153, 153));
         encapBox5.setText("<Enter Encapsulating Text>");
         encapBox5.setBorder(null);
         encapBox5.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -341,7 +345,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox5.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox5.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkBox5.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox5.setText("<Links to...>");
         hyperlinkBox5.setBorder(null);
         hyperlinkBox5.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -349,7 +353,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         encapBox6.setBackground(new java.awt.Color(57, 75, 92));
         encapBox6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        encapBox6.setForeground(new java.awt.Color(255, 255, 255));
+        encapBox6.setForeground(new java.awt.Color(153, 153, 153));
         encapBox6.setText("<Enter Encapsulating Text>");
         encapBox6.setBorder(null);
         encapBox6.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -357,7 +361,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         hyperlinkBox6.setBackground(new java.awt.Color(57, 75, 92));
         hyperlinkBox6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        hyperlinkBox6.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkBox6.setForeground(new java.awt.Color(153, 153, 153));
         hyperlinkBox6.setText("<Links to...>");
         hyperlinkBox6.setBorder(null);
         hyperlinkBox6.setCaretColor(new java.awt.Color(255, 255, 255));

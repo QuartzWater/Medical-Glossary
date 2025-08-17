@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author BRIN
  */
-public class bookConstructor {
+public class BookConstructor {
  
     public static List<Book> getBooksByYear(int year){
         
@@ -27,9 +27,22 @@ public class bookConstructor {
             
             
             
-            default: {
-                return null;
+            case 2: {
+                // TODO ADD MORE BOOKS
+                return bookList;
             }
+            
+            case 3: {
+                // TODO ADD MORE BOOKS
+                return bookList;
+            }
+            
+            case 4: {
+                // TODO ADD MORE BOOKS
+                return bookList;
+            }
+            
+            default: return bookList;
         }
     }
 }

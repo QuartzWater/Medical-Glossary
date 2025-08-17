@@ -20,10 +20,12 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -377,6 +379,13 @@ public class TermDataManagement {
     public Term getTerm(String inputString){
         
         return termMap.get(inputString);
+    }
+    
+    public List<String> getAllTerms(){
+        
+        
+        return this.allTermsList;
+        
     }
    
 }

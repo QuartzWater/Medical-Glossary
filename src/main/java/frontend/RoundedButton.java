@@ -32,7 +32,7 @@ public class RoundedButton extends JButton{
     private Color DISABLED_COLOR = new Color(57,75,92);
 
     private Color currentColor;
-    private final int arcSize = 45; // Controls the roundness of the corners
+    private int arcSize = 45; // Controls the roundness of the corners
     private final float shadowSize = 4f; // Shadow offset
     
     public RoundedButton(){
@@ -84,6 +84,12 @@ public class RoundedButton extends JButton{
         this.DISABLED_COLOR = disabledColor;
     }
     
+    public void setArcSize(int size){
+        this.arcSize = size;
+        super.repaint();
+    }
+    
+    
     public Color getDefaultColor(){
         return DEFAULT_COLOR;
     }
@@ -95,6 +101,12 @@ public class RoundedButton extends JButton{
     public Color getPressedColor(){
         return PRESSED_COLOR;
     }
+    
+    public int getArcSize(){
+        
+        return this.arcSize;
+    }
+    
     
     public void callRepaint(){
      super.repaint();

@@ -68,8 +68,8 @@ public class Term {
         this.hyperlinks = new ArrayList<>();
         this.hyperlinkEncapsulation = new ArrayList<>();
         for (int i = 0; i < 6; i++){
-                this.hyperlinks.add("Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
-                this.hyperlinkEncapsulation.add("Encapsulation for Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
+                this.hyperlinks.add(AppConstants.HYPERLINK_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
+                this.hyperlinkEncapsulation.add(AppConstants.ENCAPSULATION_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
         } // Default Values for hyperlink String.
     }
 
@@ -116,14 +116,14 @@ public class Term {
             
             for (int i = hyperlinks.size(); i < 6; i++){
                 this.hyperlinks.add("Hyperlink for '" + this.spelling + "' not available yet");
-                this.hyperlinkEncapsulation.add("Encapsulation for Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
+                this.hyperlinkEncapsulation.add(AppConstants.HYPERLINK_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         }
         else{
             
             for (int i = 0; i < 6; i++){
                 this.hyperlinks.add("Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
-                this.hyperlinkEncapsulation.add("Encapsulation for Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
+                this.hyperlinkEncapsulation.add(AppConstants.ENCAPSULATION_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         }
     }
@@ -238,13 +238,13 @@ public class Term {
             }
             
             for (int i = hyperlinks.size(); i < 6; i++){
-                this.hyperlinks.add("Hyperlink for '" + this.spelling + "' not available yet");
+                this.hyperlinks.add(AppConstants.HYPERLINK_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         }
         else{
             
             for (int i = 0; i < 6; i++){
-                this.hyperlinks.add("Hyperlink " + Integer.toString(i) + " for '" + this.spelling + "' not available yet");
+                this.hyperlinks.add(AppConstants.HYPERLINK_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         } 
     }
@@ -262,13 +262,13 @@ public class Term {
             }
             
             for (int i = hyperlinksEncapsulation.size(); i < 6; i++){
-                this.hyperlinkEncapsulation.add("Encapsulation for Hyperlink for '" + this.spelling + "' not available yet");
+                this.hyperlinkEncapsulation.add(AppConstants.ENCAPSULATION_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         }
         else{
             
             for (int i = 0; i < 6; i++){
-                this.hyperlinkEncapsulation.add("Encapsulation for Hyperlink for '" + this.spelling + "' not available yet");
+                this.hyperlinkEncapsulation.add(AppConstants.ENCAPSULATION_DEFAULT.replaceFirst("%", Integer.toString(i + 1)).replaceFirst("&", this.spelling));
             }
         } 
     }

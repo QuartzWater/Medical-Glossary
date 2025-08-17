@@ -12,6 +12,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
@@ -42,9 +45,10 @@ public class SourceFrame extends javax.swing.JFrame {
     private final String DEFAULT_DEFINITION = "-";
     private final String DEFAULT_REFERENCE = " -"; // space for stylistic choice
     
+    // LEGACY >>>>>>>>>>>>>>>>>>>>>>
     private void checkTerm(){
         
-        String currentSpelling = spellingTextBox.getText().trim();
+        String currentSpelling = spellingTextBox.getText().trim().toLowerCase();
         
         termFound= tdm.contains(currentSpelling);
         
@@ -115,18 +119,85 @@ public class SourceFrame extends javax.swing.JFrame {
         });
     }
     
+    // LEGACY ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
     public SourceFrame(Book book) {
         this.initialisedBook = book;
         this.tdm = book.getTDM();
         initComponents();
-        initialiseSpellingTextBoxBehaviour();
+        
+        // ****** LEGACY ******
+        //initialiseSpellingTextBoxBehaviour();
         //roundedPanel.setDefaultColor(Color.white);
+        
+        // ****** LEGACY ******
         
         bookLabel.setText(book.getTitle());
         bookLabel.setForeground(book.getColorScheme()[1]);
         
     }
+    
+    public static SourceFrame generateInstance(Book book){
+        SourceFrame sf = new SourceFrame(book);
+        sourceFrameController.initializeController(sf.initialisedBook, sf.tdm, sf.currentTerm, true, sf);
+        return sf;
+    }
+    
+    public static SourceFrame generateInstanceWithNoController(Book book){
+        
+        return new SourceFrame(book);
+    }
+    
+    
+    //TODO: add getters : DONE
+    
+    protected JTextField getSpellingBox(){
+        
+        return spellingTextBox;
+    }
+    
+    protected JTextArea getDefinitionArea(){
+        
+        return definitionTextArea;
+    }
+    
+    protected JLabel getPageBox(){
+        
+        return pageTextBox;
+    }
+    
+    protected JLabel getChapterBox(){
+        
+        return chapterTextBox;
+    }
+    
+    protected JLabel getMajorTopicBox(){
+        
+        return majorTopicTextBox;
+    }
+    
+    protected JTextArea getSubtopicBox(){
+        
+        return subtopicTextArea;
+    }
+    
+    protected JLabel getStatusLabel(){
+        
+        return statusLabel;
+    }
+    
+    protected JLabel getBookLabel(){
+        
+        return bookLabel;
+    }
+    
+    protected JLabel getHyperlinkInfoLabel(){
+        
+        return hyperlinkInfoLabel;
+    }
 
+    // ADD FUTURE GETTERS HERE
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +211,7 @@ public class SourceFrame extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         parentPanel = new javax.swing.JPanel();
         spellingTextBox = new javax.swing.JTextField();
+        roundedButton2 = new frontend.RoundedButton();
         titleLabel = new javax.swing.JLabel();
         definitionTextArea = new javax.swing.JTextArea();
         referenceContainerPanel = new javax.swing.JPanel();
@@ -154,7 +226,7 @@ public class SourceFrame extends javax.swing.JFrame {
         decorativeDefinitionPanel = new frontend.RoundedPanel();
         otherInfoContainerPanel = new javax.swing.JPanel();
         roundedPanel4 = new frontend.RoundedPanel();
-        jLabel1 = new javax.swing.JLabel();
+        hyperlinkInfoLabel = new javax.swing.JLabel();
         decorativeReferencePanel = new frontend.RoundedPanel();
         decorativeOtherInfoPanel = new frontend.RoundedPanel();
         otherInfoHeaderLabel = new javax.swing.JLabel();
@@ -186,7 +258,7 @@ public class SourceFrame extends javax.swing.JFrame {
         jTextArea2.setOpaque(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Medical Glossary v1.0");
+        setTitle("Medical Glossary " + backend.AppConstants.VERSION);
         setBackground(new java.awt.Color(34, 40, 44));
         setResizable(false);
         setSize(new java.awt.Dimension(1200, 700));
@@ -204,18 +276,21 @@ public class SourceFrame extends javax.swing.JFrame {
         spellingTextBox.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         spellingTextBox.setText("<Enter Term>");
         spellingTextBox.setCaretColor(new java.awt.Color(255, 255, 255));
-        spellingTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                spellingTextBoxActionPerformed(evt);
-            }
-        });
         parentPanel.add(spellingTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 680, 40));
+
+        roundedButton2.setForeground(new java.awt.Color(44, 62, 80));
+        roundedButton2.setText("PRE RELEASE");
+        roundedButton2.setArcSize(20);
+        roundedButton2.setCurrentColor(null);
+        roundedButton2.setDefaultColor(new java.awt.Color(255, 255, 255));
+        roundedButton2.setFont(new java.awt.Font("Gill Sans MT Condensed", 1, 14)); // NOI18N
+        parentPanel.add(roundedButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 100, 20));
 
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Medical Glossary v1.0");
-        parentPanel.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 280, -1));
+        titleLabel.setText("Medical Glossary " + backend.AppConstants.VERSION);
+        parentPanel.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 680, -1));
 
         definitionTextArea.setEditable(false);
         definitionTextArea.setBackground(new java.awt.Color(57, 75, 92));
@@ -229,6 +304,7 @@ public class SourceFrame extends javax.swing.JFrame {
         definitionTextArea.setBorder(null);
         definitionTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
         definitionTextArea.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        definitionTextArea.setFocusable(false);
         parentPanel.add(definitionTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 510, 390));
 
         referenceContainerPanel.setOpaque(false);
@@ -291,11 +367,11 @@ public class SourceFrame extends javax.swing.JFrame {
         decorativeDefinitionPanel.setLayout(decorativeDefinitionPanelLayout);
         decorativeDefinitionPanelLayout.setHorizontalGroup(
             decorativeDefinitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         decorativeDefinitionPanelLayout.setVerticalGroup(
             decorativeDefinitionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         parentPanel.add(decorativeDefinitionPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 530, 410));
@@ -318,12 +394,12 @@ public class SourceFrame extends javax.swing.JFrame {
 
         otherInfoContainerPanel.add(roundedPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 60, 60));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Hyperlinks");
-        jLabel1.setToolTipText("");
-        otherInfoContainerPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 80, -1));
+        hyperlinkInfoLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        hyperlinkInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hyperlinkInfoLabel.setText("Hyperlinks");
+        hyperlinkInfoLabel.setToolTipText("");
+        otherInfoContainerPanel.add(hyperlinkInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 80, -1));
 
         parentPanel.add(otherInfoContainerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 590, 130));
 
@@ -333,11 +409,11 @@ public class SourceFrame extends javax.swing.JFrame {
         decorativeReferencePanel.setLayout(decorativeReferencePanelLayout);
         decorativeReferencePanelLayout.setHorizontalGroup(
             decorativeReferencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         decorativeReferencePanelLayout.setVerticalGroup(
             decorativeReferencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         parentPanel.add(decorativeReferencePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 590, 240));
@@ -349,11 +425,11 @@ public class SourceFrame extends javax.swing.JFrame {
         decorativeOtherInfoPanel.setLayout(decorativeOtherInfoPanelLayout);
         decorativeOtherInfoPanelLayout.setHorizontalGroup(
             decorativeOtherInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         decorativeOtherInfoPanelLayout.setVerticalGroup(
             decorativeOtherInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         parentPanel.add(decorativeOtherInfoPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 590, 130));
@@ -376,7 +452,7 @@ public class SourceFrame extends javax.swing.JFrame {
         statusLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         statusLabel.setForeground(new java.awt.Color(255, 255, 255));
         statusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        statusLabel.setText("Specified term was not found. Press Enter to Create New.");
+        statusLabel.setText("Term spelling can not contain some special characters.");
         parentPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 175, 680, 20));
 
         referenceHeaderLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
@@ -390,51 +466,6 @@ public class SourceFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void spellingTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spellingTextBoxActionPerformed
-        // TODO add your handling code here:
-        JTextComponent[] textComponents = {
-          spellingTextBox, definitionTextArea  
-        };
-        
-        new definitionEditFrame(initialisedBook, tdm, currentTerm, termFound, textComponents).setVisible(true);
-    }//GEN-LAST:event_spellingTextBoxActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SourceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SourceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SourceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SourceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        Book book = Book.GRAYS_ANATOMY;
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SourceFrame(null).setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bookLabel;
     private javax.swing.JLabel chapterLabel;
@@ -444,7 +475,7 @@ public class SourceFrame extends javax.swing.JFrame {
     private frontend.RoundedPanel decorativeReferencePanel;
     private javax.swing.JLabel definitionHeaderLabel;
     private javax.swing.JTextArea definitionTextArea;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel hyperlinkInfoLabel;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel majorTopicLabel;
@@ -456,6 +487,7 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JPanel parentPanel;
     private javax.swing.JPanel referenceContainerPanel;
     private javax.swing.JLabel referenceHeaderLabel;
+    private frontend.RoundedButton roundedButton2;
     private frontend.RoundedPanel roundedPanel4;
     private javax.swing.JTextField spellingTextBox;
     private javax.swing.JLabel statusLabel;
