@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.Action;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -662,6 +663,9 @@ public class hyperlinkEditFrameGUIBehaviour {
             else
                 tdm.flush(null, newTerm);
         }
+        
+        SaveSuccessful ss = new SaveSuccessful(hef, true);
+        ss.setVisible(true);
     }
     
     private ColorScheme backButtonColorScheme = new ColorScheme(new Color(27,36,45), new Color(255,51,51), new Color(221,51,51), new Color(27,36,45));

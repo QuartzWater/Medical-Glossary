@@ -61,7 +61,14 @@ public class referenceEditFrame extends javax.swing.JFrame {
             chapterTextBox.setText(existingTerm.getChapter());
             majorTopicTextBox.setText(existingTerm.getMajorTopic());
             subtopicTextArea.setText(existingTerm.getSubtopic());
-            this.setTitle("Editing Reference for: '" + existingTerm.getSpelling() +"'");
+            
+            if(!existingTerm.getSpelling().equals(newTerm.getSpelling())){
+                this.setTitle("Editing Reference for: '" + newTerm.getSpelling() +"' (Previously: '" + existingTerm.getSpelling() + "')");
+            }
+            else{
+                this.setTitle("Editing Reference for: '" + newTerm.getSpelling() + "'");
+            }
+            
             titleLabel.setText("Edit Reference");
             statusLabel.setText("Edit page number to load a new configuration.");
             nextButton.setEnabled(true);
@@ -190,7 +197,6 @@ public class referenceEditFrame extends javax.swing.JFrame {
         nextButton = new frontend.RoundedButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Edit Reference for: '" + newTerm.getAbsoluteSpelling() + "'");
         setMinimumSize(new java.awt.Dimension(590, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(590, 720));

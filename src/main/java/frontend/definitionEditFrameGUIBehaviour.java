@@ -383,13 +383,17 @@ public class definitionEditFrameGUIBehaviour {
     private void addNextButtonFunctionality(){
         
         
-        newTerm = new Term(spellingBox.getText());
-        newTerm.setDefinition(definitionArea.getText());
+        
               
+        
         ActionListener nextButtonAct = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(searchSpellingWaitGroup.activeCount() == 0){
+                    newTerm = new Term(spellingBox.getText());
+                    newTerm.setDefinition(definitionArea.getText());
+                    System.out.println(spellingBox.getText());
+                    System.out.println("New Term Absolute Spelling: " +newTerm.getAbsoluteSpelling());
                     def.dispose();
                     referenceEditFrame ref = referenceEditFrame.generateInstance(initialisedBook, tdm, existingTerm, newTerm, termFound, def);
                     ref.setVisible(true);

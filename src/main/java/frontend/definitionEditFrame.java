@@ -33,19 +33,21 @@ public class definitionEditFrame extends javax.swing.JFrame {
     private Term newTerm;
     private final TermDataManagement tdm;
     private final Book initialisedBook;
+    private SourceFrame sf;
     
     private JTextComponent[] textComponents;
     
     private final boolean termFound;
     
-    public definitionEditFrame(Book initialisedBook, TermDataManagement tdm, Term existingTerm, boolean  termFound, JTextComponent[] textComponents){
+    public definitionEditFrame(Book initialisedBook, TermDataManagement tdm, Term existingTerm, boolean  termFound, SourceFrame sf){
         
         
         this.tdm = tdm;
         this.existingTerm = existingTerm;
         this.initialisedBook = initialisedBook;
         this.termFound = termFound;
-        this.textComponents = textComponents;
+        this.sf = sf;
+        this.textComponents = sf.getTextComponents();
         
         initComponents();
         
@@ -118,8 +120,8 @@ public class definitionEditFrame extends javax.swing.JFrame {
         // ******* LEGACY CODE ENDS ********
     }
     
-    public static definitionEditFrame generateInstance(Book initialisedBook, TermDataManagement tdm, Term existingTerm, boolean  termFound, JTextComponent[] textComponents){
-        return new definitionEditFrame(initialisedBook, tdm, existingTerm, termFound, textComponents);
+    public static definitionEditFrame generateInstance(Book initialisedBook, TermDataManagement tdm, Term existingTerm, boolean  termFound, SourceFrame sf){
+        return new definitionEditFrame(initialisedBook, tdm, existingTerm, termFound, sf);
     }
     
     
@@ -176,6 +178,10 @@ public class definitionEditFrame extends javax.swing.JFrame {
     public JTextComponent[] getPassedInTextComponent(){
         
         return this.textComponents;
+    }
+    public SourceFrame getSFParent(){
+        
+        return this.sf;
     }
     
     public String[] getSpellingDefinitionArray(){ // of parent fram and not this one

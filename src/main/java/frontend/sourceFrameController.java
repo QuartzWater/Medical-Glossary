@@ -291,7 +291,7 @@ public class sourceFrameController {
                         spellingBox, definitionArea  
                     };
 
-                    definitionEditFrame def = definitionEditFrame.generateInstance(initialisedBook, tdm, currentTerm, termFound, textComponents);
+                    definitionEditFrame def = definitionEditFrame.generateInstance(initialisedBook, tdm, currentTerm, termFound, sf);
                 
                     def.setVisible(true);
                     def.requestFocusInWindow();

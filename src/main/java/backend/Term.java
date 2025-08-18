@@ -133,7 +133,7 @@ public class Term {
 
     public String getAbsoluteSpelling(){
         
-        return absoluteSpelling;
+        return this.absoluteSpelling;
     }
     
     public String getSpelling() {
@@ -196,7 +196,9 @@ public class Term {
 
     public void setSpelling(String spelling) {
         this.spelling = Objects.requireNonNull(spelling, "Spelling cannot be null");
+        this.absoluteSpelling = this.spelling;
         this.spelling = this.spelling.toLowerCase();
+        
     }
 
     public void setDefinition(String definition) {

@@ -37,7 +37,17 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         this.ref = ref;
         initComponents();
         
-        
+        if(termFound){
+           if(!existingTerm.getSpelling().equals(newTerm.getSpelling())){
+                this.setTitle("Editing Hyperlinks for: '" + newTerm.getSpelling() +"' (Previously: '" + existingTerm.getSpelling() + "')");
+            }
+            else{
+                this.setTitle("Editing Hyperlinks for: '" + newTerm.getSpelling() + "'");
+            }
+        }
+        else{
+            this.setTitle("Creating Hyperlinks for: '" + newTerm.getSpelling() + "'");
+        }
         
         hyperlinkEditFrameGUIBehaviour hyperlinkEditFrameGUIBehaviour = new hyperlinkEditFrameGUIBehaviour(this);
     }
@@ -177,7 +187,6 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         skipSaveButton = new frontend.RoundedButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Edit hyperlinks for: '" + newTerm.getAbsoluteSpelling() + "'");
         setMinimumSize(new java.awt.Dimension(590, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(590, 720));

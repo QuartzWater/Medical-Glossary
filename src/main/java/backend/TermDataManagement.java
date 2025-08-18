@@ -91,7 +91,10 @@ public class TermDataManagement {
                         while((readDefinitionLine = readerDefinition.readLine()) != null){
                             
                             definition = definition.concat(readDefinitionLine + "\n");
+                            System.out.println("*********************** TDM DEBUGGER *******************************");
+                            System.out.println(definition);
                         }
+                        readerDefinition.close();
                         
                     }
                     
@@ -143,6 +146,9 @@ public class TermDataManagement {
                         Term loadedTerm = new Term(spelling, definition, chapter, majorTopic, subtopic, Integer.parseInt(page), hyperlinkArray, hyperlinkEncapsulationArray);
                         
                         termMap.put(spelling, loadedTerm);
+                        readLine = "";
+                        spelling = "";
+                        definition = "";
                     }
                 }
             }

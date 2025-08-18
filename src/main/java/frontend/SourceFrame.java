@@ -195,6 +195,15 @@ public class SourceFrame extends javax.swing.JFrame {
         
         return hyperlinkInfoLabel;
     }
+    
+    protected JTextComponent[] getTextComponents(){
+        
+        return new JTextComponent[]{
+                
+            spellingTextBox,
+            definitionTextArea
+        };
+    }
 
     // ADD FUTURE GETTERS HERE
     

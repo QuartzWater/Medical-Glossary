@@ -4,6 +4,21 @@
  */
 package frontend;
 
+import backend.AppConstants;
+import backend.SVGIconRenderer;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author BRIN
@@ -16,6 +31,78 @@ public class SaveSuccessful extends javax.swing.JDialog {
     public SaveSuccessful(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        okButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
+        
+        if(parent instanceof hyperlinkEditFrame hef){
+            String previous = headerLabel.getText();
+            if(hef.getTermFound()){
+                
+                headerLabel.setText(previous.replace("%", "Updated!"));
+            }
+            else{
+                
+                headerLabel.setText(previous.replace("%", "Created!"));
+            }
+        
+        
+        MouseAdapter okMAdapt = new MouseAdapter() {
+            
+            @Override
+            public void mouseEntered(MouseEvent event){
+                okButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent event){
+                okButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent event){
+                okButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getPressedColor());
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent event){
+                okButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
+            }
+        };
+        
+        ActionListener okActListen = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                hef.getREFParent().getDEFParent().getSFParent().getSpellingBox().setText(hef.getNewTerm().getSpelling());
+                getMyself().dispose();
+                hef.dispose();
+            }
+        };
+        
+        okButton.addMouseListener(okMAdapt);
+        okButton.addActionListener(okActListen);
+        
+        }
+    }
+    
+    private SaveSuccessful getMyself(){
+        
+        return this;
+    }
+    private static Image getScaledImage(Image srcImg, int w, int h) {
+        // Create a new buffered image with the desired dimensions
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        // Set rendering hints for high-quality scaling
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Draw the original image onto the new buffered image
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
     /**
@@ -27,20 +114,49 @@ public class SaveSuccessful extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        headerLabel = new javax.swing.JLabel();
+        sVGIconPanel2 = new frontend.SVGIconPanel();
+        okButton = new frontend.RoundedButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Saved");
+        setResizable(false);
+        setSize(new java.awt.Dimension(530, 280));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(44, 62, 80));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        headerLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
+        headerLabel.setForeground(new java.awt.Color(255, 255, 255));
+        headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerLabel.setText("Term Successfully %");
+        jPanel1.add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 470, -1));
+
+        sVGIconPanel2.setIconPostion(frontend.SVGIconPanel.iconPosition.CENTER);
+
+        javax.swing.GroupLayout sVGIconPanel2Layout = new javax.swing.GroupLayout(sVGIconPanel2);
+        sVGIconPanel2.setLayout(sVGIconPanel2Layout);
+        sVGIconPanel2Layout.setHorizontalGroup(
+            sVGIconPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        sVGIconPanel2Layout.setVerticalGroup(
+            sVGIconPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
         );
+
+        jPanel1.add(sVGIconPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 490, 60));
+
+        okButton.setText("Okay!");
+        okButton.setDefaultColor(new java.awt.Color(43, 181, 114));
+        jPanel1.add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 200, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 280));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -86,5 +202,9 @@ public class SaveSuccessful extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel headerLabel;
+    private javax.swing.JPanel jPanel1;
+    private frontend.RoundedButton okButton;
+    private frontend.SVGIconPanel sVGIconPanel2;
     // End of variables declaration//GEN-END:variables
 }
