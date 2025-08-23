@@ -42,7 +42,7 @@ public class RoundedButton extends JButton{
 
     public RoundedButton(String text) {
         super(text);
-        this.currentColor = DEFAULT_COLOR;
+        this.currentColor = new Color(57,75,92);
         setOpaque(false); // Make sure the button is transparent so we can draw our custom shape
         setContentAreaFilled(false); // Do not draw the default background
         setBorderPainted(false); // Do not paint the default border
@@ -89,6 +89,10 @@ public class RoundedButton extends JButton{
         super.repaint();
     }
     
+    public Color getCurrentColor(){
+        
+        return this.currentColor;
+    }
     
     public Color getDefaultColor(){
         return DEFAULT_COLOR;

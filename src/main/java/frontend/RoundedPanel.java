@@ -26,85 +26,37 @@ public class RoundedPanel extends javax.swing.JPanel{
     private Color PRESSED_COLOR = new Color(62, 142, 65); // Even darker green on press
     
     private Color currentColor;
-    private final int arcSize = 35; // Controls the roundness of the corners
+    private int arcSize = 35; // Controls the roundness of the corners
     private final float shadowSize = 4f; // Shadow offset4
     
     private Graphics2D g2d;
     
     public RoundedPanel() {
-        
-        BufferedImage bimg = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-        g2d = (Graphics2D) bimg.createGraphics();
-        this.currentColor = DEFAULT_COLOR;
+        super();
+        this.currentColor = new Color(57,75,92);
         setOpaque(false); // Make sure the button is transparent so we can draw our custom shape
-        // Do not paint focus border
-
-        // Set the text and font
-        setForeground(Color.WHITE);
-        setFont(new Font("SansSerif", Font.BOLD, 16));
-        setPreferredSize(new Dimension(150, 50));
-
-        // Add mouse listeners for interactive effects
+        
+        setPreferredSize(new Dimension(50, 50));
         
     }
     
-    public void inititaliseDefaultMouseBehaviour(){
         
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                currentColor = HOVER_COLOR;
-                repaint(); // Repaint the component to show the color change
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                currentColor = DEFAULT_COLOR;
-                repaint();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                currentColor = PRESSED_COLOR;
-                repaint();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                currentColor = HOVER_COLOR; // Go back to hover color after release
-                repaint();
-            }
-        });
+    public void setArcSize(int size){
+        this.arcSize = size;
     }
     
-    
-    
-    public void setDefaultColor(Color defaultColor){
-        DEFAULT_COLOR = defaultColor;
-        currentColor = defaultColor;
-       
+    public int getArcSize(){
+        return arcSize;
     }
     
-    public void setHoverColor(Color hoverColor){
-        HOVER_COLOR = hoverColor;
+    public void setCurrentColor(Color currentColor){
         
+        this.currentColor = currentColor;
     }
     
-    public void setPressedColor(Color pressedColor){
-        PRESSED_COLOR = pressedColor;
+    public Color getCurrentColor(){
         
-    }
-    
-    public Color getDefaultColor(){
-        return DEFAULT_COLOR;
-    }
-    
-    public Color getHoverColor(){
-        return HOVER_COLOR;
-    }
-    
-    public Color getPressedColor(){
-        return PRESSED_COLOR;
+        return this.currentColor;
     }
     
     public void callRepaint(){
@@ -112,7 +64,7 @@ public class RoundedPanel extends javax.swing.JPanel{
     }
     
     @Override
-    protected void paintChildren(Graphics g) {
+    protected void paintComponent(Graphics g) {
         g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         

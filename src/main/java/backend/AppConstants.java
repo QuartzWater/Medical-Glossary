@@ -20,6 +20,9 @@ public class AppConstants {
     public static final String HYPERLINK_DEFAULT = "Hyperlink % for '&' not available yet";
     public static final String ENCAPSULATION_DEFAULT = "Encapsulation for Hyperlink % for '&' not available yet";
     
-    public final static ColorScheme DEFAULT_NEXT_BUTTON_CS_1 = new ColorScheme(new Color(27,36,45), new Color(43,181,114), new Color(37,160,100), new Color(57,75,92));
-    public final static ColorScheme DEFAULT_NEXT_BUTTON_CS_2 = new ColorScheme(new Color(43,181,114), new Color(37,160,100), new Color(35,146,92), new Color(57,75,92));
+    public static final ColorScheme DEFAULT_NEXT_BUTTON_CS_1 = new ColorScheme(new Color(27,36,45), new Color(43,181,114), new Color(37,160,100), new Color(57,75,92));
+    public static final ColorScheme DEFAULT_NEXT_BUTTON_CS_2 = new ColorScheme(new Color(43,181,114), new Color(37,160,100), new Color(35,146,92), new Color(57,75,92));
+    
+    public static final ApplicationColorScheme DEFAULT_APPLICATION_CS = new ApplicationColorScheme(new Color(44,62,80), new Color(57,75,92), new Color(255,255,255), new Color(27,36,45));
+                                                                                                  // Blue               // Lighter-grayish blue // White            // Dark Blue
 }

@@ -272,10 +272,6 @@ public class TermDataManagement {
         Path temp_newDefinitionFile = rootFolder.resolve(newSpelling +"_temp.term");
         Path temp_newPropertiesFile = rootFolder.resolve(newSpelling +"_properties_temp.properties");
         
-        
-        
-        
-        
         int indexOF = allTermsList.indexOf(oldSpelling);
         allTermsList.set(indexOF, newSpelling);
         

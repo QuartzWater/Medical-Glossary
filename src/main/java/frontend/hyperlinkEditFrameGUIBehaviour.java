@@ -658,8 +658,11 @@ public class hyperlinkEditFrameGUIBehaviour {
                 tdm.flush(null, newTerm);
         }
         else if(stype == saveType.SKIP_AND_SAVE){
-            if(termFound)
-            tdm.flush(existingTerm, newTerm);
+            if(termFound){
+                newTerm.setHyperlinks(existingTerm.getHyperlinks());
+                newTerm.setHyperlinksEncapsulation(existingTerm.getHyperlinkEncapsulation());
+                tdm.flush(existingTerm, newTerm);
+            }
             else
                 tdm.flush(null, newTerm);
         }

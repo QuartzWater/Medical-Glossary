@@ -48,6 +48,7 @@ public class SourceFrame extends javax.swing.JFrame {
     // LEGACY >>>>>>>>>>>>>>>>>>>>>>
     private void checkTerm(){
         
+        
         String currentSpelling = spellingTextBox.getText().trim().toLowerCase();
         
         termFound= tdm.contains(currentSpelling);
@@ -204,6 +205,11 @@ public class SourceFrame extends javax.swing.JFrame {
             definitionTextArea
         };
     }
+    
+    protected SVGIconPanel getSVGBrowserIconPanel(){
+        
+        return svgBrowserIcon;
+    }
 
     // ADD FUTURE GETTERS HERE
     
@@ -216,8 +222,6 @@ public class SourceFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jTextArea2 = new javax.swing.JTextArea();
         parentPanel = new javax.swing.JPanel();
         spellingTextBox = new javax.swing.JTextField();
         roundedButton2 = new frontend.RoundedButton();
@@ -234,8 +238,8 @@ public class SourceFrame extends javax.swing.JFrame {
         pageTextBox = new javax.swing.JLabel();
         decorativeDefinitionPanel = new frontend.RoundedPanel();
         otherInfoContainerPanel = new javax.swing.JPanel();
-        roundedPanel4 = new frontend.RoundedPanel();
         hyperlinkInfoLabel = new javax.swing.JLabel();
+        svgBrowserIcon = new frontend.SVGIconPanel();
         decorativeReferencePanel = new frontend.RoundedPanel();
         decorativeOtherInfoPanel = new frontend.RoundedPanel();
         otherInfoHeaderLabel = new javax.swing.JLabel();
@@ -243,28 +247,6 @@ public class SourceFrame extends javax.swing.JFrame {
         bookLabel = new javax.swing.JLabel();
         statusLabel = new javax.swing.JLabel();
         referenceHeaderLabel = new javax.swing.JLabel();
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 64, Short.MAX_VALUE)
-        );
-
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jTextArea2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jTextArea2.setWrapStyleWord(true);
-        jTextArea2.setCaretColor(new java.awt.Color(255, 255, 255));
-        jTextArea2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextArea2.setOpaque(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Medical Glossary " + backend.AppConstants.VERSION);
@@ -290,7 +272,6 @@ public class SourceFrame extends javax.swing.JFrame {
         roundedButton2.setForeground(new java.awt.Color(44, 62, 80));
         roundedButton2.setText("PRE RELEASE");
         roundedButton2.setArcSize(20);
-        roundedButton2.setCurrentColor(null);
         roundedButton2.setDefaultColor(new java.awt.Color(255, 255, 255));
         roundedButton2.setFont(new java.awt.Font("Gill Sans MT Condensed", 1, 14)); // NOI18N
         parentPanel.add(roundedButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 100, 20));
@@ -333,7 +314,7 @@ public class SourceFrame extends javax.swing.JFrame {
         subtopicTextArea.setFocusable(false);
         referenceContainerPanel.add(subtopicTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 560, 50));
 
-        chapterTextBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        chapterTextBox.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
         chapterTextBox.setForeground(new java.awt.Color(255, 255, 255));
         chapterTextBox.setText(" -");
         referenceContainerPanel.add(chapterTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 560, -1));
@@ -370,8 +351,6 @@ public class SourceFrame extends javax.swing.JFrame {
 
         parentPanel.add(referenceContainerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 590, 240));
 
-        decorativeDefinitionPanel.setDefaultColor(new java.awt.Color(57, 75, 92));
-
         javax.swing.GroupLayout decorativeDefinitionPanelLayout = new javax.swing.GroupLayout(decorativeDefinitionPanel);
         decorativeDefinitionPanel.setLayout(decorativeDefinitionPanelLayout);
         decorativeDefinitionPanelLayout.setHorizontalGroup(
@@ -388,21 +367,6 @@ public class SourceFrame extends javax.swing.JFrame {
         otherInfoContainerPanel.setOpaque(false);
         otherInfoContainerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        roundedPanel4.setDefaultColor(new java.awt.Color(45, 60, 74));
-
-        javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
-        roundedPanel4.setLayout(roundedPanel4Layout);
-        roundedPanel4Layout.setHorizontalGroup(
-            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-        roundedPanel4Layout.setVerticalGroup(
-            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-
-        otherInfoContainerPanel.add(roundedPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 60, 60));
-
         hyperlinkInfoLabel.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         hyperlinkInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
         hyperlinkInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -410,9 +374,28 @@ public class SourceFrame extends javax.swing.JFrame {
         hyperlinkInfoLabel.setToolTipText("");
         otherInfoContainerPanel.add(hyperlinkInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 80, -1));
 
-        parentPanel.add(otherInfoContainerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 590, 130));
+        try {
+            svgBrowserIcon.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        svgBrowserIcon.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
+        svgBrowserIcon.setIconSquarePadding(3.0);
 
-        decorativeReferencePanel.setDefaultColor(new java.awt.Color(57, 75, 92));
+        javax.swing.GroupLayout svgBrowserIconLayout = new javax.swing.GroupLayout(svgBrowserIcon);
+        svgBrowserIcon.setLayout(svgBrowserIconLayout);
+        svgBrowserIconLayout.setHorizontalGroup(
+            svgBrowserIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        svgBrowserIconLayout.setVerticalGroup(
+            svgBrowserIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        otherInfoContainerPanel.add(svgBrowserIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 60, 60));
+
+        parentPanel.add(otherInfoContainerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 590, 130));
 
         javax.swing.GroupLayout decorativeReferencePanelLayout = new javax.swing.GroupLayout(decorativeReferencePanel);
         decorativeReferencePanel.setLayout(decorativeReferencePanelLayout);
@@ -426,9 +409,6 @@ public class SourceFrame extends javax.swing.JFrame {
         );
 
         parentPanel.add(decorativeReferencePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 590, 240));
-
-        decorativeOtherInfoPanel.setDefaultColor(new java.awt.Color(57, 75, 92));
-        decorativeOtherInfoPanel.setHoverColor(new java.awt.Color(57, 75, 92));
 
         javax.swing.GroupLayout decorativeOtherInfoPanelLayout = new javax.swing.GroupLayout(decorativeOtherInfoPanel);
         decorativeOtherInfoPanel.setLayout(decorativeOtherInfoPanelLayout);
@@ -485,8 +465,6 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JLabel definitionHeaderLabel;
     private javax.swing.JTextArea definitionTextArea;
     private javax.swing.JLabel hyperlinkInfoLabel;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel majorTopicLabel;
     private javax.swing.JLabel majorTopicTextBox;
     private javax.swing.JPanel otherInfoContainerPanel;
@@ -497,11 +475,11 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JPanel referenceContainerPanel;
     private javax.swing.JLabel referenceHeaderLabel;
     private frontend.RoundedButton roundedButton2;
-    private frontend.RoundedPanel roundedPanel4;
     private javax.swing.JTextField spellingTextBox;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel subtopicLabel;
     private javax.swing.JTextArea subtopicTextArea;
+    private frontend.SVGIconPanel svgBrowserIcon;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

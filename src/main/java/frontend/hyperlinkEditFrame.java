@@ -186,7 +186,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         saveButton = new frontend.RoundedButton();
         skipSaveButton = new frontend.RoundedButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(590, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(590, 720));
@@ -383,7 +383,7 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         parentPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 530, 530));
 
-        decorativePanel.setDefaultColor(new java.awt.Color(57, 75, 92));
+        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
 
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);

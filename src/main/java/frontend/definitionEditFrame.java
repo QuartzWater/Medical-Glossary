@@ -323,7 +323,7 @@ public class definitionEditFrame extends javax.swing.JFrame {
         definitionTextArea.setOpaque(false);
         parentPanel.add(definitionTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 510, 390));
 
-        decorativePanel.setDefaultColor(new java.awt.Color(57, 75, 92));
+        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
 
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);

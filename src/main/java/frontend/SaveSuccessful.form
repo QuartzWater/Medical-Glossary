@@ -65,7 +65,7 @@
         </Component>
         <Container class="frontend.SVGIconPanel" name="sVGIconPanel2">
           <Properties>
-            <Property name="iconPostion" type="frontend.SVGIconPanel$iconPosition" editor="org.netbeans.modules.form.editors.EnumEditor">
+            <Property name="iconPosition" type="frontend.SVGIconPanel$iconPosition" editor="org.netbeans.modules.form.editors.EnumEditor">
               <Value id="CENTER"/>
             </Property>
           </Properties>
@@ -91,13 +91,14 @@
         <Component class="frontend.RoundedButton" name="okButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Okay!"/>
+            <Property name="arcSize" type="int" value="35"/>
             <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="72" green="b5" red="2b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="193" y="200" width="-1" height="-1"/>
+              <AbsoluteConstraints x="200" y="210" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

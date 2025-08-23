@@ -134,7 +134,7 @@ public class SaveSuccessful extends javax.swing.JDialog {
         headerLabel.setText("Term Successfully %");
         jPanel1.add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 470, -1));
 
-        sVGIconPanel2.setIconPostion(frontend.SVGIconPanel.iconPosition.CENTER);
+        sVGIconPanel2.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
 
         javax.swing.GroupLayout sVGIconPanel2Layout = new javax.swing.GroupLayout(sVGIconPanel2);
         sVGIconPanel2.setLayout(sVGIconPanel2Layout);
@@ -150,8 +150,9 @@ public class SaveSuccessful extends javax.swing.JDialog {
         jPanel1.add(sVGIconPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 490, 60));
 
         okButton.setText("Okay!");
+        okButton.setArcSize(35);
         okButton.setDefaultColor(new java.awt.Color(43, 181, 114));
-        jPanel1.add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 200, -1, -1));
+        jPanel1.add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 130, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 280));
 

@@ -293,7 +293,7 @@ public class referenceEditFrame extends javax.swing.JFrame {
 
         parentPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 410));
 
-        decorativePanel.setDefaultColor(new java.awt.Color(57, 75, 92));
+        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
 
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);

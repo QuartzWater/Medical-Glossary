@@ -7,11 +7,14 @@ package frontend;
 import backend.SpellingFilter;
 import backend.Term;
 import backend.TermDataManagement;
+import backend.eventadapter.GranularMouseAdapter;
 import book.bookpicker.Book;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
@@ -63,10 +66,63 @@ public class sourceFrameController {
     private JLabel statusLabel;
     private JLabel bookLabel;
     private JLabel hyperlinkInfoLabel;
-    
+    private SVGIconPanel SVGBrowserIconPanel;
     // ADD HERE IN FUTURE
     
     // ******* END OF VARIABLES DECLARATION ******* //
+    
+    private GranularMouseAdapter granMAdapt_svgPanel = new GranularMouseAdapter(){
+        
+        
+        // TODO THERE WILL BE DIFFERENT ICONS.
+        @Override
+        public void actOnMouseEntry(MouseEvent e){
+            
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            } catch (IOException ex) {
+                
+                System.out.println("SVG icon couldn't be loaded...");
+            }
+        }
+        
+        @Override
+        public void actOnMouseExit(MouseEvent e){
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            } catch (IOException ex) {
+                
+                System.out.println("SVG icon couldn't be loaded...");
+            }
+        }
+        
+        @Override
+        public void actOnMousePress(MouseEvent e){
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            } catch (IOException ex) {
+                
+                System.out.println("SVG icon couldn't be loaded...");
+            }
+        }
+        
+        @Override
+        public void actOnMouseRelease(MouseEvent e){
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            } catch (IOException ex) {
+                
+                System.out.println("SVG icon couldn't be loaded...");
+            }
+        }
+        
+        @Override
+        public void actOnMouseClick(MouseEvent e){
+            hyperlinkViewFrame hvf = hyperlinkViewFrame.createInstance(sf, currentTerm);
+            hvf.setVisible(true);
+            hvf.requestFocusInWindow();
+        }
+    };
     
     private sourceFrameController(Book initialisedBook, TermDataManagement tdm, Term currentTerm, boolean termFound, SourceFrame sf){
      
@@ -87,12 +143,18 @@ public class sourceFrameController {
         this.statusLabel = sf.getStatusLabel();
         this.bookLabel = sf.getBookLabel();
         this.hyperlinkInfoLabel = sf.getHyperlinkInfoLabel();
+        this.SVGBrowserIconPanel = sf.getSVGBrowserIconPanel();
         
         // ADD HERE IN FUTURE
         
         // *** END OF VARIABLES INITIALIZATION *** //
         
+        
+        SVGBrowserIconPanel.addMouseListener(granMAdapt_svgPanel);
         addSpellingBoxFunctionality();
+        granMAdapt_svgPanel.setCanRespondToClick(false);
+        granMAdapt_svgPanel.setCanRespondToHover(false);
+        granMAdapt_svgPanel.setCanRespondToPress_Release(false);
     }
     
     public static void initializeController(Book initialisedBook, TermDataManagement tdm, Term currentTerm, boolean termFound, SourceFrame sf){
@@ -324,6 +386,9 @@ public class sourceFrameController {
     private void updateGUI(){
         
         String currentSpelling = spellingBox.getText().trim().toLowerCase();
+        granMAdapt_svgPanel.setCanRespondToClick(termFound);
+        granMAdapt_svgPanel.setCanRespondToHover(termFound);
+        granMAdapt_svgPanel.setCanRespondToPress_Release(termFound);
         if(termFound){
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             pageBox.setText(Integer.toString(currentTerm.getPage()));
@@ -331,6 +396,7 @@ public class sourceFrameController {
             majorTopicBox.setText(currentTerm.getMajorTopic());
             subtopicBox.setText(currentTerm.getSubtopic());
             definitionArea.setText(currentTerm.getDefinition());
+            
         }
         else{
             if(!currentSpelling.isBlank()){

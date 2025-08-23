@@ -129,7 +129,7 @@
         </Component>
         <Container class="frontend.RoundedPanel" name="decorativePanel">
           <Properties>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="5c" green="4b" red="39" type="rgb"/>
             </Property>
           </Properties>
