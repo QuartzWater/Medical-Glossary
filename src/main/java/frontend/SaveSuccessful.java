@@ -151,7 +151,7 @@ public class SaveSuccessful extends javax.swing.JDialog {
 
         okButton.setText("Okay!");
         okButton.setArcSize(35);
-        okButton.setDefaultColor(new java.awt.Color(43, 181, 114));
+        okButton.setCurrentColor(new java.awt.Color(43, 181, 114));
         jPanel1.add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 130, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 280));

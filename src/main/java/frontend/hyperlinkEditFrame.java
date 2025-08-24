@@ -241,37 +241,42 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         parentPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 119, 40, 40));
 
         adjacentButton6.setText("");
-        adjacentButton6.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton6.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton6.setFont(new java.awt.Font("SansSerif", 1, 23)); // NOI18N
         parentPanel.add(adjacentButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 570, 40, 40));
         adjacentButton6.getAccessibleContext().setAccessibleName("adjacentButton6");
 
         adjacentButton5.setText("");
-        adjacentButton5.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton5.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton5.setFont(new java.awt.Font("SansSerif", 1, 23)); // NOI18N
+        adjacentButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adjacentButton5ActionPerformed(evt);
+            }
+        });
         parentPanel.add(adjacentButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 480, 40, 40));
         adjacentButton5.getAccessibleContext().setAccessibleName("adjacentButton5");
 
         adjacentButton4.setText("");
-        adjacentButton4.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton4.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton4.setFont(new java.awt.Font("SansSerif", 1, 23)); // NOI18N
         parentPanel.add(adjacentButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 390, 40, 40));
         adjacentButton4.getAccessibleContext().setAccessibleName("adjacentButton4");
 
         adjacentButton3.setText("");
-        adjacentButton3.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton3.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton3.setFont(new java.awt.Font("SansSerif", 1, 23)); // NOI18N
         parentPanel.add(adjacentButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 300, 40, 40));
         adjacentButton3.getAccessibleContext().setAccessibleName("adjacentButton3");
 
         adjacentButton2.setText("");
-        adjacentButton2.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton2.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton2.setFont(new java.awt.Font("SansSerif", 1, 23)); // NOI18N
         parentPanel.add(adjacentButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, 40, 40));
         adjacentButton2.getAccessibleContext().setAccessibleName("adjacentButton2");
 
         adjacentButton1.setText("");
-        adjacentButton1.setDefaultColor(new java.awt.Color(27, 36, 45));
+        adjacentButton1.setCurrentColor(new java.awt.Color(27, 36, 45));
         adjacentButton1.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         adjacentButton1.setIconTextGap(0);
         parentPanel.add(adjacentButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 120, 40, 40));
@@ -383,8 +388,6 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
 
         parentPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 530, 530));
 
-        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
-
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);
         decorativePanelLayout.setHorizontalGroup(
@@ -404,26 +407,33 @@ public class hyperlinkEditFrame extends javax.swing.JFrame {
         parentPanel.add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, -1));
 
         backButton.setText("Back");
-        backButton.setDefaultColor(new java.awt.Color(27, 36, 45));
-        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 650, -1, -1));
+        backButton.setArcSize(35);
+        backButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 660, 130, 40));
 
         statusLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         statusLabel.setForeground(new java.awt.Color(255, 255, 255));
         parentPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 410, 20));
 
         saveButton.setText("Save");
-        saveButton.setDefaultColor(new java.awt.Color(27, 36, 45));
-        parentPanel.add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, -1, -1));
+        saveButton.setArcSize(35);
+        saveButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 660, 130, 40));
 
-        skipSaveButton.setText("Skip and Save");
-        skipSaveButton.setDefaultColor(new java.awt.Color(27, 36, 45));
-        parentPanel.add(skipSaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, -1, -1));
+        skipSaveButton.setText("Skip & Save");
+        skipSaveButton.setArcSize(35);
+        skipSaveButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(skipSaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 660, 130, 40));
 
         getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 720));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void adjacentButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adjacentButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adjacentButton5ActionPerformed
 
     
 

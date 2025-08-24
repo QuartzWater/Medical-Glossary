@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.AppConstants;
 import backend.ColorScheme;
 import backend.PageContentState;
 import backend.State;
@@ -60,9 +61,9 @@ public class referenceEditFrameGUIBehaviour {
     
     private JTextField pageBox;
     private JLabel bookField;
-    private JLabel chapterField;
-    private JLabel majorTopicField;
-    private JTextArea subtopicField;
+    private JLabel superHeadingBox;
+    private JLabel middleHeadingBox;
+    private JTextArea subHeadingBox;
     private RoundedButton backButton;
     private RoundedButton nextButton;
     private JLabel statusLabel;
@@ -106,9 +107,7 @@ public class referenceEditFrameGUIBehaviour {
                 return true;
             }
             
-            
             warningEnabled = !super.isValidInput(fb, offset, length, text);
-            
             updateWarningOnStatusLabel(warningEnabled, text);
             return !warningEnabled;
         }
@@ -130,9 +129,9 @@ public class referenceEditFrameGUIBehaviour {
         // Controllable JComponents reference initialisation:
         this.pageBox = ref.getPageBox();
         this.bookField = ref.getBookField();
-        this.chapterField = ref.getChapterField();
-        this.majorTopicField = ref.getMajorTopicField();
-        this.subtopicField = ref.getSubtopicField();
+        this.superHeadingBox = ref.getSuperHeadingBox();
+        this.middleHeadingBox = ref.getMiddleHeadingBox();
+        this.subHeadingBox = ref.getSubHeadingBox();
         this.backButton = ref.getBackButton();
         this.nextButton = ref.getNextButton();
         this.statusLabel = ref.getStatusLabel();
@@ -182,26 +181,29 @@ public class referenceEditFrameGUIBehaviour {
         
         MouseAdapter backMAdapt = new MouseAdapter() {
             
+            boolean isOutside = true;
             @Override
             public void mouseEntered(MouseEvent event){
-                backButton.setCurrentColor(backCS.getHoverColor());
+                isOutside = false;
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
             }
             
             @Override
             public void mouseExited(MouseEvent event){
-                 backButton.setCurrentColor(backCS.getDefaultColor());
-
+                isOutside = true;
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getDefaultColor());
             }
             
             @Override
             public void mousePressed(MouseEvent event){
-                backButton.setCurrentColor(backCS.getPressedColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getPressedColor());
             }
             
             @Override
             public void mouseReleased(MouseEvent event){
-                 backButton.setCurrentColor(backCS.getHoverColor());
-
+                if(!isOutside){
+                    backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
+                }
             }
             
             
@@ -223,9 +225,9 @@ public class referenceEditFrameGUIBehaviour {
                 
                 if(searchPageWaitGroup.activeCount() == 0){
                     newTerm.setPage(Integer.parseInt(pageBox.getText()));
-                    newTerm.setChapter(chapterField.getText());
-                    newTerm.setMajorTopic(majorTopicField.getText());
-                    newTerm.setSubtopic(subtopicField.getText());
+                    newTerm.setSuperHeadingContent(superHeadingBox.getText());
+                    newTerm.setMiddleHeadingContent(middleHeadingBox.getText());
+                    newTerm.setSubHeadingContent(subHeadingBox.getText());
                     ref.dispose();
 
                     hyperlinkEditFrame hef = new hyperlinkEditFrame(initialisedBook, tdm, existingTerm, newTerm, termFound, ref);
@@ -240,26 +242,29 @@ public class referenceEditFrameGUIBehaviour {
         
         MouseAdapter nextMAdapt = new MouseAdapter() {
             
+            boolean isOutside = true;
             @Override
             public void mouseEntered(MouseEvent event){
-                nextButton.setCurrentColor(nextCS.getHoverColor());
+                isOutside = false;
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
             }
             
             @Override
             public void mouseExited(MouseEvent event){
-                 nextButton.setCurrentColor(nextCS.getDefaultColor());
-
+                isOutside = true;
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
             }
             
             @Override
             public void mousePressed(MouseEvent event){
-                nextButton.setCurrentColor(nextCS.getPressedColor());
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getPressedColor());
             }
             
             @Override
             public void mouseReleased(MouseEvent event){
-                 nextButton.setCurrentColor(nextCS.getHoverColor());
-
+                if(!isOutside){
+                    nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
+                }
             }
         };
         
@@ -283,7 +288,7 @@ public class referenceEditFrameGUIBehaviour {
         }
         
         bookField.setText(initialisedBook.getTitle());
-        bookField.setForeground(initialisedBook.getColorScheme()[1]);
+        bookField.setForeground(initialisedBook.getColorScheme().getHoverColor());
         
         DocumentListener pageDocListen = new DocumentListener() {
             @Override
@@ -329,7 +334,7 @@ public class referenceEditFrameGUIBehaviour {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CURRENT_INDEX = updateCurrentIndex(contentMap, pageContentState, CURRENT_INDEX, updownTYPE.UP);
-                updateFields(contentMap, CURRENT_INDEX, chapterField, majorTopicField, subtopicField);
+                updateFields(contentMap, CURRENT_INDEX, superHeadingBox, middleHeadingBox, subHeadingBox);
                 HeaderLabel.setText(getHeaderLabelText(pageContentState, pageValidityState, contentMap, CURRENT_INDEX));
             }
         };
@@ -338,7 +343,7 @@ public class referenceEditFrameGUIBehaviour {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CURRENT_INDEX = updateCurrentIndex(contentMap, pageContentState, CURRENT_INDEX, updownTYPE.DOWN);
-                updateFields(contentMap, CURRENT_INDEX, chapterField, majorTopicField, subtopicField);
+                updateFields(contentMap, CURRENT_INDEX, superHeadingBox, middleHeadingBox, subHeadingBox);
                 HeaderLabel.setText(getHeaderLabelText(pageContentState, pageValidityState, contentMap, CURRENT_INDEX));
             }
         };
@@ -480,7 +485,7 @@ public class referenceEditFrameGUIBehaviour {
             pageValidityState.setState(State.ComponentState.DEFAULT_AND_INVALID);
             nextButtonValidityState.setState(State.ComponentState.DEFAULT_AND_INVALID);
             updateButton(nextButtonValidityState, nextButton);
-            setFieldsToDefault(chapterField, majorTopicField, subtopicField);
+            setFieldsToDefault(superHeadingBox, middleHeadingBox, subHeadingBox);
         }
         else{
             
@@ -491,10 +496,9 @@ public class referenceEditFrameGUIBehaviour {
         
         
         if(pageValidityState.isValid()){
-            System.out.println("inside RAN");
             int page = Integer.parseInt(pageString);
                 updateState(page);
-                updateFields(contentMap, 0, chapterField, majorTopicField, subtopicField); // always update fields at 0th index
+                updateFields(contentMap, 0, superHeadingBox, middleHeadingBox, subHeadingBox); // always update fields at 0th index
                 updateButton(nextButtonValidityState, nextButton);
                 
         }
@@ -511,7 +515,6 @@ public class referenceEditFrameGUIBehaviour {
         
         
         if(contentMap == null){
-            System.out.println("currently null");
             pageContentState.setCurrentState(PageContentState.StateType.NOT_FOUND);
             nextButtonValidityState.setState(State.ComponentState.NON_DEFAULT_AND_INVALID);
         }
@@ -582,20 +585,20 @@ public class referenceEditFrameGUIBehaviour {
             new Thread(new Runnable(){
                 @Override
                 public void run() {
-                    String chapterSetText;
-                    String majorTopicSetText;
-                    String subtopicSetText;
-                    chapterSetText = currentContent[0];
-                    majorTopicSetText = currentContent[1];
-                    subtopicSetText = currentContent[2];
+                    String superHeadingSetText;
+                    String middleHeadingSetText;
+                    String subHeadingSetText;
+                    superHeadingSetText = currentContent[0];
+                    middleHeadingSetText = currentContent[1];
+                    subHeadingSetText = currentContent[2];
                     
                     SwingUtilities.invokeLater(new Runnable(){
                         @Override
                         public void run() {
                             
-                            chapterField.setText(chapterSetText);
-                            majorTopicField.setText(majorTopicSetText);
-                            subtopicField.setText(subtopicSetText);
+                            chapterField.setText(superHeadingSetText);
+                            majorTopicField.setText(middleHeadingSetText);
+                            subtopicField.setText(subHeadingSetText);
                         }
                         
                     });
@@ -604,16 +607,15 @@ public class referenceEditFrameGUIBehaviour {
             }).start();
             
             /*
-            chapterField.setText(currentContent[0]);
-            majorTopicField.setText(currentContent[1]);
-            subtopicField.setText(currentContent[2]);
+            superHeadingBox.setText(currentContent[0]);
+            middleHeadingBox.setText(currentContent[1]);
+            subHeadingBox.setText(currentContent[2]);
             */
             
          
             nextButtonValidityState.setState(State.ComponentState.NON_DEFAULT_AND_VALID);
         }
         else {
-            System.out.println("WARNING: input Map was found null");
             pageContentState.setCurrentState(PageContentState.StateType.NOT_FOUND);
             setFieldsToDefault(chapterField, majorTopicField, subtopicField);
             nextButtonValidityState.setState(State.ComponentState.NON_DEFAULT_AND_INVALID);

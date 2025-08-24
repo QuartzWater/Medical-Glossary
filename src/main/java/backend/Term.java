@@ -21,9 +21,9 @@ public class Term {
     // Core attributes of the term, now NOT final to allow mutability.
     private String spelling;
     private String definition;
-    private String chapter;
-    private String majorTopic;
-    private String subtopic;
+    private String superHeadingContent;
+    private String middleHeadingContent;
+    private String subHeadingContent;
     private int page;
     
     private String absoluteSpelling;
@@ -59,9 +59,9 @@ public class Term {
         // Initialize other fields with default messages,
         // ensuring 'spelling' is correctly interpolated.
         this.definition = DEFAULT_DEFINITION_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.chapter = DEFAULT_CHAPTER_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.majorTopic = DEFAULT_MAJOR_TOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.subtopic = DEFAULT_SUBTOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.superHeadingContent = DEFAULT_CHAPTER_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.middleHeadingContent = DEFAULT_MAJOR_TOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.subHeadingContent = DEFAULT_SUBTOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
         this.page = 0; // Default page number
 
         // Initialize hyperlinks as an empty, mutable list.
@@ -74,15 +74,13 @@ public class Term {
     }
 
     /**
-     * Comprehensive constructor for creating a Term with all its details.
-     * Provides options for null or empty string inputs to fall back to defaults.
-     * Enforces a maximum of 6 hyperlinks.
+     * Comprehensive constructor for creating a Term with all its details.Provides options for null or empty string inputs to fall back to defaults.Enforces a maximum of 6 hyperlinks.
      *
      * @param spelling The primary spelling of the term. Must not be null.
      * @param definition The definition of the term. If null or empty, a default message is used.
-     * @param chapter The chapter the term belongs to. If null or empty, a default message is used.
+     * @param chapter The superHeadingContent the term belongs to. If null or empty, a default message is used.
      * @param majorTopic The major topic the term belongs to. If null or empty, a default message is used.
-     * @param subtopic The subtopic the term belongs to. If null or empty, a default message is used.
+     * @param subtopic The subHeadingContent the term belongs to. If null or empty, a default message is used.
      * @param page The page number where the term is found.
      * @param hyperlinks A list of hyperlinks associated with the term. If more than 6 are provided,
      * only the first 6 will be used. If null, an empty list is used.
@@ -96,9 +94,9 @@ public class Term {
 
         // Use ternary operator to check for null or empty strings and assign defaults (? = ternary operator - short hand way of writing if-else)
         this.definition = (definition != null && !definition.trim().isEmpty()) ? definition : DEFAULT_DEFINITION_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.chapter = (chapter != null && !chapter.trim().isEmpty()) ? chapter : DEFAULT_CHAPTER_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.majorTopic = (majorTopic != null && !majorTopic.trim().isEmpty()) ? majorTopic : DEFAULT_MAJOR_TOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
-        this.subtopic = (subtopic != null && !subtopic.trim().isEmpty()) ? subtopic : DEFAULT_SUBTOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.superHeadingContent = (chapter != null && !chapter.trim().isEmpty()) ? chapter : DEFAULT_CHAPTER_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.middleHeadingContent = (majorTopic != null && !majorTopic.trim().isEmpty()) ? majorTopic : DEFAULT_MAJOR_TOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
+        this.subHeadingContent = (subtopic != null && !subtopic.trim().isEmpty()) ? subtopic : DEFAULT_SUBTOPIC_PREFIX + spelling + DEFAULT_SUFFIX;
 
         this.page = page; // Page is a primitive int, so no null check needed.
 
@@ -144,16 +142,16 @@ public class Term {
         return definition;
     }
 
-    public String getChapter() {
-        return chapter;
+    public String getSuperHeadingContent() {
+        return superHeadingContent;
     }
 
-    public String getMajorTopic() {
-        return majorTopic;
+    public String getMiddleHeadingContent() {
+        return middleHeadingContent;
     }
 
-    public String getSubtopic() {
-        return subtopic;
+    public String getSubHeadingContent() {
+        return subHeadingContent;
     }
 
     public int getPage() {
@@ -205,16 +203,16 @@ public class Term {
         this.definition = (definition != null && !definition.trim().isEmpty()) ? definition : DEFAULT_DEFINITION_PREFIX + this.spelling + DEFAULT_SUFFIX;
     }
 
-    public void setChapter(String chapter) {
-        this.chapter = (chapter != null && !chapter.trim().isEmpty()) ? chapter : DEFAULT_CHAPTER_PREFIX + this.spelling + DEFAULT_SUFFIX;
+    public void setSuperHeadingContent(String superHeadingContent) {
+        this.superHeadingContent = (superHeadingContent != null && !superHeadingContent.trim().isEmpty()) ? superHeadingContent : DEFAULT_CHAPTER_PREFIX + this.spelling + DEFAULT_SUFFIX;
     }
 
-    public void setMajorTopic(String majorTopic) {
-        this.majorTopic = (majorTopic != null && !majorTopic.trim().isEmpty()) ? majorTopic : DEFAULT_MAJOR_TOPIC_PREFIX + this.spelling + DEFAULT_SUFFIX;
+    public void setMiddleHeadingContent(String middleHeadingContent) {
+        this.middleHeadingContent = (middleHeadingContent != null && !middleHeadingContent.trim().isEmpty()) ? middleHeadingContent : DEFAULT_MAJOR_TOPIC_PREFIX + this.spelling + DEFAULT_SUFFIX;
     }
 
-    public void setSubtopic(String subtopic) {
-        this.subtopic = (subtopic != null && !subtopic.trim().isEmpty()) ? subtopic : DEFAULT_SUBTOPIC_PREFIX + this.spelling + DEFAULT_SUFFIX;
+    public void setSubHeadingContent(String subHeadingContent) {
+        this.subHeadingContent = (subHeadingContent != null && !subHeadingContent.trim().isEmpty()) ? subHeadingContent : DEFAULT_SUBTOPIC_PREFIX + this.spelling + DEFAULT_SUFFIX;
     }
 
     public void setPage(int page) {
@@ -305,9 +303,9 @@ public class Term {
         return "Term{" +
                "spelling='" + spelling + '\'' +
                ", definition='" + definition + '\'' +
-               ", chapter='" + chapter + '\'' +
-               ", majorTopic='" + majorTopic + '\'' +
-               ", subtopic='" + subtopic + '\'' +
+               ", superHeadingContent='" + superHeadingContent + '\'' +
+               ", middleHeadingContent='" + middleHeadingContent + '\'' +
+               ", subHeadingContent='" + subHeadingContent + '\'' +
                ", page=" + page +
                ", hyperlinks=" + hyperlinks +
                ", encapsulating text=" + hyperlinkEncapsulation +
@@ -328,15 +326,15 @@ public class Term {
         return page == term.page &&
                Objects.equals(spelling, term.spelling) &&
                Objects.equals(definition, term.definition) &&
-               Objects.equals(chapter, term.chapter) &&
-               Objects.equals(majorTopic, term.majorTopic) &&
-               Objects.equals(subtopic, term.subtopic) &&
+               Objects.equals(superHeadingContent, term.superHeadingContent) &&
+               Objects.equals(middleHeadingContent, term.middleHeadingContent) &&
+               Objects.equals(subHeadingContent, term.subHeadingContent) &&
                Objects.equals(hyperlinks, term.hyperlinks) &&
                Objects.equals(hyperlinkEncapsulation, term.hyperlinkEncapsulation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(spelling, definition, chapter, majorTopic, subtopic, page, hyperlinks, hyperlinkEncapsulation);
+        return Objects.hash(spelling, definition, superHeadingContent, middleHeadingContent, subHeadingContent, page, hyperlinks, hyperlinkEncapsulation);
     }
 }

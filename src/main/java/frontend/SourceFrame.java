@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.HeadingModel;
 import backend.Term;
 import backend.TermDataManagement;
 import book.bookpicker.Book;
@@ -61,9 +62,9 @@ public class SourceFrame extends javax.swing.JFrame {
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             definitionTextArea.setText(currentTerm.getDefinition());
             pageTextBox.setText(Integer.toString(currentTerm.getPage()));
-            chapterTextBox.setText(currentTerm.getChapter());
-            majorTopicTextBox.setText(currentTerm.getMajorTopic());
-            subtopicTextArea.setText(currentTerm.getSubtopic());
+            superHeadingTextBox.setText(currentTerm.getSuperHeadingContent());
+            middleHeadingTextBox.setText(currentTerm.getMiddleHeadingContent());
+            subHeadingTextArea.setText(currentTerm.getSubHeadingContent());
             
         }
         else{
@@ -77,9 +78,9 @@ public class SourceFrame extends javax.swing.JFrame {
             }
             definitionTextArea.setText(DEFAULT_REFERENCE);
             pageTextBox.setText(DEFAULT_REFERENCE);
-            chapterTextBox.setText(DEFAULT_REFERENCE);
-            majorTopicTextBox.setText(DEFAULT_REFERENCE);
-            subtopicTextArea.setText(DEFAULT_REFERENCE);
+            superHeadingTextBox.setText(DEFAULT_REFERENCE);
+            middleHeadingTextBox.setText(DEFAULT_REFERENCE);
+            subHeadingTextArea.setText(DEFAULT_REFERENCE);
         }
         
         
@@ -125,8 +126,12 @@ public class SourceFrame extends javax.swing.JFrame {
     public SourceFrame(Book book) {
         this.initialisedBook = book;
         this.tdm = book.getTDM();
-        initComponents();
+        HeadingModel hm = book.getHeadingModel();
         
+        initComponents();
+        this.superHeadingLabel.setText(hm.getSuperHeading() + ":");
+        this.middleHeadingLabel.setText(hm.getMiddleHeading() + ":");
+        this.subHeadingLabel.setText(hm.getSubHeading() + ":");
         // ****** LEGACY ******
         //initialiseSpellingTextBoxBehaviour();
         //roundedPanel.setDefaultColor(Color.white);
@@ -134,7 +139,7 @@ public class SourceFrame extends javax.swing.JFrame {
         // ****** LEGACY ******
         
         bookLabel.setText(book.getTitle());
-        bookLabel.setForeground(book.getColorScheme()[1]);
+        bookLabel.setForeground(book.getColorScheme().getHoverColor());
         
     }
     
@@ -167,19 +172,19 @@ public class SourceFrame extends javax.swing.JFrame {
         return pageTextBox;
     }
     
-    protected JLabel getChapterBox(){
+    protected JLabel getSuperHeadingTextBox(){
         
-        return chapterTextBox;
+        return superHeadingTextBox;
     }
     
-    protected JLabel getMajorTopicBox(){
+    protected JLabel getMiddleHeadingTextBox(){
         
-        return majorTopicTextBox;
+        return middleHeadingTextBox;
     }
     
-    protected JTextArea getSubtopicBox(){
+    protected JTextArea getSubHeadingTextBox(){
         
-        return subtopicTextArea;
+        return subHeadingTextArea;
     }
     
     protected JLabel getStatusLabel(){
@@ -228,12 +233,12 @@ public class SourceFrame extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         definitionTextArea = new javax.swing.JTextArea();
         referenceContainerPanel = new javax.swing.JPanel();
-        subtopicTextArea = new javax.swing.JTextArea();
-        chapterTextBox = new javax.swing.JLabel();
-        chapterLabel = new javax.swing.JLabel();
-        majorTopicLabel = new javax.swing.JLabel();
-        majorTopicTextBox = new javax.swing.JLabel();
-        subtopicLabel = new javax.swing.JLabel();
+        subHeadingTextArea = new javax.swing.JTextArea();
+        superHeadingTextBox = new javax.swing.JLabel();
+        superHeadingLabel = new javax.swing.JLabel();
+        middleHeadingLabel = new javax.swing.JLabel();
+        middleHeadingTextBox = new javax.swing.JLabel();
+        subHeadingLabel = new javax.swing.JLabel();
         pageLabel = new javax.swing.JLabel();
         pageTextBox = new javax.swing.JLabel();
         decorativeDefinitionPanel = new frontend.RoundedPanel();
@@ -248,8 +253,8 @@ public class SourceFrame extends javax.swing.JFrame {
         statusLabel = new javax.swing.JLabel();
         referenceHeaderLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Medical Glossary " + backend.AppConstants.VERSION);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Medical Glossary " + backend.AppConfig.VERSION);
         setBackground(new java.awt.Color(34, 40, 44));
         setResizable(false);
         setSize(new java.awt.Dimension(1200, 700));
@@ -272,14 +277,14 @@ public class SourceFrame extends javax.swing.JFrame {
         roundedButton2.setForeground(new java.awt.Color(44, 62, 80));
         roundedButton2.setText("PRE RELEASE");
         roundedButton2.setArcSize(20);
-        roundedButton2.setDefaultColor(new java.awt.Color(255, 255, 255));
+        roundedButton2.setCurrentColor(new java.awt.Color(255, 255, 255));
         roundedButton2.setFont(new java.awt.Font("Gill Sans MT Condensed", 1, 14)); // NOI18N
         parentPanel.add(roundedButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 100, 20));
 
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Medical Glossary " + backend.AppConstants.VERSION);
+        titleLabel.setText("Medical Glossary " + backend.AppConfig.VERSION);
         parentPanel.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 680, -1));
 
         definitionTextArea.setEditable(false);
@@ -300,44 +305,44 @@ public class SourceFrame extends javax.swing.JFrame {
         referenceContainerPanel.setOpaque(false);
         referenceContainerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        subtopicTextArea.setEditable(false);
-        subtopicTextArea.setBackground(new java.awt.Color(57, 75, 92));
-        subtopicTextArea.setColumns(20);
-        subtopicTextArea.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        subtopicTextArea.setForeground(new java.awt.Color(255, 255, 255));
-        subtopicTextArea.setLineWrap(true);
-        subtopicTextArea.setRows(5);
-        subtopicTextArea.setText(" -");
-        subtopicTextArea.setWrapStyleWord(true);
-        subtopicTextArea.setBorder(null);
-        subtopicTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
-        subtopicTextArea.setFocusable(false);
-        referenceContainerPanel.add(subtopicTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 560, 50));
+        subHeadingTextArea.setEditable(false);
+        subHeadingTextArea.setBackground(new java.awt.Color(57, 75, 92));
+        subHeadingTextArea.setColumns(20);
+        subHeadingTextArea.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        subHeadingTextArea.setForeground(new java.awt.Color(255, 255, 255));
+        subHeadingTextArea.setLineWrap(true);
+        subHeadingTextArea.setRows(5);
+        subHeadingTextArea.setText(" -");
+        subHeadingTextArea.setWrapStyleWord(true);
+        subHeadingTextArea.setBorder(null);
+        subHeadingTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
+        subHeadingTextArea.setFocusable(false);
+        referenceContainerPanel.add(subHeadingTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 560, 50));
 
-        chapterTextBox.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
-        chapterTextBox.setForeground(new java.awt.Color(255, 255, 255));
-        chapterTextBox.setText(" -");
-        referenceContainerPanel.add(chapterTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 560, -1));
+        superHeadingTextBox.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
+        superHeadingTextBox.setForeground(new java.awt.Color(255, 255, 255));
+        superHeadingTextBox.setText(" -");
+        referenceContainerPanel.add(superHeadingTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 560, -1));
 
-        chapterLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        chapterLabel.setForeground(new java.awt.Color(204, 204, 204));
-        chapterLabel.setText(" Chapter:");
-        referenceContainerPanel.add(chapterLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, -1));
+        superHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        superHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        superHeadingLabel.setText(" Chapter:");
+        referenceContainerPanel.add(superHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, -1));
 
-        majorTopicLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        majorTopicLabel.setForeground(new java.awt.Color(204, 204, 204));
-        majorTopicLabel.setText(" Major Topic:");
-        referenceContainerPanel.add(majorTopicLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
+        middleHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        middleHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        middleHeadingLabel.setText(" Major Topic:");
+        referenceContainerPanel.add(middleHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
 
-        majorTopicTextBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        majorTopicTextBox.setForeground(new java.awt.Color(255, 255, 255));
-        majorTopicTextBox.setText(" -");
-        referenceContainerPanel.add(majorTopicTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 560, -1));
+        middleHeadingTextBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        middleHeadingTextBox.setForeground(new java.awt.Color(255, 255, 255));
+        middleHeadingTextBox.setText(" -");
+        referenceContainerPanel.add(middleHeadingTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 560, -1));
 
-        subtopicLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        subtopicLabel.setForeground(new java.awt.Color(204, 204, 204));
-        subtopicLabel.setText(" Subtopic:");
-        referenceContainerPanel.add(subtopicLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 70, -1));
+        subHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        subHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        subHeadingLabel.setText(" Subtopic:");
+        referenceContainerPanel.add(subHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 70, -1));
 
         pageLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         pageLabel.setForeground(new java.awt.Color(204, 204, 204));
@@ -457,16 +462,14 @@ public class SourceFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bookLabel;
-    private javax.swing.JLabel chapterLabel;
-    private javax.swing.JLabel chapterTextBox;
     private frontend.RoundedPanel decorativeDefinitionPanel;
     private frontend.RoundedPanel decorativeOtherInfoPanel;
     private frontend.RoundedPanel decorativeReferencePanel;
     private javax.swing.JLabel definitionHeaderLabel;
     private javax.swing.JTextArea definitionTextArea;
     private javax.swing.JLabel hyperlinkInfoLabel;
-    private javax.swing.JLabel majorTopicLabel;
-    private javax.swing.JLabel majorTopicTextBox;
+    private javax.swing.JLabel middleHeadingLabel;
+    private javax.swing.JLabel middleHeadingTextBox;
     private javax.swing.JPanel otherInfoContainerPanel;
     private javax.swing.JLabel otherInfoHeaderLabel;
     private javax.swing.JLabel pageLabel;
@@ -477,8 +480,10 @@ public class SourceFrame extends javax.swing.JFrame {
     private frontend.RoundedButton roundedButton2;
     private javax.swing.JTextField spellingTextBox;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JLabel subtopicLabel;
-    private javax.swing.JTextArea subtopicTextArea;
+    private javax.swing.JLabel subHeadingLabel;
+    private javax.swing.JTextArea subHeadingTextArea;
+    private javax.swing.JLabel superHeadingLabel;
+    private javax.swing.JLabel superHeadingTextBox;
     private frontend.SVGIconPanel svgBrowserIcon;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

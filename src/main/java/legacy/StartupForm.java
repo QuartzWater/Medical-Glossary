@@ -7,6 +7,7 @@ package legacy;
 import book.GraysAnatomy.Content;
 import backend.Term;
 import backend.TermDataManagement;
+import book.bookpicker.Book;
 import java.awt.Color;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -27,13 +28,7 @@ public class StartupForm extends javax.swing.JFrame {
     TermDataManagement tdm;
     public StartupForm() {
         initComponents();
-        new Thread(){
-        @Override
-        public void run(){
-            tdm = new TermDataManagement(Paths.get("C:\\MedicalGlossary\\books\\GA"));
-        }
         
-        }.start();
         
     }
 
@@ -144,8 +139,10 @@ public class StartupForm extends javax.swing.JFrame {
 
     private void jLabel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseReleased
         jLabel2.setForeground(Color.WHITE);
-        
+        Book book = Book.GRAYS_ANATOMY;
+        tdm = book.getTDM();
         MouseReleaseCode mrc = new MouseReleaseCode(){
+            
             
             @Override
             public void runCode(){

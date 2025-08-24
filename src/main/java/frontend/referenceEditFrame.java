@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.HeadingModel;
 import backend.Term;
 import backend.TermDataManagement;
 import book.bookpicker.Book;
@@ -53,14 +54,19 @@ public class referenceEditFrame extends javax.swing.JFrame {
         this.newTerm = newTerm;
         this.termFound = termFound;
         this.parentFrame = def;
+        HeadingModel hm = initialisedBook.getHeadingModel();
+        
         
         initComponents();
+        this.superHeadingLabel.setText(hm.getSuperHeading() + ":");
+        this.middleHeadingLabel.setText(hm.getMiddleHeading() + ":");
+        this.subHeadingLabel.setText(hm.getSubHeading() + ":");
         
         if(termFound){
             pageBox.setText(Integer.toString(existingTerm.getPage()));
-            chapterTextBox.setText(existingTerm.getChapter());
-            majorTopicTextBox.setText(existingTerm.getMajorTopic());
-            subtopicTextArea.setText(existingTerm.getSubtopic());
+            superHeadingTextBox.setText(existingTerm.getSuperHeadingContent());
+            middleHeadingTextBox.setText(existingTerm.getMiddleHeadingContent());
+            subHeadingTextArea.setText(existingTerm.getSubHeadingContent());
             
             if(!existingTerm.getSpelling().equals(newTerm.getSpelling())){
                 this.setTitle("Editing Reference for: '" + newTerm.getSpelling() +"' (Previously: '" + existingTerm.getSpelling() + "')");
@@ -75,9 +81,9 @@ public class referenceEditFrame extends javax.swing.JFrame {
         }
         else{
             pageBox.setText(DEFAULT_PAGE_BOX_TEXT);
-            chapterTextBox.setText(" -");
-            majorTopicTextBox.setText(" -");
-            subtopicTextArea.setText(" -");
+            superHeadingTextBox.setText(" -");
+            middleHeadingTextBox.setText(" -");
+            subHeadingTextArea.setText(" -");
             this.setTitle("Creating Reference for: '" + newTerm.getSpelling() +"'");
             titleLabel.setText("Create Reference");
             statusLabel.setText("Enter page number to load a configuration.");
@@ -133,19 +139,19 @@ public class referenceEditFrame extends javax.swing.JFrame {
         return bookTextBox;
     }
     
-    public JLabel getChapterField(){
+    public JLabel getSuperHeadingBox(){
         
-        return chapterTextBox;
+        return superHeadingTextBox;
     }
     
-    public JLabel getMajorTopicField(){
+    public JLabel getMiddleHeadingBox(){
         
-        return majorTopicTextBox;
+        return middleHeadingTextBox;
     }
     
-    public JTextArea getSubtopicField(){
+    public JTextArea getSubHeadingBox(){
         
-        return subtopicTextArea;
+        return subHeadingTextArea;
     }
     
     public RoundedButton getBackButton(){
@@ -182,12 +188,12 @@ public class referenceEditFrame extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         statusTextArea = new javax.swing.JTextArea();
         containerPanel = new javax.swing.JPanel();
-        subtopicTextArea = new javax.swing.JTextArea();
-        chapterTextBox = new javax.swing.JLabel();
-        chapterLabel = new javax.swing.JLabel();
-        majorTopicLabel = new javax.swing.JLabel();
-        majorTopicTextBox = new javax.swing.JLabel();
-        subtopicLabel = new javax.swing.JLabel();
+        subHeadingTextArea = new javax.swing.JTextArea();
+        superHeadingTextBox = new javax.swing.JLabel();
+        superHeadingLabel = new javax.swing.JLabel();
+        middleHeadingLabel = new javax.swing.JLabel();
+        middleHeadingTextBox = new javax.swing.JLabel();
+        subHeadingLabel = new javax.swing.JLabel();
         bookLabel = new javax.swing.JLabel();
         bookTextBox = new javax.swing.JLabel();
         decorativePanel = new frontend.RoundedPanel();
@@ -241,45 +247,45 @@ public class referenceEditFrame extends javax.swing.JFrame {
         containerPanel.setOpaque(false);
         containerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        subtopicTextArea.setEditable(false);
-        subtopicTextArea.setColumns(20);
-        subtopicTextArea.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        subtopicTextArea.setForeground(new java.awt.Color(255, 255, 255));
-        subtopicTextArea.setLineWrap(true);
-        subtopicTextArea.setRows(5);
-        subtopicTextArea.setText(" -");
-        subtopicTextArea.setWrapStyleWord(true);
-        subtopicTextArea.setBorder(null);
-        subtopicTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
-        subtopicTextArea.setFocusable(false);
-        subtopicTextArea.setOpaque(false);
-        subtopicTextArea.setPreferredSize(new java.awt.Dimension(450, 160));
-        containerPanel.add(subtopicTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 490, 140));
+        subHeadingTextArea.setEditable(false);
+        subHeadingTextArea.setColumns(20);
+        subHeadingTextArea.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        subHeadingTextArea.setForeground(new java.awt.Color(255, 255, 255));
+        subHeadingTextArea.setLineWrap(true);
+        subHeadingTextArea.setRows(5);
+        subHeadingTextArea.setText(" -");
+        subHeadingTextArea.setWrapStyleWord(true);
+        subHeadingTextArea.setBorder(null);
+        subHeadingTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
+        subHeadingTextArea.setFocusable(false);
+        subHeadingTextArea.setOpaque(false);
+        subHeadingTextArea.setPreferredSize(new java.awt.Dimension(450, 160));
+        containerPanel.add(subHeadingTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 490, 150));
 
-        chapterTextBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        chapterTextBox.setForeground(new java.awt.Color(255, 255, 255));
-        chapterTextBox.setText(" -");
-        containerPanel.add(chapterTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 490, -1));
+        superHeadingTextBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        superHeadingTextBox.setForeground(new java.awt.Color(255, 255, 255));
+        superHeadingTextBox.setText(" -");
+        containerPanel.add(superHeadingTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 490, -1));
 
-        chapterLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        chapterLabel.setForeground(new java.awt.Color(204, 204, 204));
-        chapterLabel.setText(" Chapter:");
-        containerPanel.add(chapterLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, -1));
+        superHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        superHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        superHeadingLabel.setText(" Chapter:");
+        containerPanel.add(superHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, -1));
 
-        majorTopicLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        majorTopicLabel.setForeground(new java.awt.Color(204, 204, 204));
-        majorTopicLabel.setText(" Major Topic:");
-        containerPanel.add(majorTopicLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 120, -1));
+        middleHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        middleHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        middleHeadingLabel.setText(" Major Topic:");
+        containerPanel.add(middleHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 120, -1));
 
-        majorTopicTextBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        majorTopicTextBox.setForeground(new java.awt.Color(255, 255, 255));
-        majorTopicTextBox.setText(" -");
-        containerPanel.add(majorTopicTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 490, -1));
+        middleHeadingTextBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        middleHeadingTextBox.setForeground(new java.awt.Color(255, 255, 255));
+        middleHeadingTextBox.setText(" -");
+        containerPanel.add(middleHeadingTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 490, -1));
 
-        subtopicLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        subtopicLabel.setForeground(new java.awt.Color(204, 204, 204));
-        subtopicLabel.setText(" Subtopic:");
-        containerPanel.add(subtopicLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 100, -1));
+        subHeadingLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        subHeadingLabel.setForeground(new java.awt.Color(204, 204, 204));
+        subHeadingLabel.setText(" Subtopic:");
+        containerPanel.add(subHeadingLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 100, -1));
 
         bookLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bookLabel.setForeground(new java.awt.Color(204, 204, 204));
@@ -291,9 +297,7 @@ public class referenceEditFrame extends javax.swing.JFrame {
         bookTextBox.setText(" -");
         containerPanel.add(bookTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 490, -1));
 
-        parentPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 410));
-
-        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
+        parentPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 420));
 
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);
@@ -303,10 +307,10 @@ public class referenceEditFrame extends javax.swing.JFrame {
         );
         decorativePanelLayout.setVerticalGroup(
             decorativePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
-        parentPanel.add(decorativePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 410));
+        parentPanel.add(decorativePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 420));
 
         headerLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         headerLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -314,8 +318,9 @@ public class referenceEditFrame extends javax.swing.JFrame {
         parentPanel.add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 120, -1));
 
         backButton.setText("Back");
-        backButton.setDefaultColor(new java.awt.Color(255, 51, 51));
-        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, -1, -1));
+        backButton.setArcSize(35);
+        backButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 660, 130, 40));
 
         statusLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         statusLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -324,7 +329,9 @@ public class referenceEditFrame extends javax.swing.JFrame {
         parentPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 470, 20));
 
         nextButton.setText("Next");
-        parentPanel.add(nextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, -1, -1));
+        nextButton.setArcSize(35);
+        nextButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(nextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 660, 130, 40));
 
         getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 720));
 
@@ -342,20 +349,20 @@ public class referenceEditFrame extends javax.swing.JFrame {
     private frontend.RoundedButton backButton;
     private javax.swing.JLabel bookLabel;
     private javax.swing.JLabel bookTextBox;
-    private javax.swing.JLabel chapterLabel;
-    private javax.swing.JLabel chapterTextBox;
     private javax.swing.JPanel containerPanel;
     private frontend.RoundedPanel decorativePanel;
     private javax.swing.JLabel headerLabel;
-    private javax.swing.JLabel majorTopicLabel;
-    private javax.swing.JLabel majorTopicTextBox;
+    private javax.swing.JLabel middleHeadingLabel;
+    private javax.swing.JLabel middleHeadingTextBox;
     private frontend.RoundedButton nextButton;
     private javax.swing.JTextField pageBox;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JTextArea statusTextArea;
-    private javax.swing.JLabel subtopicLabel;
-    private javax.swing.JTextArea subtopicTextArea;
+    private javax.swing.JLabel subHeadingLabel;
+    private javax.swing.JTextArea subHeadingTextArea;
+    private javax.swing.JLabel superHeadingLabel;
+    private javax.swing.JLabel superHeadingTextBox;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

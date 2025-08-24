@@ -248,7 +248,7 @@ public class hyperlinkEditFrameGUIBehaviour {
                 break;
             } //TODO SET PROPER COLOR
             case State.ComponentState.NON_DEFAULT_AND_VALID : {
-                rdb.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
+                rdb.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_2.getDefaultColor());
                 rdb.setEnabled(true);
                 break;
             }
@@ -362,7 +362,6 @@ public class hyperlinkEditFrameGUIBehaviour {
             encap.getDocument().addDocumentListener(encapDocListen);
         }
         
-        System.out.println(i);
     }
     
     
@@ -498,32 +497,37 @@ public class hyperlinkEditFrameGUIBehaviour {
         
             MouseAdapter adjacentMAdapt = new MouseAdapter() {
 
+                boolean  isOutside = true;
                 @Override
                 public void mouseEntered(MouseEvent event){
 
+                    isOutside = false;
                     if(rdb.isEnabled())
-                    rdb.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
+                    rdb.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_2.getHoverColor());
                 }
 
                 @Override
                 public void mouseExited(MouseEvent event){
 
+                    isOutside = true;
                     if(rdb.isEnabled())
-                    rdb.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
+                    rdb.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_2.getDefaultColor());
                 }
                 
                 @Override
                 public void mousePressed(MouseEvent event){
                     
                     if(rdb.isEnabled())
-                    rdb.setCurrentColor(adjacentButtonColorScheme.getPressedColor());
+                    rdb.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_2.getPressedColor());
                 }
                 
                 @Override
                 public void mouseReleased(MouseEvent event){
                     
-                    if(rdb.isEnabled())
-                    rdb.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
+                    if(!isOutside){
+                        if(rdb.isEnabled())
+                        rdb.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_2.getHoverColor());
+                    }
                 }
             };
 
@@ -546,57 +550,62 @@ public class hyperlinkEditFrameGUIBehaviour {
         
         MouseAdapter saveMAdapt = new MouseAdapter() {
             
+            boolean isOutside = true;
             @Override
-                public void mouseEntered(MouseEvent event){
+            public void mouseEntered(MouseEvent event){
 
-                    if(event.getSource() == saveButton)
-                    {
-                        if(saveButton.isEnabled())
-                        saveButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
-                    }
-                    else if(event.getSource() == save_skipButton){
-                        save_skipButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
-                    }
+                isOutside = false;
+                if(event.getSource() == saveButton)
+                {
+                    if(saveButton.isEnabled())
+                    saveButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
                 }
+                else if(event.getSource() == save_skipButton){
+                    save_skipButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
+                }
+            }
 
-                @Override
-                public void mouseExited(MouseEvent event){
+            @Override
+            public void mouseExited(MouseEvent event){
 
+                isOutside = true;
+                if(event.getSource() == saveButton)
+                {
+                    if(saveButton.isEnabled())
+                    saveButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
+                }
+                else if(event.getSource() == save_skipButton){
+                    save_skipButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event){
+
+                if(event.getSource() == saveButton)
+                {
+                    if(saveButton.isEnabled())
+                        saveButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getPressedColor());
+                }
+                else if(event.getSource() == save_skipButton){
+                    save_skipButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getPressedColor());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event){
+
+                if(!isOutside){
                     if(event.getSource() == saveButton)
                     {
                         if(saveButton.isEnabled())
-                        saveButton.setCurrentColor(RoundedButton.ULTIMATE_DEFAULT);
+                            saveButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
                     }
                     else if(event.getSource() == save_skipButton){
-                        save_skipButton.setCurrentColor(RoundedButton.ULTIMATE_DEFAULT);
+                        save_skipButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
                     }
                 }
-                
-                @Override
-                public void mousePressed(MouseEvent event){
-                    
-                    if(event.getSource() == saveButton)
-                    {
-                        if(saveButton.isEnabled())
-                            saveButton.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
-                    }
-                    else if(event.getSource() == save_skipButton){
-                        save_skipButton.setCurrentColor(adjacentButtonColorScheme.getHoverColor());
-                    }
-                }
-                
-                @Override
-                public void mouseReleased(MouseEvent event){
-                    
-                    if(event.getSource() == saveButton)
-                    {
-                        if(saveButton.isEnabled())
-                            saveButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
-                    }
-                    else if(event.getSource() == save_skipButton){
-                        save_skipButton.setCurrentColor(adjacentButtonColorScheme.getDefaultColor());
-                    }
-                }
+            }
                 
         };
      
@@ -651,7 +660,6 @@ public class hyperlinkEditFrameGUIBehaviour {
 
             newTerm.setHyperlinks(hyperlinkURL);
             newTerm.setHyperlinksEncapsulation(hyperlinkEncapsulation);
-            System.out.println(newTerm.toString());
             if(termFound)
             tdm.flush(existingTerm, newTerm);
             else
@@ -680,26 +688,23 @@ public class hyperlinkEditFrameGUIBehaviour {
             @Override
             public void mouseEntered(MouseEvent e){
                 
-                backButton.setCurrentColor(backButtonColorScheme.getHoverColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
             }
             
             @Override
             public void mouseExited(MouseEvent e){
-                backButton.setCurrentColor(backButtonColorScheme.getDefaultColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getDefaultColor());
             }
             
             @Override
             public void mousePressed(MouseEvent e){
-                backButton.setCurrentColor(backButtonColorScheme.getPressedColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getPressedColor());
             }
             
             @Override
             public void mouseReleased(MouseEvent e){
-                backButton.setCurrentColor(backButtonColorScheme.getHoverColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
             }
-            
-            
-                
         };
         
         ActionListener backActListen = new ActionListener() {

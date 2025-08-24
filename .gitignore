@@ -5,4 +5,3 @@ gitignore.io help:
 /lib/
 /target/
 /nbactions.xml
-/pom.xml

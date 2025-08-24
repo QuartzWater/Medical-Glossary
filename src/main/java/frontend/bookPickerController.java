@@ -69,15 +69,16 @@ public class bookPickerController {
         rdbActListenMap = new LinkedHashMap<>();
         rdbBook = new LinkedHashMap<>();
         workingSelectionButtons = new RoundedButton[0];
+        
         addNavigationFunctionality();
+        
         initializeMaps(currentYear);
+        
     }
     
     public static void initializeController(bookPickerFrame bpf){
         bookPickerController bookPickerController = new bookPickerController(bpf);
     }
-    
-    
     
     private void initializeMaps(int year){
         
@@ -101,7 +102,6 @@ public class bookPickerController {
         for(RoundedButton rdb : workingSelectionButtons){
             
             addButtonFunctionality(rdb, rdbBook);
-            
         }
     }
     
@@ -111,7 +111,6 @@ public class bookPickerController {
             
             rdb.removeMouseListener(rdbMAdaptMap.get(rdb));
             rdb.removeActionListener(rdbActListenMap.get(rdb));
-            
         }
         
         rdbBook = new LinkedHashMap<>();
@@ -123,32 +122,36 @@ public class bookPickerController {
     private void addButtonFunctionality(RoundedButton rdb, Map<RoundedButton, Book> rdbMap){
         Book book = rdbMap.get(rdb);
         AfterEventCode aec = book.getActionCode();
-        Color[] cs = book.getColorScheme();
-        
+        ColorScheme bookCS = book.getColorScheme();
         
         rdb.setText(book.getShortHandTitle());
-        rdb.setCurrentColor(cs[0]);
+        rdb.setCurrentColor(bookCS.getDefaultColor());
         
         MouseAdapter selectionMAdapt = new MouseAdapter() {
         
+            boolean isOutside = true;
             @Override
             public void mouseEntered(MouseEvent event){
-                rdb.setCurrentColor(cs[1]);
+                isOutside = false;
+                rdb.setCurrentColor(bookCS.getHoverColor());
             }
 
             @Override
             public void mouseExited(MouseEvent event){
-                rdb.setCurrentColor(cs[0]);
+                isOutside = true;
+                rdb.setCurrentColor(bookCS.getDefaultColor());
             }
 
             @Override
             public void mousePressed(MouseEvent event){
-                rdb.setCurrentColor(cs[2]);
+                rdb.setCurrentColor(bookCS.getPressedColor());
             }
 
             @Override
             public void mouseReleased(MouseEvent event){
-                rdb.setCurrentColor(cs[1]);
+                if(!isOutside){
+                    rdb.setCurrentColor(bookCS.getHoverColor());
+                }
             }
         };
         
@@ -159,7 +162,6 @@ public class bookPickerController {
                 aec.start();
             }
         };
-        
         
         rdbActListenMap.put(rdb, selectionActListen);
         rdb.addActionListener(selectionActListen);

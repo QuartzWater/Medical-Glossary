@@ -60,9 +60,9 @@ public class sourceFrameController {
     private JTextField spellingBox;
     private JTextArea definitionArea;
     private JLabel pageBox;
-    private JLabel chapterBox;
-    private JLabel majorTopicBox;
-    private JTextArea subtopicBox;
+    private JLabel superHeadingBox;
+    private JLabel middleHeadingBox;
+    private JTextArea subHeadingBox;
     private JLabel statusLabel;
     private JLabel bookLabel;
     private JLabel hyperlinkInfoLabel;
@@ -137,9 +137,9 @@ public class sourceFrameController {
         this.spellingBox = sf.getSpellingBox();
         this.definitionArea = sf.getDefinitionArea();
         this.pageBox = sf.getPageBox();
-        this.chapterBox = sf.getChapterBox();
-        this.majorTopicBox = sf.getMajorTopicBox();
-        this.subtopicBox = sf.getSubtopicBox();
+        this.superHeadingBox = sf.getSuperHeadingTextBox();
+        this.middleHeadingBox = sf.getMiddleHeadingTextBox();
+        this.subHeadingBox = sf.getSubHeadingTextBox();
         this.statusLabel = sf.getStatusLabel();
         this.bookLabel = sf.getBookLabel();
         this.hyperlinkInfoLabel = sf.getHyperlinkInfoLabel();
@@ -392,9 +392,9 @@ public class sourceFrameController {
         if(termFound){
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             pageBox.setText(Integer.toString(currentTerm.getPage()));
-            chapterBox.setText(currentTerm.getChapter());
-            majorTopicBox.setText(currentTerm.getMajorTopic());
-            subtopicBox.setText(currentTerm.getSubtopic());
+            superHeadingBox.setText(currentTerm.getSuperHeadingContent());
+            middleHeadingBox.setText(currentTerm.getMiddleHeadingContent());
+            subHeadingBox.setText(currentTerm.getSubHeadingContent());
             definitionArea.setText(currentTerm.getDefinition());
             
         }
@@ -407,9 +407,9 @@ public class sourceFrameController {
             }
             
             pageBox.setText(DEFAULT_REFERENCE);
-            chapterBox.setText(DEFAULT_REFERENCE);
-            majorTopicBox.setText(DEFAULT_REFERENCE);
-            subtopicBox.setText(DEFAULT_REFERENCE);
+            superHeadingBox.setText(DEFAULT_REFERENCE);
+            middleHeadingBox.setText(DEFAULT_REFERENCE);
+            subHeadingBox.setText(DEFAULT_REFERENCE);
             definitionArea.setText(DEFAULT_DEFINITION);
         }
     }

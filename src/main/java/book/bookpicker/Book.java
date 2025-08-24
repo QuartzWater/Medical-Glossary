@@ -4,7 +4,11 @@
  */
 package book.bookpicker;
 
+import backend.AppConfig;
+import backend.ColorScheme;
 import backend.ContentConstructor;
+import backend.HeadingModel;
+import backend.PropertyKey;
 import backend.TermDataManagement;
 import legacy.AfterEventCode;
 import legacy.ButtonActionCode;
@@ -26,20 +30,56 @@ public enum Book{
             "Gray's Anatomy", 
             "Gray's",
             "GraysAnatomy",
-            new Color[]{
-                
-                new Color(27,36,45), //Default
-                new Color(255,204,51), //Hover
-                new Color(233,179,15) //Pressed
-            },
-            
-            new ButtonActionCode(){
+            new HeadingModel("Chapter", "Major Topic", "Subtopic"),
+            new ColorScheme(new Color(27,36,45), new Color(255,204,51), new Color(233,179,15), new Color(57,75,92)),
+            new AfterEventCode(){
                 
                 @Override
                 public void runCode(){
                     
-                    System.out.println("THIS RAN");
+                    System.out.println("Initialized Gray's Anatomy");
                     SourceFrame sf = SourceFrame.generateInstance(GRAYS_ANATOMY);
+                    sf.setVisible(true);
+                    sf.requestFocusInWindow();
+                    
+                }
+            }
+            
+    ),
+    
+    HARPERS_ILLUSTRATED_BIOCHEMISTRY(
+            "Harper's Illustrated Biochemistry", 
+            "Harper's",
+            "HarpersIllustratedBiochemistry",
+            new HeadingModel("Section", "Chapter", "Subtopic"),
+            new ColorScheme(new Color(27,36,45), new Color(25, 162, 224), new Color(22, 144, 199), new Color(57,75,92)),
+            new AfterEventCode(){
+                
+                @Override
+                public void runCode(){
+                    
+                    System.out.println("Initialized Harper's Illustrated Biochemistry");
+                    SourceFrame sf = SourceFrame.generateInstance(HARPERS_ILLUSTRATED_BIOCHEMISTRY);
+                    sf.setVisible(true);
+                    sf.requestFocusInWindow();
+                    
+                }
+            }
+    ),
+    
+    GUYTON_AND_HALL_TEXTBOOK_OF_MEDICAL_PHYSIOLOGY(
+            "Guyton and Hall - Textbook of Medical Physiology",
+            "G&H",
+            "TextbookOfMedicalPhysiology",
+            new HeadingModel("Section", "Chapter", "Subtopic"),
+            new ColorScheme(new Color(27,36,45), new Color(24, 219, 164), new Color(21, 189, 141), new Color(57,75,92)),
+            new AfterEventCode(){
+                
+                @Override
+                public void runCode(){
+                    
+                    System.out.println("Initialized Guyton and Hall - Textbook of Medical Physiology");
+                    SourceFrame sf = SourceFrame.generateInstance(GUYTON_AND_HALL_TEXTBOOK_OF_MEDICAL_PHYSIOLOGY);
                     sf.setVisible(true);
                     sf.requestFocusInWindow();
                     
@@ -55,30 +95,27 @@ public enum Book{
     private final String title;
     private final String shortHandTitle;
     private final Path rootBookPath;
-    private final ButtonActionCode actionCode;
+    private final AfterEventCode actionCode;
     
     private  TermDataManagement tdm;
     private final Path rootPath = Paths.get("rep").resolve("MedicalGlossary").resolve("books");;
     
-    private final Color[] colorScheme;
+    private final ColorScheme colorScheme;
+    private final HeadingModel headingModel;
     
 
-    private Book(String title, String shortHandTitle, String bookDirectoryName, Color[] colorScheme, ButtonActionCode actionCode){
+    private Book(String title, String shortHandTitle, String bookDirectoryName, HeadingModel headingModel, ColorScheme colorScheme, AfterEventCode actionCode){
         
         this.title = title;
         this.colorScheme = colorScheme;
         this.shortHandTitle = shortHandTitle;
         this.actionCode = actionCode;
+        this.headingModel = headingModel;
        // TODO: Remove all fluff
         
         String directory = rootPath.toString();
-        String curatedDir = directory.replace("rep", "C:\\"); // TODO Remove this when you achieve cross platform compatibility
-        System.out.println(curatedDir);
-        
+        String curatedDir = directory.replace("rep", AppConfig.configProperties.getProperty(PropertyKey.STORAGE_PATH)); 
         rootBookPath = Paths.get(curatedDir).resolve(bookDirectoryName);
-        directory = rootBookPath.toString();
-        System.out.println(directory);
-        
         
     }
     
@@ -94,18 +131,23 @@ public enum Book{
     
     public TermDataManagement getTDM(){
         
-        this.tdm = new TermDataManagement(rootBookPath);
+        this.tdm = new TermDataManagement(this, rootBookPath);
         return this.tdm;
     }
     
-    public Color[] getColorScheme(){
+    public ColorScheme getColorScheme(){
         
         return this.colorScheme;
     }
     
+    public HeadingModel getHeadingModel(){
+        
+        return this.headingModel;
+    }
+    
     // Following methods will only be used by bookPickerFrame
     
-    public ButtonActionCode getActionCode(){
+    public AfterEventCode getActionCode(){
         
         return this.actionCode;
     }

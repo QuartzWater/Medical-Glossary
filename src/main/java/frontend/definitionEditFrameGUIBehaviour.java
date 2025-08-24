@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.AppConstants;
 import backend.ColorScheme;
 import backend.SpellingFilter;
 import backend.State;
@@ -91,14 +92,6 @@ public class definitionEditFrameGUIBehaviour {
         addSpellingBoxBehaviour();
         addNextButtonFunctionality();
         addBackButtonFunctionality();
-        
-        //debug code
-        Iterator<String> itr = tdm.getAllTerms().iterator();
-        while(itr.hasNext()){
-            System.out.print(itr.next() +"\n");
-        }
-        
-        
     }
     
     private ThreadGroup statusClearThreads = new ThreadGroup("statusClearThreads");
@@ -392,8 +385,6 @@ public class definitionEditFrameGUIBehaviour {
                 if(searchSpellingWaitGroup.activeCount() == 0){
                     newTerm = new Term(spellingBox.getText());
                     newTerm.setDefinition(definitionArea.getText());
-                    System.out.println(spellingBox.getText());
-                    System.out.println("New Term Absolute Spelling: " +newTerm.getAbsoluteSpelling());
                     def.dispose();
                     referenceEditFrame ref = referenceEditFrame.generateInstance(initialisedBook, tdm, existingTerm, newTerm, termFound, def);
                     ref.setVisible(true);
@@ -403,24 +394,29 @@ public class definitionEditFrameGUIBehaviour {
         };
         
         MouseAdapter nextMAdapt = new MouseAdapter() {
+            boolean isOutside = true;
             @Override
             public void mouseEntered(MouseEvent event){
-                nextButton.setCurrentColor(nextButtonColorScheme.getHoverColor());
+                isOutside = false;
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
             }
             
             @Override
             public void mouseExited(MouseEvent event){
-                nextButton.setCurrentColor(nextButtonColorScheme.getDefaultColor());
+                isOutside = true;
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getDefaultColor());
             }
             
             @Override
             public void mousePressed(MouseEvent event){
-                nextButton.setCurrentColor(nextButtonColorScheme.getPressedColor());
+                nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getPressedColor());
             }
             
             @Override
             public void mouseReleased(MouseEvent event){
-                nextButton.setCurrentColor(nextButtonColorScheme.getHoverColor());
+                if(!isOutside){
+                    nextButton.setCurrentColor(AppConstants.DEFAULT_NEXT_BUTTON_CS_1.getHoverColor());
+                }
             }
         };
         
@@ -438,24 +434,29 @@ public class definitionEditFrameGUIBehaviour {
         };
         
         MouseAdapter backMAdapt = new MouseAdapter() {
+            boolean isOutside = true;
             @Override
             public void mouseEntered(MouseEvent event){
-                backButton.setCurrentColor(nextButtonColorScheme.getHoverColor());
+                isOutside = false;
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
             }
             
             @Override
             public void mouseExited(MouseEvent event){
-                backButton.setCurrentColor(nextButtonColorScheme.getDefaultColor());
+                isOutside = true;
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getDefaultColor());
             }
             
             @Override
             public void mousePressed(MouseEvent event){
-                backButton.setCurrentColor(nextButtonColorScheme.getPressedColor());
+                backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getPressedColor());
             }
             
             @Override
             public void mouseReleased(MouseEvent event){
-                backButton.setCurrentColor(nextButtonColorScheme.getHoverColor());
+                if(!isOutside){
+                    backButton.setCurrentColor(AppConstants.DEFAULT_BACK_BUTTON_CS_1.getHoverColor());
+                }
             }
         };
         

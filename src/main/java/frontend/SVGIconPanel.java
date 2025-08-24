@@ -331,14 +331,9 @@ public final class SVGIconPanel extends javax.swing.JPanel{
         // Get the SVG's intrinsic dimensions from the viewBox
         double svgWidth = svgDocument.getRootElement().getWidth().getBaseVal().getValue();
         double svgHeight = svgDocument.getRootElement().getHeight().getBaseVal().getValue();
-
-        
-        System.out.println(svgWidth);
-        System.out.println(svgHeight);
         
         // Get the current panel dimensions
         Dimension dim = super.getSize();
-        System.out.println(dim.toString());
         double panelWidth = dim.getWidth();
         double panelHeight = dim.getHeight();
         

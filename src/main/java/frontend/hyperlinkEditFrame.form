@@ -179,7 +179,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton6">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -198,7 +198,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton5">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -208,6 +208,9 @@
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="adjacentButton5"/>
           </AccessibilityProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adjacentButton5ActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="5" y="480" width="40" height="40"/>
@@ -217,7 +220,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton4">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -236,7 +239,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton3">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -255,7 +258,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton2">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -274,7 +277,7 @@
         <Component class="frontend.RoundedButton" name="adjacentButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value=""/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -643,11 +646,6 @@
           </SubComponents>
         </Container>
         <Container class="frontend.RoundedPanel" name="decorativePanel">
-          <Properties>
-            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="5c" green="4b" red="39" type="rgb"/>
-            </Property>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="30" y="100" width="530" height="530"/>
@@ -686,13 +684,14 @@
         <Component class="frontend.RoundedButton" name="backButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Back"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="arcSize" type="int" value="35"/>
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="70" y="650" width="-1" height="-1"/>
+              <AbsoluteConstraints x="130" y="660" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -714,26 +713,28 @@
         <Component class="frontend.RoundedButton" name="saveButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="arcSize" type="int" value="35"/>
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="410" y="650" width="-1" height="-1"/>
+              <AbsoluteConstraints x="430" y="660" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="frontend.RoundedButton" name="skipSaveButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Skip and Save"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="text" type="java.lang.String" value="Skip &amp; Save"/>
+            <Property name="arcSize" type="int" value="35"/>
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="240" y="650" width="-1" height="-1"/>
+              <AbsoluteConstraints x="280" y="660" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

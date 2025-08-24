@@ -2,9 +2,9 @@
 
 <Form version="1.7" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="&quot;Medical Glossary &quot; + backend.AppConstants.VERSION" type="code"/>
+      <Connection code="&quot;Medical Glossary &quot; + backend.AppConfig.VERSION" type="code"/>
     </Property>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="2c" green="28" red="22" type="rgb"/>
@@ -90,7 +90,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="PRE RELEASE"/>
             <Property name="arcSize" type="int" value="20"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -113,7 +113,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;Medical Glossary &quot; + backend.AppConstants.VERSION" type="code"/>
+              <Connection code="&quot;Medical Glossary &quot; + backend.AppConfig.VERSION" type="code"/>
             </Property>
           </Properties>
           <Constraints>
@@ -170,7 +170,7 @@
             <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="subtopicTextArea">
+            <Component class="javax.swing.JTextArea" name="subHeadingTextArea">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -201,7 +201,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="chapterTextBox">
+            <Component class="javax.swing.JLabel" name="superHeadingTextBox">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="17" style="1"/>
@@ -217,7 +217,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="chapterLabel">
+            <Component class="javax.swing.JLabel" name="superHeadingLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -233,7 +233,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="majorTopicLabel">
+            <Component class="javax.swing.JLabel" name="middleHeadingLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
@@ -249,7 +249,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="majorTopicTextBox">
+            <Component class="javax.swing.JLabel" name="middleHeadingTextBox">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -265,7 +265,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="subtopicLabel">
+            <Component class="javax.swing.JLabel" name="subHeadingLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>

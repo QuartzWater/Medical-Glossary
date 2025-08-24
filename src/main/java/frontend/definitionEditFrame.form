@@ -123,19 +123,14 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="40" y="230" width="510" height="390"/>
+              <AbsoluteConstraints x="40" y="230" width="510" height="400"/>
             </Constraint>
           </Constraints>
         </Component>
         <Container class="frontend.RoundedPanel" name="decorativePanel">
-          <Properties>
-            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="5c" green="4b" red="39" type="rgb"/>
-            </Property>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="30" y="220" width="530" height="410"/>
+              <AbsoluteConstraints x="30" y="220" width="530" height="420"/>
             </Constraint>
           </Constraints>
 
@@ -147,7 +142,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="410" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="420" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -171,13 +166,14 @@
         <Component class="frontend.RoundedButton" name="backButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Back"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="5c" green="4b" red="39" type="rgb"/>
+            <Property name="arcSize" type="int" value="35"/>
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="240" y="650" width="-1" height="-1"/>
+              <AbsoluteConstraints x="280" y="660" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -200,13 +196,14 @@
         <Component class="frontend.RoundedButton" name="nextButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Next"/>
-            <Property name="defaultColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+            <Property name="arcSize" type="int" value="35"/>
+            <Property name="currentColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2d" green="24" red="1b" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="410" y="650" width="-1" height="-1"/>
+              <AbsoluteConstraints x="430" y="660" width="130" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

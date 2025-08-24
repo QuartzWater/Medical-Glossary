@@ -4,14 +4,25 @@
  */
 package frontend;
 
+import backend.AppConfig;
+import backend.AppConstants;
+import book.HarpersIllustratedBiochemistry.Content;
 import book.bookpicker.Book;
 import book.bookpicker.BookConstructor;
 import legacy.AfterEventCode;
 import legacy.BehaviourForSwing;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -159,32 +170,26 @@ public class bookPickerFrame extends javax.swing.JFrame {
         jPanel1.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 280, -1));
 
         selectionButton3.setText("-");
-        selectionButton3.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, -1, 80));
 
         selectionButton1.setText("-");
-        selectionButton1.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, 80));
 
         selectionButton2.setText("-");
-        selectionButton2.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, -1, 80));
 
         selectionButton6.setText("-");
-        selectionButton6.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, -1, 80));
 
         selectionButton4.setText("-");
-        selectionButton4.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, -1, 80));
 
         selectionButton5.setText("-");
-        selectionButton5.setDefaultColor(new java.awt.Color(57, 75, 92));
         selectionButton5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jPanel1.add(selectionButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, 80));
 
@@ -225,42 +230,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(bookPickerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(bookPickerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(bookPickerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(bookPickerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        
-        
-        /* Create and display the form */
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                bookPickerFrame bpf = bookPickerFrame.generateInstance();
-                bpf.setVisible(true);
-                bpf.requestFocusInWindow();
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

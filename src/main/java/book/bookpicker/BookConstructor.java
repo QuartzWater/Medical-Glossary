@@ -21,6 +21,8 @@ public class BookConstructor {
             
             case 1 :{
                  bookList.add(Book.GRAYS_ANATOMY);
+                 bookList.add(Book.HARPERS_ILLUSTRATED_BIOCHEMISTRY);
+                 bookList.add(Book.GUYTON_AND_HALL_TEXTBOOK_OF_MEDICAL_PHYSIOLOGY);
                  // TODO: ADD PHYSIO & BIOCHEM
                  return bookList;
             }

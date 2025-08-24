@@ -4,6 +4,7 @@
  */
 package backend;
 
+import book.bookpicker.Book;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,12 +44,19 @@ public class TermDataManagement {
     private Map<String, Term> termMap;
     private List<String> allTermsList = new ArrayList<>();
     
-    public TermDataManagement(Path root){
+    private String superHeading;
+    private String middleHeading;
+    private String subHeading;
+    
+    public TermDataManagement(Book book, Path root){
         
         System.out.println("Loading...");
         this.rootFolder = root;
         this.propertiesFolder = root.resolve("globalproperties");
         this.termMap = new HashMap<>();
+        this.superHeading = book.getHeadingModel().getSuperHeading().replaceAll("\\s+", "").toLowerCase();
+        this.middleHeading = book.getHeadingModel().getMiddleHeading().replaceAll("\\s+", "").toLowerCase();
+        this.subHeading = book.getHeadingModel().getSubHeading().replaceAll("\\s+", "").toLowerCase();
         
         try{
             
@@ -91,8 +99,6 @@ public class TermDataManagement {
                         while((readDefinitionLine = readerDefinition.readLine()) != null){
                             
                             definition = definition.concat(readDefinitionLine + "\n");
-                            System.out.println("*********************** TDM DEBUGGER *******************************");
-                            System.out.println(definition);
                         }
                         readerDefinition.close();
                         
@@ -104,9 +110,9 @@ public class TermDataManagement {
                         
                         loadProp.load(inputProp);
                         
-                        String chapter = loadProp.getProperty(PropertyKey.CHAPTER);
-                        String majorTopic = loadProp.getProperty(PropertyKey.MAJOR_TOPIC);
-                        String subtopic = loadProp.getProperty(PropertyKey.SUB_TOPIC);
+                        String superHeadingContent = loadProp.getProperty(this.superHeading);
+                        String middleHeadingContent = loadProp.getProperty(this.middleHeading);
+                        String subHeadingContent = loadProp.getProperty(this.subHeading);
                         String page = loadProp.getProperty(PropertyKey.PAGE);
                         
                         String hyperlink_1 = loadProp.getProperty(PropertyKey.HYPERLINK_1);
@@ -143,7 +149,7 @@ public class TermDataManagement {
                         
                         
                         
-                        Term loadedTerm = new Term(spelling, definition, chapter, majorTopic, subtopic, Integer.parseInt(page), hyperlinkArray, hyperlinkEncapsulationArray);
+                        Term loadedTerm = new Term(spelling, definition, superHeadingContent, middleHeadingContent, subHeadingContent, Integer.parseInt(page), hyperlinkArray, hyperlinkEncapsulationArray);
                         
                         termMap.put(spelling, loadedTerm);
                         readLine = "";
@@ -204,9 +210,9 @@ public class TermDataManagement {
         
         
             Properties prop = new Properties();
-            prop.setProperty(PropertyKey.CHAPTER, newTerm.getChapter());
-            prop.setProperty(PropertyKey.MAJOR_TOPIC, newTerm.getMajorTopic());
-            prop.setProperty(PropertyKey.SUB_TOPIC, newTerm.getSubtopic());
+            prop.setProperty(this.superHeading, newTerm.getSuperHeadingContent());
+            prop.setProperty(this.middleHeading, newTerm.getMiddleHeadingContent());
+            prop.setProperty(this.subHeading, newTerm.getSubHeadingContent());
             prop.setProperty(PropertyKey.PAGE, Integer.toString(newTerm.getPage()));
             
             prop.setProperty(PropertyKey.HYPERLINK_1, newTerm.getHyperlinkByIndex(0) );
@@ -301,9 +307,9 @@ public class TermDataManagement {
         
         
         Properties prop = new Properties();
-        prop.setProperty(PropertyKey.CHAPTER, newTerm.getChapter());
-        prop.setProperty(PropertyKey.MAJOR_TOPIC, newTerm.getMajorTopic());
-        prop.setProperty(PropertyKey.SUB_TOPIC, newTerm.getSubtopic());
+        prop.setProperty(this.superHeading, newTerm.getSuperHeadingContent());
+        prop.setProperty(this.middleHeading, newTerm.getMiddleHeadingContent());
+        prop.setProperty(this.subHeading, newTerm.getSubHeadingContent());
         prop.setProperty(PropertyKey.PAGE, Integer.toString(newTerm.getPage()));
         
         prop.setProperty(PropertyKey.HYPERLINK_1, newTerm.getHyperlinkByIndex(0) );

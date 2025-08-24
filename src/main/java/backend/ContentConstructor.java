@@ -20,7 +20,16 @@ public class ContentConstructor {
                 
                 return book.GraysAnatomy.Content.THE_BODY.getEverythingByPage(page);
             }
+            
+            case Book.HARPERS_ILLUSTRATED_BIOCHEMISTRY :{
                 
+                return book.HarpersIllustratedBiochemistry.ContentFactory.getEverythingByPage(page);
+            }
+            
+            case Book.GUYTON_AND_HALL_TEXTBOOK_OF_MEDICAL_PHYSIOLOGY : {
+                
+                return book.GuytonAndHallTextBookOfMedicalPhysiology.ContentFactory.getEverythingByPage(page);
+            }
                 
             default:
                 throw new AssertionError("Invalid Book Name");

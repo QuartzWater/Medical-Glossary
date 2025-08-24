@@ -51,7 +51,7 @@ public class definitionEditFrame extends javax.swing.JFrame {
         
         initComponents();
         
-        nextButton.setEnabled(true);
+        nextButton.setEnabled(termFound);
         
         if(termFound){
             
@@ -62,7 +62,9 @@ public class definitionEditFrame extends javax.swing.JFrame {
             
         }
         else{
-            
+            if(!sf.getSpellingBox().getText().isBlank()){
+                nextButton.setEnabled(true);
+            }
             titleLabel.setText("Create new term");
             spellingTextBox.setText(textComponents[0].getText());
             this.setTitle("Create new term: '" + textComponents[0].getText() + "'");
@@ -252,12 +254,7 @@ public class definitionEditFrame extends javax.swing.JFrame {
         
     }
     
-    public void resetColor(){
-        
-        backButton.setDefaultColor(backButtonColorScheme[0]);
-        nextButton.setDefaultColor(nextButtonColorScheme[0]);
-        
-    }
+    
     
 
     /**
@@ -321,9 +318,7 @@ public class definitionEditFrame extends javax.swing.JFrame {
         definitionTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
         definitionTextArea.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         definitionTextArea.setOpaque(false);
-        parentPanel.add(definitionTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 510, 390));
-
-        decorativePanel.setCurrentColor(new java.awt.Color(57, 75, 92));
+        parentPanel.add(definitionTextArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 510, 400));
 
         javax.swing.GroupLayout decorativePanelLayout = new javax.swing.GroupLayout(decorativePanel);
         decorativePanel.setLayout(decorativePanelLayout);
@@ -333,10 +328,10 @@ public class definitionEditFrame extends javax.swing.JFrame {
         );
         decorativePanelLayout.setVerticalGroup(
             decorativePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
-        parentPanel.add(decorativePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 410));
+        parentPanel.add(decorativePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 420));
 
         headerLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         headerLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -344,8 +339,9 @@ public class definitionEditFrame extends javax.swing.JFrame {
         parentPanel.add(headerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 120, -1));
 
         backButton.setText("Back");
-        backButton.setDefaultColor(new java.awt.Color(57, 75, 92));
-        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, -1, -1));
+        backButton.setArcSize(35);
+        backButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 660, 130, 40));
 
         statusLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 12)); // NOI18N
         statusLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -353,8 +349,9 @@ public class definitionEditFrame extends javax.swing.JFrame {
         parentPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 470, 20));
 
         nextButton.setText("Next");
-        nextButton.setDefaultColor(new java.awt.Color(27, 36, 45));
-        parentPanel.add(nextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, -1, -1));
+        nextButton.setArcSize(35);
+        nextButton.setCurrentColor(new java.awt.Color(27, 36, 45));
+        parentPanel.add(nextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 660, 130, 40));
 
         statusTextArea.setColumns(20);
         statusTextArea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

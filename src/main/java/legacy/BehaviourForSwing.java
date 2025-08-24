@@ -431,10 +431,11 @@ public class BehaviourForSwing {
     
     public static void addSpecificRoundedButtonActionBehaviour(RoundedButton rdButton, Color[] colorArray, ButtonActionCode aec){
         
-        
+        /* Deprecated
         rdButton.setDefaultColor(colorArray[0]);
         rdButton.setHoverColor(colorArray[1]);
         rdButton.setPressedColor(colorArray[2]);
+        */
         
         rdButton.callRepaint();
         
@@ -496,7 +497,7 @@ public class BehaviourForSwing {
     
     public static void removeRoundedButtonActionBehaviour(RoundedButton rdButton){
         
-        rdButton.setDefaultColor(new Color(57,75,92));
+        rdButton.setCurrentColor(new Color(57,75,92));
         rdButton.callRepaint();
         
         
@@ -555,7 +556,7 @@ public class BehaviourForSwing {
                 if(JTextBox.getText().isBlank() || JTextBox.getText().equals(defaultText)){
                     JTextBox.setText(defaultText);
                 
-                    rdB.setDefaultColor(rdB.ULTIMATE_DEFAULT);
+                    rdB.setCurrentColor(rdB.ULTIMATE_DEFAULT);
                     rdB.callRepaint();
                     JTextBox.setForeground(colorScheme[2]);
                     

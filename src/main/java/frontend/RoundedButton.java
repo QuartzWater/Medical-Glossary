@@ -32,7 +32,7 @@ public class RoundedButton extends JButton{
     private Color DISABLED_COLOR = new Color(57,75,92);
 
     private Color currentColor;
-    private int arcSize = 45; // Controls the roundness of the corners
+    private int arcSize = 35; // Controls the roundness of the corners
     private final float shadowSize = 4f; // Shadow offset
     
     public RoundedButton(){
@@ -56,24 +56,6 @@ public class RoundedButton extends JButton{
         
     }
     
-    
-    public void setDefaultColor(Color defaultColor){
-        DEFAULT_COLOR = defaultColor;
-        currentColor = defaultColor;
-        
-       
-    }
-    
-    public void setHoverColor(Color hoverColor){
-        HOVER_COLOR = hoverColor;
-        
-    }
-    
-    public void setPressedColor(Color pressedColor){
-        PRESSED_COLOR = pressedColor;
-        
-    }
-    
     public void setCurrentColor(Color currColor){
         
         this.currentColor = currColor;
@@ -94,16 +76,9 @@ public class RoundedButton extends JButton{
         return this.currentColor;
     }
     
-    public Color getDefaultColor(){
-        return DEFAULT_COLOR;
-    }
-    
-    public Color getHoverColor(){
-        return HOVER_COLOR;
-    }
-    
-    public Color getPressedColor(){
-        return PRESSED_COLOR;
+    public Color getDisabledColor(){
+        
+        return this.DISABLED_COLOR;
     }
     
     public int getArcSize(){
@@ -115,9 +90,6 @@ public class RoundedButton extends JButton{
     public void callRepaint(){
      super.repaint();
     }
-    
-   
-
     
     /**
      * Overrides the paintComponent method to draw a custom rounded rectangle background.
@@ -154,7 +126,7 @@ public class RoundedButton extends JButton{
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(150, 50);
+        return new Dimension(130, 40);
     }
 }
 
