@@ -369,11 +369,12 @@
             </Component>
             <Container class="frontend.SVGIconPanel" name="svgBrowserIcon">
               <Properties>
-                <Property name="_SVG_URL_String" type="java.lang.String" value="/images/icons/captive-portal-white.svg"/>
+                <Property name="_SVG_URL_String" type="java.lang.String" value="/images/icons/captive-portal-white-NA-55-percent-opaque.svg"/>
+                <Property name="bgSquarePadding" type="double" value="4.0"/>
                 <Property name="iconPosition" type="frontend.SVGIconPanel$iconPosition" editor="org.netbeans.modules.form.editors.EnumEditor">
                   <Value id="CENTER"/>
                 </Property>
-                <Property name="iconSquarePadding" type="double" value="3.0"/>
+                <Property name="iconSquarePadding" type="double" value="6.0"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

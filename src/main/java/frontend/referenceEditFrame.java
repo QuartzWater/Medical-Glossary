@@ -7,6 +7,7 @@ package frontend;
 import backend.HeadingModel;
 import backend.Term;
 import backend.TermDataManagement;
+import backend.Utils;
 import book.bookpicker.Book;
 import legacy.BehaviourForSwing;
 import legacy.ButtonActionCode;
@@ -61,6 +62,10 @@ public class referenceEditFrame extends javax.swing.JFrame {
         this.superHeadingLabel.setText(hm.getSuperHeading() + ":");
         this.middleHeadingLabel.setText(hm.getMiddleHeading() + ":");
         this.subHeadingLabel.setText(hm.getSubHeading() + ":");
+        
+        bookTextBox.setText(initialisedBook.getTitle());
+        bookTextBox.setForeground(initialisedBook.getColorScheme().getHoverColor());
+        Utils.dynamicallyChangeFont(bookTextBox);
         
         if(termFound){
             pageBox.setText(Integer.toString(existingTerm.getPage()));

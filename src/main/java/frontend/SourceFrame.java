@@ -380,12 +380,13 @@ public class SourceFrame extends javax.swing.JFrame {
         otherInfoContainerPanel.add(hyperlinkInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 80, -1));
 
         try {
-            svgBrowserIcon.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            svgBrowserIcon.set_SVG_URL_String("/images/icons/captive-portal-white-NA-55-percent-opaque.svg");
         } catch (java.io.IOException e1) {
             e1.printStackTrace();
         }
+        svgBrowserIcon.setbgSquarePadding(4.0);
         svgBrowserIcon.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
-        svgBrowserIcon.setIconSquarePadding(3.0);
+        svgBrowserIcon.setIconSquarePadding(6.0);
 
         javax.swing.GroupLayout svgBrowserIconLayout = new javax.swing.GroupLayout(svgBrowserIcon);
         svgBrowserIcon.setLayout(svgBrowserIconLayout);

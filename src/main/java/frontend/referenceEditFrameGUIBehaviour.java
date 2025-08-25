@@ -10,6 +10,7 @@ import backend.PageContentState;
 import backend.State;
 import backend.Term;
 import backend.TermDataManagement;
+import backend.Utils;
 import book.bookpicker.Book;
 import legacy.NumericAndFirstDigitFilter;
 import java.awt.Color;
@@ -90,7 +91,7 @@ public class referenceEditFrameGUIBehaviour {
     
     // ^^^^^^^^^^^^^^^^^^^^^^^ SOLVED ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
-    // LESSON LEARNT: NEVER update states of objects in a DocumentFilter ever again!!!
+    // LESSON LEARNT: NEVER carelessly update states of objects in a DocumentFilter ever again!!!
     
     private class ExtendedNumericAndFirstDigitFilter extends NumericAndFirstDigitFilter{
         
@@ -286,9 +287,6 @@ public class referenceEditFrameGUIBehaviour {
             System.err.println("WARNING: DOCUMENT FILTER COULDN'T BE SET BECAUSE "
                     + "THE DOCUMENT TYPE RECIEVED WAS NOT AN INSTANCE OF ABSTRACT DOCUMENT");
         }
-        
-        bookField.setText(initialisedBook.getTitle());
-        bookField.setForeground(initialisedBook.getColorScheme().getHoverColor());
         
         DocumentListener pageDocListen = new DocumentListener() {
             @Override
@@ -597,8 +595,11 @@ public class referenceEditFrameGUIBehaviour {
                         public void run() {
                             
                             chapterField.setText(superHeadingSetText);
+                            Utils.dynamicallyChangeFont(chapterField);
                             majorTopicField.setText(middleHeadingSetText);
+                            Utils.dynamicallyChangeFont(majorTopicField);
                             subtopicField.setText(subHeadingSetText);
+                            Utils.dynamicallyChangeFont(subtopicField);
                         }
                         
                     });

@@ -114,7 +114,7 @@ public enum Book{
        // TODO: Remove all fluff
         
         String directory = rootPath.toString();
-        String curatedDir = directory.replace("rep", AppConfig.configProperties.getProperty(PropertyKey.STORAGE_PATH)); 
+        String curatedDir = directory.replace("rep", AppConfig.EXT_CONFIG_PROPERTIES.getProperty(PropertyKey.STORAGE_PATH)); 
         rootBookPath = Paths.get(curatedDir).resolve(bookDirectoryName);
         
     }

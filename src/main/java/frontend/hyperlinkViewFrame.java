@@ -159,7 +159,7 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel1.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel1.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
+        parentPanel.add(goPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 50, 50));
 
         try {
             goPanel2.set_SVG_URL_String("/images/icons/right-circle-white.svg");
@@ -168,7 +168,7 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel2.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel2.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, -1, -1));
+        parentPanel.add(goPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 50, -1));
 
         try {
             goPanel3.set_SVG_URL_String("/images/icons/right-circle-white.svg");
@@ -177,7 +177,7 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel3.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel3.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, -1, -1));
+        parentPanel.add(goPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, 50, 50));
 
         try {
             goPanel4.set_SVG_URL_String("/images/icons/right-circle-white.svg");
@@ -186,7 +186,7 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel4.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel4.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, -1, -1));
+        parentPanel.add(goPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 50, 50));
 
         try {
             goPanel5.set_SVG_URL_String("/images/icons/right-circle-white.svg");
@@ -195,7 +195,7 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel5.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel5.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, -1, -1));
+        parentPanel.add(goPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 50, 50));
 
         try {
             goPanel6.set_SVG_URL_String("/images/icons/right-circle-white.svg");
@@ -204,31 +204,31 @@ public class hyperlinkViewFrame extends javax.swing.JFrame {
         }
         goPanel6.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
         goPanel6.setIconSquarePadding(0.5);
-        parentPanel.add(goPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, -1, -1));
+        parentPanel.add(goPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, 50, -1));
 
         hyperlink4.setArcSize(20);
         hyperlink4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 530, -1));
+        parentPanel.add(hyperlink4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 530, 50));
 
         hyperlink1.setArcSize(20);
         hyperlink1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 530, -1));
+        parentPanel.add(hyperlink1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 530, 50));
 
         hyperlink2.setArcSize(20);
         hyperlink2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, -1));
+        parentPanel.add(hyperlink2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 50));
 
         hyperlink6.setArcSize(20);
         hyperlink6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 530, -1));
+        parentPanel.add(hyperlink6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 530, 50));
 
         hyperlink3.setArcSize(20);
         hyperlink3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 530, -1));
+        parentPanel.add(hyperlink3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 530, 50));
 
         hyperlink5.setArcSize(20);
         hyperlink5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        parentPanel.add(hyperlink5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, 530, -1));
+        parentPanel.add(hyperlink5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, 530, 50));
 
         getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 720));
 

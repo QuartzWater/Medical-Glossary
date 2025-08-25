@@ -7,8 +7,10 @@ package frontend;
 import backend.SpellingFilter;
 import backend.Term;
 import backend.TermDataManagement;
+import backend.Utils;
 import backend.eventadapter.GranularMouseAdapter;
 import book.bookpicker.Book;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -79,7 +81,9 @@ public class sourceFrameController {
         public void actOnMouseEntry(MouseEvent e){
             
             try {
-                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+                SVGBrowserIconPanel.setCurrentColor(Color.white);
+                SVGBrowserIconPanel.setBackgroundPainted(true);
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-44-62-80.svg");
             } catch (IOException ex) {
                 
                 System.out.println("SVG icon couldn't be loaded...");
@@ -89,6 +93,7 @@ public class sourceFrameController {
         @Override
         public void actOnMouseExit(MouseEvent e){
             try {
+                SVGBrowserIconPanel.setBackgroundPainted(false);
                 SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
             } catch (IOException ex) {
                 
@@ -98,22 +103,18 @@ public class sourceFrameController {
         
         @Override
         public void actOnMousePress(MouseEvent e){
-            try {
-                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
-            } catch (IOException ex) {
-                
-                System.out.println("SVG icon couldn't be loaded...");
-            }
+            
+            SVGBrowserIconPanel.setCurrentColor(new Color(237,237,237));
+            SVGBrowserIconPanel.repaint();
+               
+            
         }
         
         @Override
         public void actOnMouseRelease(MouseEvent e){
-            try {
-                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
-            } catch (IOException ex) {
-                
-                System.out.println("SVG icon couldn't be loaded...");
-            }
+            
+            SVGBrowserIconPanel.setCurrentColor(Color.white);
+            SVGBrowserIconPanel.repaint();
         }
         
         @Override
@@ -390,15 +391,30 @@ public class sourceFrameController {
         granMAdapt_svgPanel.setCanRespondToHover(termFound);
         granMAdapt_svgPanel.setCanRespondToPress_Release(termFound);
         if(termFound){
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
+            } catch (IOException ex) {
+                System.getLogger(sourceFrameController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             pageBox.setText(Integer.toString(currentTerm.getPage()));
             superHeadingBox.setText(currentTerm.getSuperHeadingContent());
+            Utils.dynamicallyChangeFont(superHeadingBox);
             middleHeadingBox.setText(currentTerm.getMiddleHeadingContent());
+            Utils.dynamicallyChangeFont(middleHeadingBox);
             subHeadingBox.setText(currentTerm.getSubHeadingContent());
+            Utils.dynamicallyChangeFont(subHeadingBox);
             definitionArea.setText(currentTerm.getDefinition());
             
         }
-        else{
+        else
+        {
+            try {
+                SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white-NA-55-percent-opaque.svg");
+            } catch (IOException ex) {
+                System.getLogger(sourceFrameController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            
             if(!currentSpelling.isBlank()){
                 statusLabel.setText(TERM_NOT_FOUND_STATUS_TEXT);
             }
