@@ -14,6 +14,7 @@ import backend.Utils;
 import book.bookpicker.Book;
 import legacy.NumericAndFirstDigitFilter;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -81,6 +82,10 @@ public class referenceEditFrameGUIBehaviour {
     private int CURRENT_INDEX = 0;
     private final String DEFAULT_PAGE_BOX_TEXT = "<Enter Page Number>";
     
+    private final Font originalSuperHeadingTextBoxFont;
+    private final Font originalMiddleHeadingTextBoxFont;
+    private final Font originalSubHeadingTextBoxFont;
+    
     // -------------------------------------------------------------
     
     // TODO:
@@ -138,6 +143,10 @@ public class referenceEditFrameGUIBehaviour {
         this.statusLabel = ref.getStatusLabel();
         this.HeaderLabel = ref.getHeaderLabel();
         // initialisation ends
+        
+        this.originalSuperHeadingTextBoxFont = superHeadingBox.getFont();
+        this.originalMiddleHeadingTextBoxFont = middleHeadingBox.getFont();
+        this.originalSubHeadingTextBoxFont = subHeadingBox.getFont();
         
         this.pageContentState = new PageContentState(pageBox,PageContentState.StateType.NOT_FOUND);
         this.pageValidityState = new State(pageBox, State.ComponentState.DEFAULT_AND_INVALID);
@@ -567,9 +576,9 @@ public class referenceEditFrameGUIBehaviour {
     private void updateFields(
             Map<Integer, String[]> content, 
             int currentIndex,
-            JLabel chapterField,
-            JLabel majorTopicField,
-            JTextArea subtopicField)
+            JLabel superHeadingField,
+            JLabel middleHeadingField,
+            JTextArea subHeadingField)
     {
         if(!pageValidityState.isValid()){
             return;
@@ -594,12 +603,12 @@ public class referenceEditFrameGUIBehaviour {
                         @Override
                         public void run() {
                             
-                            chapterField.setText(superHeadingSetText);
-                            Utils.dynamicallyChangeFont(chapterField);
-                            majorTopicField.setText(middleHeadingSetText);
-                            Utils.dynamicallyChangeFont(majorTopicField);
-                            subtopicField.setText(subHeadingSetText);
-                            Utils.dynamicallyChangeFont(subtopicField);
+                            superHeadingField.setText(superHeadingSetText);
+                            Utils.dynamicallyChangeFont(superHeadingField, originalSuperHeadingTextBoxFont);
+                            middleHeadingField.setText(middleHeadingSetText);
+                            Utils.dynamicallyChangeFont(middleHeadingField, originalMiddleHeadingTextBoxFont);
+                            subHeadingField.setText(subHeadingSetText);
+                            Utils.dynamicallyChangeFont(subHeadingField, originalSubHeadingTextBoxFont);
                         }
                         
                     });
@@ -618,7 +627,7 @@ public class referenceEditFrameGUIBehaviour {
         }
         else {
             pageContentState.setCurrentState(PageContentState.StateType.NOT_FOUND);
-            setFieldsToDefault(chapterField, majorTopicField, subtopicField);
+            setFieldsToDefault(superHeadingField, middleHeadingField, subHeadingField);
             nextButtonValidityState.setState(State.ComponentState.NON_DEFAULT_AND_INVALID);
         }
     }

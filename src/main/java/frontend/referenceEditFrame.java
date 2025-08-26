@@ -13,6 +13,7 @@ import legacy.BehaviourForSwing;
 import legacy.ButtonActionCode;
 import legacy.TextBoxContentEventCode;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Map;
@@ -46,6 +47,8 @@ public class referenceEditFrame extends javax.swing.JFrame {
     private definitionEditFrame parentFrame;
     private final String DEFAULT_PAGE_BOX_TEXT = "<Enter Page Number>";
     
+    private final Font originalBookTextBoxFont;
+    
     public referenceEditFrame(Book initialisedBook, TermDataManagement tdm, Term existingTerm, Term newTerm, boolean  termFound, definitionEditFrame def) {
         
         
@@ -63,9 +66,11 @@ public class referenceEditFrame extends javax.swing.JFrame {
         this.middleHeadingLabel.setText(hm.getMiddleHeading() + ":");
         this.subHeadingLabel.setText(hm.getSubHeading() + ":");
         
+        originalBookTextBoxFont = bookTextBox.getFont();
+        
         bookTextBox.setText(initialisedBook.getTitle());
         bookTextBox.setForeground(initialisedBook.getColorScheme().getHoverColor());
-        Utils.dynamicallyChangeFont(bookTextBox);
+        Utils.dynamicallyChangeFont(bookTextBox, originalBookTextBoxFont);
         
         if(termFound){
             pageBox.setText(Integer.toString(existingTerm.getPage()));

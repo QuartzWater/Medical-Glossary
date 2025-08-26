@@ -48,14 +48,14 @@ public class ContentFactory {
                 if(page >= startPage && page <= endPage){
                     
                     inputMap.put(count, new String[]{
-                    section.getTitle(),                         // index = 0
-                    content.getTitle(),                         // index = 1
-                    subtopic.getTitle(),                        // index = 2
-                    Integer.toString(subtopic.getStartPage()),  // index = 3
-                    Integer.toString(subtopic.getEndPage())     // index = 4
+                        section.getTitle(),                         // index = 0
+                        content.getTitle(),                         // index = 1
+                        subtopic.getTitle(),                        // index = 2
+                        Integer.toString(subtopic.getStartPage()),  // index = 3
+                        Integer.toString(subtopic.getEndPage())     // index = 4
                 
-                });
-                count++; // Map starts at index 0; since the count is increased AFTER the it's previous value is put in map.
+                    });
+                    count++; // Map starts at index 0; since the count is increased AFTER the it's previous value is put in map.
                 }
                 
             }

@@ -11,6 +11,7 @@ import backend.Utils;
 import backend.eventadapter.GranularMouseAdapter;
 import book.bookpicker.Book;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -125,6 +126,12 @@ public class sourceFrameController {
         }
     };
     
+    
+    private final Font originalSuperHeadingTextBoxFont;
+    private final Font originalMiddleHeadingTextBoxFont;
+    private final Font originalSubHeadingTextBoxFont;
+
+    
     private sourceFrameController(Book initialisedBook, TermDataManagement tdm, Term currentTerm, boolean termFound, SourceFrame sf){
      
         this.initialisedBook = initialisedBook;
@@ -149,6 +156,10 @@ public class sourceFrameController {
         // ADD HERE IN FUTURE
         
         // *** END OF VARIABLES INITIALIZATION *** //
+        
+        originalSuperHeadingTextBoxFont = superHeadingBox.getFont();
+        originalMiddleHeadingTextBoxFont = middleHeadingBox.getFont();
+        originalSubHeadingTextBoxFont = subHeadingBox.getFont();
         
         
         SVGBrowserIconPanel.addMouseListener(granMAdapt_svgPanel);
@@ -399,11 +410,11 @@ public class sourceFrameController {
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             pageBox.setText(Integer.toString(currentTerm.getPage()));
             superHeadingBox.setText(currentTerm.getSuperHeadingContent());
-            Utils.dynamicallyChangeFont(superHeadingBox);
+            Utils.dynamicallyChangeFont(superHeadingBox, originalSuperHeadingTextBoxFont);
             middleHeadingBox.setText(currentTerm.getMiddleHeadingContent());
-            Utils.dynamicallyChangeFont(middleHeadingBox);
+            Utils.dynamicallyChangeFont(middleHeadingBox, originalMiddleHeadingTextBoxFont);
             subHeadingBox.setText(currentTerm.getSubHeadingContent());
-            Utils.dynamicallyChangeFont(subHeadingBox);
+            Utils.dynamicallyChangeFont(subHeadingBox, originalSubHeadingTextBoxFont);
             definitionArea.setText(currentTerm.getDefinition());
             
         }
