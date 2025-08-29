@@ -401,6 +401,11 @@ public class sourceFrameController {
         granMAdapt_svgPanel.setCanRespondToClick(termFound);
         granMAdapt_svgPanel.setCanRespondToHover(termFound);
         granMAdapt_svgPanel.setCanRespondToPress_Release(termFound);
+
+        Utils.restoreFont(superHeadingBox, originalSuperHeadingTextBoxFont);
+        Utils.restoreFont(middleHeadingBox, originalMiddleHeadingTextBoxFont);
+        Utils.restoreFont(subHeadingBox, originalSubHeadingTextBoxFont);
+
         if(termFound){
             try {
                 SVGBrowserIconPanel.set_SVG_URL_String("/images/icons/captive-portal-white.svg");
@@ -410,11 +415,11 @@ public class sourceFrameController {
             statusLabel.setText(TERM_FOUND_STATUS_TEXT);
             pageBox.setText(Integer.toString(currentTerm.getPage()));
             superHeadingBox.setText(currentTerm.getSuperHeadingContent());
-            Utils.dynamicallyChangeFont(superHeadingBox, originalSuperHeadingTextBoxFont);
+            Utils.dynamicallyChangeFont(superHeadingBox);
             middleHeadingBox.setText(currentTerm.getMiddleHeadingContent());
-            Utils.dynamicallyChangeFont(middleHeadingBox, originalMiddleHeadingTextBoxFont);
+            Utils.dynamicallyChangeFont(middleHeadingBox);
             subHeadingBox.setText(currentTerm.getSubHeadingContent());
-            Utils.dynamicallyChangeFont(subHeadingBox, originalSubHeadingTextBoxFont);
+            Utils.dynamicallyChangeFont(subHeadingBox);
             definitionArea.setText(currentTerm.getDefinition());
             
         }

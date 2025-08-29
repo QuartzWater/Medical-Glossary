@@ -70,7 +70,8 @@ public class referenceEditFrame extends javax.swing.JFrame {
         
         bookTextBox.setText(initialisedBook.getTitle());
         bookTextBox.setForeground(initialisedBook.getColorScheme().getHoverColor());
-        Utils.dynamicallyChangeFont(bookTextBox, originalBookTextBoxFont);
+
+        Utils.dynamicallyChangeFont(bookTextBox);
         
         if(termFound){
             pageBox.setText(Integer.toString(existingTerm.getPage()));

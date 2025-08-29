@@ -27,7 +27,7 @@ public interface PropertyKey {
     public final String HYPERLINK_3_ENCAP = "hyperlink3encap";
     public final String HYPERLINK_4_ENCAP = "hyperlink4encap";
     public final String HYPERLINK_5_ENCAP = "hyperlink5encap";
-    public final String HYPERLINK_6_ECNAP = "hyperlink6encap";
+    public final String HYPERLINK_6_ENCAP = "hyperlink6encap";
     
     
     public static final String STORAGE_PATH = "storage.path";

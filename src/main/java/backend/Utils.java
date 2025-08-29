@@ -16,9 +16,9 @@ import javax.swing.JTextField;
  */
 public class Utils {
     
-    public static void dynamicallyChangeFont(JTextField jtx, Font originalFont){
+    public static void dynamicallyChangeFont(JTextField jtx){
         
-        jtx.setFont(originalFont);
+
         FontMetrics fmt = jtx.getFontMetrics(jtx.getFont());
         
         int textWidth = fmt.stringWidth(jtx.getText());
@@ -43,8 +43,8 @@ public class Utils {
         
     }
 
-    public static void dynamicallyChangeFont(JLabel jlb, Font originalFont) {
-        jlb.setFont(originalFont);
+    public static void dynamicallyChangeFont(JLabel jlb) {
+
         FontMetrics fmt = jlb.getFontMetrics(jlb.getFont());
         
         int textWidth = fmt.stringWidth(jlb.getText());
@@ -67,9 +67,9 @@ public class Utils {
         }    
     }
     
-    public static void dynamicallyChangeFont(JTextArea jta, Font originalFont) {
+    public static void dynamicallyChangeFont(JTextArea jta) {
         
-        jta.setFont(originalFont);
+
         int textHeight = jta.getPreferredSize().height;
         int fieldHeight = jta.getWidth();
         
@@ -89,5 +89,17 @@ public class Utils {
             System.out.println("text Height: "  + textHeight);
             System.out.println("field Height: " +fieldHeight);
         }    
+    }
+
+    public static void restoreFont(JLabel jlb, Font initialFont){
+        jlb.setFont(initialFont);
+    }
+
+    public static void restoreFont(JTextField jtx, Font initialFont){
+        jtx.setFont(initialFont);
+    }
+
+    public static void restoreFont(JTextArea jta, Font initialFont){
+        jta.setFont(initialFont);
     }
 }

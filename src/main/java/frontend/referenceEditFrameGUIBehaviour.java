@@ -485,7 +485,11 @@ public class referenceEditFrameGUIBehaviour {
         
         String pageString = pageBox.getText();
         CURRENT_INDEX = 0; // Always updates the current Index to 0 whenever a new number is typed
-        
+
+        Utils.restoreFont(superHeadingBox, originalSuperHeadingTextBoxFont);
+        Utils.restoreFont(middleHeadingBox, originalMiddleHeadingTextBoxFont);
+        Utils.restoreFont(subHeadingBox, originalSubHeadingTextBoxFont);
+
         if(pageString == null || pageString.isBlank() || pageString.equals(DEFAULT_PAGE_BOX_TEXT)){
         
             pageContentState.setCurrentState(PageContentState.StateType.NOT_FOUND);
@@ -580,15 +584,16 @@ public class referenceEditFrameGUIBehaviour {
             JLabel middleHeadingField,
             JTextArea subHeadingField)
     {
+
         if(!pageValidityState.isValid()){
             return;
         }
-        
+
+
+
         String[] currentContent = content.get(currentIndex);
         if(currentContent != null){
-            
-            
-            
+
             new Thread(new Runnable(){
                 @Override
                 public void run() {
@@ -604,11 +609,11 @@ public class referenceEditFrameGUIBehaviour {
                         public void run() {
                             
                             superHeadingField.setText(superHeadingSetText);
-                            Utils.dynamicallyChangeFont(superHeadingField, originalSuperHeadingTextBoxFont);
+                            Utils.dynamicallyChangeFont(superHeadingField);
                             middleHeadingField.setText(middleHeadingSetText);
-                            Utils.dynamicallyChangeFont(middleHeadingField, originalMiddleHeadingTextBoxFont);
+                            Utils.dynamicallyChangeFont(middleHeadingField);
                             subHeadingField.setText(subHeadingSetText);
-                            Utils.dynamicallyChangeFont(subHeadingField, originalSubHeadingTextBoxFont);
+                            Utils.dynamicallyChangeFont(subHeadingField);
                         }
                         
                     });

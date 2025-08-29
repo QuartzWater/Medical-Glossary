@@ -9,24 +9,19 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.io.Writer;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,22 +62,10 @@ public class TermDataManagement {
             this.allTermsFile = propertiesFolder.resolve("ALLTERMS.properties");
             this.temp_allTermsFile = propertiesFolder.resolve("ALLTERMS_temp.properties");
             
-            if(!Files.exists(allTermsFile)){
+            if(!Files.exists(allTermsFile)) {
                 Files.createFile(allTermsFile);
             }
-            
-            try(BufferedReader reader = Files.newBufferedReader(allTermsFile)){
-            
-            
-            String readLine;
-            while((readLine = reader.readLine()) != null){
-                
-                allTermsList.add(readLine);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(TermDataManagement.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
             try(BufferedReader reader = Files.newBufferedReader(allTermsFile)){
                 
                 String readLine = "";
@@ -94,14 +77,13 @@ public class TermDataManagement {
                     
                     Path targetPath = root.resolve(readLine + ".term");
                     spelling = readLine;
-                    try(BufferedReader readerDefinition = Files.newBufferedReader(targetPath)){
+
+                    try(BufferedReader definitionReader = Files.newBufferedReader(targetPath)){
                         String readDefinitionLine;
-                        while((readDefinitionLine = readerDefinition.readLine()) != null){
+                        while((readDefinitionLine = definitionReader.readLine()) != null){
                             
                             definition = definition.concat(readDefinitionLine + "\n");
                         }
-                        readerDefinition.close();
-                        
                     }
                     
                     Path targetPropertiesPath = root.resolve(readLine + "_properties.properties");
@@ -127,10 +109,8 @@ public class TermDataManagement {
                         String hyperlink_3_encap = loadProp.getProperty(PropertyKey.HYPERLINK_3_ENCAP);
                         String hyperlink_4_encap = loadProp.getProperty(PropertyKey.HYPERLINK_4_ENCAP);
                         String hyperlink_5_encap = loadProp.getProperty(PropertyKey.HYPERLINK_5_ENCAP);
-                        String hyperlink_6_encap = loadProp.getProperty(PropertyKey.HYPERLINK_6_ECNAP);
-                        
-                       
-                        
+                        String hyperlink_6_encap = loadProp.getProperty(PropertyKey.HYPERLINK_6_ENCAP);
+
                         List<String> hyperlinkArray = new ArrayList<String>();
                         hyperlinkArray.add(hyperlink_1);
                         hyperlinkArray.add(hyperlink_2);
@@ -146,12 +126,12 @@ public class TermDataManagement {
                         hyperlinkEncapsulationArray.add(hyperlink_4_encap);
                         hyperlinkEncapsulationArray.add(hyperlink_5_encap);
                         hyperlinkEncapsulationArray.add(hyperlink_6_encap);
-                        
-                        
-                        
+
                         Term loadedTerm = new Term(spelling, definition, superHeadingContent, middleHeadingContent, subHeadingContent, Integer.parseInt(page), hyperlinkArray, hyperlinkEncapsulationArray);
                         
                         termMap.put(spelling, loadedTerm);
+                        allTermsList.add(spelling);
+
                         readLine = "";
                         spelling = "";
                         definition = "";
@@ -174,13 +154,11 @@ public class TermDataManagement {
         
         String spelling = newTerm.getSpelling();
         String definition = newTerm.getDefinition();
-        
-        
-        
+
         Path definitionFile = rootFolder.resolve(spelling + ".term");
         
         try(BufferedWriter writer = Files.newBufferedWriter(temp_allTermsFile, StandardOpenOption.CREATE_NEW,
-                                                              StandardOpenOption.APPEND)){
+                                                              StandardOpenOption.TRUNCATE_EXISTING)){
             
             for (int i = 0; i < allTermsList.size(); i++) {
                 writer.write(allTermsList.get(i));
@@ -227,7 +205,7 @@ public class TermDataManagement {
             prop.setProperty(PropertyKey.HYPERLINK_3_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(2) );
             prop.setProperty(PropertyKey.HYPERLINK_4_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(3) );
             prop.setProperty(PropertyKey.HYPERLINK_5_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(4) );
-            prop.setProperty(PropertyKey.HYPERLINK_6_ECNAP, newTerm.getHyperlinkEncapsulationByIndex(5) );
+            prop.setProperty(PropertyKey.HYPERLINK_6_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(5) );
             
             
         
@@ -252,6 +230,7 @@ public class TermDataManagement {
                 operationFailure = true;
             }finally{
                 if(!operationFailure){
+                    allTermsList.add(spelling);
                     termMap.put(spelling, newTerm);
                     System.out.println("Successfully saved '" + newTerm.getSpelling() + "'");
                 }
@@ -279,13 +258,17 @@ public class TermDataManagement {
         Path temp_newPropertiesFile = rootFolder.resolve(newSpelling +"_properties_temp.properties");
         
         int indexOF = allTermsList.indexOf(oldSpelling);
-        allTermsList.set(indexOF, newSpelling);
+
+        List<String> tempAllTermsList = new ArrayList<>();
+        tempAllTermsList.addAll(allTermsList);
+
+        tempAllTermsList.set(indexOF, newSpelling);
         
         try(BufferedWriter writer = Files.newBufferedWriter(temp_allTermsFile)){
             
-            for(int i = 0; i < allTermsList.size(); i++){
+            for(int i = 0; i < tempAllTermsList.size(); i++){
                 
-                writer.write(allTermsList.get(i));
+                writer.write(tempAllTermsList.get(i));
                 writer.newLine();
             }
         } catch (IOException ex) {
@@ -293,12 +276,13 @@ public class TermDataManagement {
             System.err.println("ALLTERMS.properties couldn't be updated! ");
             operationFailure = true;
         }
-        
+
         try(BufferedWriter writer = Files.newBufferedWriter(temp_newDefinitionFile)){
-            
+
+            writer.write(newDefinition);
             Files.delete(oldDefinitionFile);
             Files.delete(oldPropertiesFile);
-            writer.write(newDefinition);
+
         } catch (IOException ex) {
             Logger.getLogger(TermDataManagement.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Definition couldn't be updated! ");
@@ -324,7 +308,7 @@ public class TermDataManagement {
         prop.setProperty(PropertyKey.HYPERLINK_3_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(2) );
         prop.setProperty(PropertyKey.HYPERLINK_4_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(3) );
         prop.setProperty(PropertyKey.HYPERLINK_5_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(4) );
-        prop.setProperty(PropertyKey.HYPERLINK_6_ECNAP, newTerm.getHyperlinkEncapsulationByIndex(5) );
+        prop.setProperty(PropertyKey.HYPERLINK_6_ENCAP, newTerm.getHyperlinkEncapsulationByIndex(5) );
        
         try(BufferedWriter writer = Files.newBufferedWriter(temp_newPropertiesFile)){
             
@@ -356,6 +340,8 @@ public class TermDataManagement {
         }
         if(!operationFailure){
             termMap.put(newSpelling, newTerm); // Add/Update with new term object
+            allTermsList.clear();
+            allTermsList.addAll(tempAllTermsList);
             System.out.println("Successfully updated from '" + oldSpelling + "' to '" + newTerm.getSpelling() + "'");
         }else{
             System.err.println("'" + oldSpelling + "' to '" + newTerm.getSpelling() + "' change was not executed properly!");
