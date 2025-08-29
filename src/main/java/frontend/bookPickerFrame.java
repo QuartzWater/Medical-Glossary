@@ -152,6 +152,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
         yearLabel = new javax.swing.JLabel();
         ordinalNumberLabel = new javax.swing.JLabel();
         leftRotateLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Medical Glossary - Choose A Book");
@@ -221,6 +222,10 @@ public class bookPickerFrame extends javax.swing.JFrame {
         leftRotateLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(leftRotateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, 80));
 
+        jLabel1.setForeground(java.awt.Color.white);
+        jLabel1.setText("> Settings (Not Implemented Yet)");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
 
         pack();
@@ -233,6 +238,7 @@ public class bookPickerFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel leftRotateLabel;
     private javax.swing.JLabel ordinalIndicatorLabel;
