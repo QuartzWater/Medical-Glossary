@@ -14,6 +14,8 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -140,6 +142,8 @@ public class SourceFrame extends javax.swing.JFrame {
         
         bookLabel.setText(book.getTitle());
         bookLabel.setForeground(book.getColorScheme().getHoverColor());
+        containerPane.getViewport().setOpaque(false);
+        containerPane.setVisible(false);
         
     }
     
@@ -215,6 +219,16 @@ public class SourceFrame extends javax.swing.JFrame {
         
         return svgBrowserIcon;
     }
+    
+    protected JPanel getParentPanel(){
+        
+        return this.parentPanel;
+    }
+    
+    protected JScrollPane getContainerPane(){
+        
+        return this.containerPane;
+    }
 
     // ADD FUTURE GETTERS HERE
     
@@ -228,6 +242,10 @@ public class SourceFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         parentPanel = new javax.swing.JPanel();
+        containerPane = new javax.swing.JScrollPane();
+        roundedPanel1 = new frontend.RoundedPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         spellingTextBox = new javax.swing.JTextField();
         roundedButton2 = new frontend.RoundedButton();
         titleLabel = new javax.swing.JLabel();
@@ -265,6 +283,26 @@ public class SourceFrame extends javax.swing.JFrame {
         parentPanel.setMinimumSize(new java.awt.Dimension(1200, 700));
         parentPanel.setPreferredSize(new java.awt.Dimension(1200, 700));
         parentPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        containerPane.setBorder(null);
+        containerPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        containerPane.setOpaque(false);
+
+        roundedPanel1.setCurrentColor(new java.awt.Color(204, 204, 204));
+        roundedPanel1.setOpaque(true);
+        roundedPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 660, 30));
+
+        roundedPanel1.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 60));
+
+        containerPane.setViewportView(roundedPanel1);
+
+        parentPanel.add(containerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 182, 680, 210));
 
         spellingTextBox.setBackground(new java.awt.Color(68, 96, 122));
         spellingTextBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -463,12 +501,15 @@ public class SourceFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bookLabel;
+    private javax.swing.JScrollPane containerPane;
     private frontend.RoundedPanel decorativeDefinitionPanel;
     private frontend.RoundedPanel decorativeOtherInfoPanel;
     private frontend.RoundedPanel decorativeReferencePanel;
     private javax.swing.JLabel definitionHeaderLabel;
     private javax.swing.JTextArea definitionTextArea;
     private javax.swing.JLabel hyperlinkInfoLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel middleHeadingLabel;
     private javax.swing.JLabel middleHeadingTextBox;
     private javax.swing.JPanel otherInfoContainerPanel;
@@ -479,6 +520,7 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JPanel referenceContainerPanel;
     private javax.swing.JLabel referenceHeaderLabel;
     private frontend.RoundedButton roundedButton2;
+    private frontend.RoundedPanel roundedPanel1;
     private javax.swing.JTextField spellingTextBox;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel subHeadingLabel;

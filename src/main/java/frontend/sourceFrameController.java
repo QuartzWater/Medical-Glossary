@@ -22,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -43,8 +45,8 @@ public class sourceFrameController {
     private Book initialisedBook;
     private boolean termFound;
     private TermDataManagement tdm;
-    
-    
+    private SuggestionPanel sp;
+            
     private SourceFrame sf;
     
     private final String DEFAULT_SPELLING = "_PLACE_HOLDER_";
@@ -70,6 +72,8 @@ public class sourceFrameController {
     private JLabel bookLabel;
     private JLabel hyperlinkInfoLabel;
     private SVGIconPanel SVGBrowserIconPanel;
+    private JPanel parentPanel;
+    private JScrollPane containerPane;
     // ADD HERE IN FUTURE
     
     // ******* END OF VARIABLES DECLARATION ******* //
@@ -140,6 +144,7 @@ public class sourceFrameController {
         this.termFound = termFound;
         this.sf = sf;
         
+        
         // **** GUI VARIABLES INITIALIZATION ***** //
         
         this.spellingBox = sf.getSpellingBox();
@@ -152,10 +157,12 @@ public class sourceFrameController {
         this.bookLabel = sf.getBookLabel();
         this.hyperlinkInfoLabel = sf.getHyperlinkInfoLabel();
         this.SVGBrowserIconPanel = sf.getSVGBrowserIconPanel();
-        
+        this.parentPanel = sf.getParentPanel();
+        this.containerPane = sf.getContainerPane();
         // ADD HERE IN FUTURE
         
         // *** END OF VARIABLES INITIALIZATION *** //
+        
         
         originalSuperHeadingTextBoxFont = superHeadingBox.getFont();
         originalMiddleHeadingTextBoxFont = middleHeadingBox.getFont();
@@ -167,6 +174,10 @@ public class sourceFrameController {
         granMAdapt_svgPanel.setCanRespondToClick(false);
         granMAdapt_svgPanel.setCanRespondToHover(false);
         granMAdapt_svgPanel.setCanRespondToPress_Release(false);
+        
+        // IF CLASS CAST EXCEPTION OCCURS THEN ALWAYS LOOK AT THIS FIRST:::
+        this.sp = new SuggestionPanel(containerPane, (RoundedPanel) containerPane.getViewport().getComponent(0), parentPanel);
+        //                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     }
     
     public static void initializeController(Book initialisedBook, TermDataManagement tdm, Term currentTerm, boolean termFound, SourceFrame sf){
@@ -314,6 +325,7 @@ public class sourceFrameController {
             public void insertUpdate(DocumentEvent e) {
                 // This method is called when text is inserted
                 checkTerm();
+                sp.hide();
                 waitForStabilization(300);
                     
                 
@@ -323,6 +335,7 @@ public class sourceFrameController {
             public void removeUpdate(DocumentEvent e) {
                 // This method is called when text is removed
                 checkTerm();
+                sp.hide();
                 waitForStabilization(300);
                 
             }
@@ -331,6 +344,7 @@ public class sourceFrameController {
             public void changedUpdate(DocumentEvent e) {
                 // This method is called when attributes change (less common for JTextField)
                 checkTerm();
+                sp.hide();
                 waitForStabilization(300);
             }
 
@@ -360,7 +374,8 @@ public class sourceFrameController {
         ActionListener spellingActListen = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(searchSpellingWaitGroup.activeCount() == 0){
+                System.out.println(spellingBox.getActionListeners().length);
+                if(searchSpellingWaitGroup.activeCount() == 0 && !sp.isSuggestionNavigationActive()){
                     JTextComponent[] textComponents = {
                         spellingBox, definitionArea  
                     };
@@ -369,6 +384,12 @@ public class sourceFrameController {
                 
                     def.setVisible(true);
                     def.requestFocusInWindow();
+                }
+                
+                else{
+                    if(sp.isSuggestionNavigationActive()){
+                        System.out.println("suggestion active!");
+                    }
                 }
             }
         };
@@ -422,6 +443,8 @@ public class sourceFrameController {
             Utils.dynamicallyChangeFont(subHeadingBox);
             definitionArea.setText(currentTerm.getDefinition());
             
+            
+            sp.hide();
         }
         else
         {
@@ -437,13 +460,19 @@ public class sourceFrameController {
             else{
                 statusLabel.setText(DEFAULT_STATUS_TEXT);
             }
-            
+            subHeadingBox.setText(DEFAULT_REFERENCE);
             pageBox.setText(DEFAULT_REFERENCE);
             superHeadingBox.setText(DEFAULT_REFERENCE);
             middleHeadingBox.setText(DEFAULT_REFERENCE);
-            subHeadingBox.setText(DEFAULT_REFERENCE);
+            
             definitionArea.setText(DEFAULT_DEFINITION);
+            if(!spellingBox.getText().isBlank())
+            sp.show(new Term(spellingBox.getText().toLowerCase()), tdm, spellingBox);
+            else
+                sp.hide();
         }
+        
+        sp.callRepaintOnParent();
     }
     
     

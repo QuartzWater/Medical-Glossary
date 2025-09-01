@@ -5,3 +5,4 @@ gitignore.io help:
 /lib/
 /target/
 /nbactions.xml
+/nbproject/
