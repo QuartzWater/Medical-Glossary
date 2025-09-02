@@ -12,7 +12,8 @@ import java.util.List;
  * @author BRIN
  */
 public class BookConstructor {
- 
+
+    
     public static List<Book> getBooksByYear(int year){
         
         List<Book> bookList = new ArrayList<>();
@@ -20,6 +21,7 @@ public class BookConstructor {
         switch(year){
             
             case 1 :{
+                
                  bookList.add(Book.GRAYS_ANATOMY);
                  bookList.add(Book.HARPERS_ILLUSTRATED_BIOCHEMISTRY);
                  bookList.add(Book.GUYTON_AND_HALL_TEXTBOOK_OF_MEDICAL_PHYSIOLOGY);

@@ -81,7 +81,7 @@ public class SearchTermAlgorithm {
         
         List<String> prefixList = new LinkedList<>();
         
-        int searchDepth = 0; // Maximum Search Depth
+        int searchDepth = 1; // Maximum Search Depth
         int termSpellingLength = termSpelling.length();
         
         if(currentType == SearchType.SHALLOW_SEARCH){
@@ -97,21 +97,22 @@ public class SearchTermAlgorithm {
                 searchDepth--;
             }
             
+        }else if(currentType == SearchType.DEEP_SEARCH){
+            searchDepth = 1;
         }
         
-        if(termSpellingLength == 1){
-            searchDepth = 0;
+        if(termSpellingLength == 1 || termSpellingLength == 2){
+            searchDepth = 1;
         }
         
-        for(int i = termSpellingLength; i > searchDepth; i--){
+        for(int i = termSpellingLength; i >= searchDepth;){
             prefixList.add(termSpelling.substring(0, i));
+            i--;
         }
         
         
         for(String prefix : prefixList){
-            
-            System.out.println("ran");
-            System.out.println(prefixList.size());
+           
             for(String  currentTerm : allTermsList){
                 
                 

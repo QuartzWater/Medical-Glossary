@@ -263,6 +263,10 @@ public class SourceFrame extends javax.swing.JFrame {
         otherInfoContainerPanel = new javax.swing.JPanel();
         hyperlinkInfoLabel = new javax.swing.JLabel();
         svgBrowserIcon = new frontend.SVGIconPanel();
+        svgBrowserIcon1 = new frontend.SVGIconPanel();
+        hyperlinkInfoLabel1 = new javax.swing.JLabel();
+        hyperlinkInfoLabel2 = new javax.swing.JLabel();
+        svgBrowserIcon2 = new frontend.SVGIconPanel();
         decorativeReferencePanel = new frontend.RoundedPanel();
         decorativeOtherInfoPanel = new frontend.RoundedPanel();
         otherInfoHeaderLabel = new javax.swing.JLabel();
@@ -439,6 +443,64 @@ public class SourceFrame extends javax.swing.JFrame {
 
         otherInfoContainerPanel.add(svgBrowserIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 60, 60));
 
+        try {
+            svgBrowserIcon1.set_SVG_URL_String("/images/icons/photo-x.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        svgBrowserIcon1.setbgSquarePadding(4.0);
+        svgBrowserIcon1.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
+        svgBrowserIcon1.setIconSquarePadding(6.0);
+
+        javax.swing.GroupLayout svgBrowserIcon1Layout = new javax.swing.GroupLayout(svgBrowserIcon1);
+        svgBrowserIcon1.setLayout(svgBrowserIcon1Layout);
+        svgBrowserIcon1Layout.setHorizontalGroup(
+            svgBrowserIcon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        svgBrowserIcon1Layout.setVerticalGroup(
+            svgBrowserIcon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        otherInfoContainerPanel.add(svgBrowserIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 60, 60));
+
+        hyperlinkInfoLabel1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        hyperlinkInfoLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkInfoLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hyperlinkInfoLabel1.setText("Images");
+        hyperlinkInfoLabel1.setToolTipText("");
+        otherInfoContainerPanel.add(hyperlinkInfoLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 80, -1));
+
+        hyperlinkInfoLabel2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        hyperlinkInfoLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        hyperlinkInfoLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hyperlinkInfoLabel2.setText("Test");
+        hyperlinkInfoLabel2.setToolTipText("");
+        otherInfoContainerPanel.add(hyperlinkInfoLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 80, -1));
+
+        try {
+            svgBrowserIcon2.set_SVG_URL_String("/images/icons/book-check-55-percent-opaque.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        svgBrowserIcon2.setbgSquarePadding(4.0);
+        svgBrowserIcon2.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
+        svgBrowserIcon2.setIconSquarePadding(6.0);
+
+        javax.swing.GroupLayout svgBrowserIcon2Layout = new javax.swing.GroupLayout(svgBrowserIcon2);
+        svgBrowserIcon2.setLayout(svgBrowserIcon2Layout);
+        svgBrowserIcon2Layout.setHorizontalGroup(
+            svgBrowserIcon2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+        svgBrowserIcon2Layout.setVerticalGroup(
+            svgBrowserIcon2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
+        otherInfoContainerPanel.add(svgBrowserIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 60, 60));
+
         parentPanel.add(otherInfoContainerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 550, 590, 130));
 
         javax.swing.GroupLayout decorativeReferencePanelLayout = new javax.swing.GroupLayout(decorativeReferencePanel);
@@ -508,6 +570,8 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JLabel definitionHeaderLabel;
     private javax.swing.JTextArea definitionTextArea;
     private javax.swing.JLabel hyperlinkInfoLabel;
+    private javax.swing.JLabel hyperlinkInfoLabel1;
+    private javax.swing.JLabel hyperlinkInfoLabel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel middleHeadingLabel;
@@ -528,6 +592,8 @@ public class SourceFrame extends javax.swing.JFrame {
     private javax.swing.JLabel superHeadingLabel;
     private javax.swing.JLabel superHeadingTextBox;
     private frontend.SVGIconPanel svgBrowserIcon;
+    private frontend.SVGIconPanel svgBrowserIcon1;
+    private frontend.SVGIconPanel svgBrowserIcon2;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

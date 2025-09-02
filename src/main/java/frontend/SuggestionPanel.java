@@ -4,6 +4,7 @@
  */
 package frontend;
 
+import backend.AppConfig;
 import backend.AppConstants;
 import backend.SearchTermAlgorithm;
 import backend.Term;
@@ -68,7 +69,7 @@ public class SuggestionPanel{
         this.actualContainer.setPreferredSize(decorativePanel.getPreferredSize());
         this.parentPanel = parentPanel;
         this.decorativePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        this.sta = new SearchTermAlgorithm(SearchTermAlgorithm.SearchType.DEEP_SEARCH, 10);
+        this.sta = new SearchTermAlgorithm(AppConfig.getSearchDepth(), 10);
         
         // initialization
     }
@@ -83,7 +84,6 @@ public class SuggestionPanel{
         List<String> suggestions = sta.get(term, tdm);
         List<RoundedButton> rdbSuggestionList = new ArrayList<>();
         
-        System.out.println(term.getSpelling());
         int termCount = suggestions.size();
         
         int buttonWidth = jtx.getWidth() - buttonHorizontalPadding;
@@ -96,7 +96,6 @@ public class SuggestionPanel{
         }
         panelHeight += buttonVerticalPadding;
         
-        System.out.println("panelHeight: " + panelHeight);
         Dimension dim = new Dimension(jtx.getWidth(), panelHeight);
         decorativePanel.setPreferredSize(dim);
         decorativePanel.setSize(dim);
@@ -232,14 +231,12 @@ public class SuggestionPanel{
         KeyStroke downKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
         KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
         
-        
         InputMap inputMap = jtx.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = jtx.getActionMap();
         
         String upActionName = "upAction";
         String downActionName = "downAction";
         String escapeActionName = "escapeAction";
-        
         
         Action upAction = new AbstractAction() {
             @Override
@@ -266,7 +263,6 @@ public class SuggestionPanel{
             }
         };
         
-        
         actList = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -287,21 +283,18 @@ public class SuggestionPanel{
         inputMap.put(escapeKeyStroke, escapeActionName);
         actionMap.put(escapeActionName, escapeAction);
         
-        
     }
+    
     
     private enum actionType {
         UP, DOWN
     }
     
     int firstVisibleIndex = 0;
-            
     
     private void changeButtonInFocus(actionType atype, List<RoundedButton> rdbList){
         int previousCurrentButtonIndex = currentButtonIndex;
         int changeValue = 0;
-        
-        
         
         switch (atype) {
             case UP -> {
@@ -312,15 +305,11 @@ public class SuggestionPanel{
                     firstVisibleIndex = rdbList.size() - visibleButtonsAtATime;
                     changeValue = jscrp.getVerticalScrollBar().getMaximum();
                 }
-                
                 else if(currentButtonIndex < firstVisibleIndex){
                     changeValue = -(buttonHeight + buttonVerticalPadding);
                     firstVisibleIndex--;
                     
                 }
-                
-               
-                
             }
             
             case DOWN -> {
@@ -338,12 +327,9 @@ public class SuggestionPanel{
                     changeValue = buttonHeight + buttonVerticalPadding;
                     
                 }
-                
             }
             
         }
-        
-        System.out.println("First Visible Index: " + firstVisibleIndex);
         
         jscrp.getVerticalScrollBar().setValue(jscrp.getVerticalScrollBar().getValue() + changeValue);
         

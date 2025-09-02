@@ -9,9 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -31,9 +34,23 @@ public class AppConfig {
     
     public static final String USER_HOME;
     public static final String EXT_APP_CONFIG_HOME;
-    public static final String EXT_CONFIG_FILE_NAME;
-    public static final Path EXT_CONFIG_PROPERTIES_PATH;
-    public static final Properties EXT_CONFIG_PROPERTIES;
+    public static final String EXT_APP_CONFIG_FILE_NAME;
+    public static final Path EXT_APP_CONFIG_PROPERTIES_PATH;
+    
+    // EXT SETTINGS AND KEY VALUES ----------------------
+    private static final Properties EXT_APP_CONFIG_PROPERTIES;
+    private static final Properties EXT_APP_CONFIG_PROPERTIES_DUPLICATE;
+    public interface ExternalPropertiesKey{
+        public static final String STORAGE_PATH = "storage.path";
+        public static final String SEARCH_DEPTH = "search.depth";
+    }
+    
+    // END OF EXT PROPERTIES SECTION
+    
+    // DEFAULT EXT PROPERTIES 
+    public static final Path DEFAULT_STORAGE_PATH;
+    // END OF DEFAULT EXT PROPERTIES
+    
     
     static {
         
@@ -61,7 +78,7 @@ public class AppConfig {
         //</editor-fold>
 
         EXT_APP_CONFIG_HOME = ".medicalglossary";
-        EXT_CONFIG_FILE_NAME = "config.properties";
+        EXT_APP_CONFIG_FILE_NAME = "config.properties";
         // ALWAYS CHANGE THIS IF YOU CHANGE <group-id> or <artifact-id> OF THE PROJECT
         POM_PROPERTIES_VIA_CLASSLOADER = "META-INF/maven/quartzwater/Medical-Glossary/pom.properties";
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<group-id>^^^<artifact-id>^^^^^^^^^^^^^^^^^^^
@@ -93,13 +110,16 @@ public class AppConfig {
         
         System.out.println("Application Version: " + VERSION);
         
+        // EXTERNAL CONFIGURATION INITILZATION::::::::::::::::::::::::::::::::::
+        
         USER_HOME = System.getProperty("user.home");
-        EXT_CONFIG_PROPERTIES_PATH = Paths.get(USER_HOME).resolve(EXT_APP_CONFIG_HOME).resolve(EXT_CONFIG_FILE_NAME);
+        EXT_APP_CONFIG_PROPERTIES_PATH = Paths.get(USER_HOME).resolve(EXT_APP_CONFIG_HOME).resolve(EXT_APP_CONFIG_FILE_NAME);
+        DEFAULT_STORAGE_PATH = Paths.get(USER_HOME).resolve("Medical-Glossary");
         
         /*
         // REMOVE THIS CODE IN FINAL SHIPMENT
         try {
-            Files.delete(AppConfig.EXT_CONFIG_PROPERTIES_PATH);
+            Files.delete(AppConfig.EXT_APP_CONFIG_PROPERTIES_PATH);
         } catch (IOException ex) {
             System.err.println("No such file : TODO REMOVE THIS CODE : AppConfig.java : line 104");
         }
@@ -113,29 +133,60 @@ public class AppConfig {
             extProp = new Properties();
             // First time running, prompt the user
             JOptionPane.showMessageDialog(null, "Please select the location where you would like to save the terms.");
+            
+            boolean isARoot = true;
+            File[] roots = File.listRoots();
 
-            JFileChooser chooser = new JFileChooser();
+            while (isARoot) {                
+                isARoot = false;
+                JFileChooser chooser = new JFileChooser();
             
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            
-            int option = chooser.showOpenDialog(null);
-            
-            if (option == JFileChooser.APPROVE_OPTION) {
-                File selectedDir = chooser.getSelectedFile();
-                String storagePath = selectedDir.getAbsolutePath();
-                
-                extProp.setProperty(PropertyKey.STORAGE_PATH, storagePath);
-                AppConfig.setExternalConfiguration(extProp);
-                
-                JOptionPane.showMessageDialog(null, "Welcome to Medical Glossary " + VERSION + "!");
-            } else {
-                // User cancelled -> exit application
-                System.exit(0);
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+                int option = chooser.showOpenDialog(null);
+
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File selectedDir = chooser.getSelectedFile();
+                    
+                    for(File f : roots){
+                        if(selectedDir.equals(f)){
+                            isARoot = true;
+                        }
+                    }
+                    String storagePath = selectedDir.getAbsolutePath();
+                    
+
+                    if(!isARoot){
+                        extProp.setProperty(AppConfig.ExternalPropertiesKey.STORAGE_PATH, storagePath);
+                        extProp.setProperty(AppConfig.ExternalPropertiesKey.SEARCH_DEPTH, "DEEP_SEARCH");
+                        try {
+                            AppConfig.setExternalConfiguration(extProp);
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(
+                                null, 
+                                "Error encountered while trying to create the configuration file: \njava.io.IOException: " + ex.getMessage(), 
+                                "Error", 
+                                JOptionPane.ERROR_MESSAGE);
+                            System.getLogger(AppConfig.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        }
+
+                        JOptionPane.showMessageDialog(null, "Welcome to Medical Glossary " + VERSION + "!");
+                    }
+                    else{
+                        
+                        JOptionPane.showMessageDialog(null, "Selected directory was found to be root directory! This may cause permission issues. Please select another directory");
+                    }
+                } else {
+                    // User cancelled -> exit application
+                    System.exit(0);
+                }
             }
+            
         }
 
-        EXT_CONFIG_PROPERTIES = extProp;
-        
+        EXT_APP_CONFIG_PROPERTIES = extProp;
+        EXT_APP_CONFIG_PROPERTIES_DUPLICATE = new Properties();
+        EXT_APP_CONFIG_PROPERTIES_DUPLICATE.putAll(EXT_APP_CONFIG_PROPERTIES);
     }
     
     /** Gets external configuration stored in predetermined configuration location
@@ -147,7 +198,7 @@ public class AppConfig {
         
         try {
             Properties prop;
-            try (InputStream newInputStream = Files.newInputStream(EXT_CONFIG_PROPERTIES_PATH)) {
+            try (InputStream newInputStream = Files.newInputStream(EXT_APP_CONFIG_PROPERTIES_PATH)) {
                 prop = new Properties();
                 prop.load(newInputStream);
             }
@@ -163,20 +214,210 @@ public class AppConfig {
      * 
      * @param extProp The final configuration property to be saved.
      */
-    private static void setExternalConfiguration(Properties extProp){
+    private static void setExternalConfiguration(Properties extProp) throws IOException{
         try {
             
-            Files.createDirectories(EXT_CONFIG_PROPERTIES_PATH.getParent());
-            try (OutputStream newOutputStream = Files.newOutputStream(EXT_CONFIG_PROPERTIES_PATH)) {
+            Files.createDirectories(EXT_APP_CONFIG_PROPERTIES_PATH.getParent());
+            try (OutputStream newOutputStream = Files.newOutputStream(EXT_APP_CONFIG_PROPERTIES_PATH)) {
                 extProp.store(newOutputStream, "Application Configuration File");
             }
             
         } catch (IOException ex) {
             System.err.println("Configuration file could not be created: " + ex.getMessage());
-            System.exit(1);
+            throw new IOException("Configuration file could not be created: " + ex.getMessage());
         }
     }
+    
+    /**
+     * Gets the storage location for the application's data.
+     * <p>
+     * This method retrieves the path from the in-memory configuration. It checks if the
+     * path exists and, if not, prints an error and falls back to a default location.
+     * The default location is based on "user.home" property of system properties.
+     * </p>
+     * @return The Path object representing the application's data storage location.
+     */
+    public static final Path getStorageLocation(){
+        String storage = EXT_APP_CONFIG_PROPERTIES.getProperty(ExternalPropertiesKey.STORAGE_PATH);
+        Path storage_path = Path.of(storage);
+        if(storage_path.toFile().exists()){
+            return storage_path;
+        }
+        else {
+            System.err.println("Critical Storage Path was found to not exist! Fallback to default path");
+            return DEFAULT_STORAGE_PATH;
+        }
+    }
+    
+    
+    /**
+     * Sets the storage location for the application's data.
+     * <p>
+     * This method updates the storage path in the in-memory configuration properties.
+     * The changes will not be saved to the file until {@link #storeUserPropertiesToFile()} is called.
+     * </p>
+     * @param location The new Path object representing the desired storage location.
+     */
+    public static final void setStorageLocation(Path location){
+     
+        EXT_APP_CONFIG_PROPERTIES_DUPLICATE.setProperty(ExternalPropertiesKey.STORAGE_PATH, location.toString());
+    }
+    
+    /**
+     * Checks if Storage Path Property was changed.
+     *
+     * @return false if the original Property Object and duplicate Property Object have same key-value binding for (@link #ExternalPropertiesKey.STORAGE_PATH) otherwise true.
+     */
+    public static boolean storageLocationPropertyChanged(){
+        
+        if(EXT_APP_CONFIG_PROPERTIES.getProperty(ExternalPropertiesKey.STORAGE_PATH).equals(EXT_APP_CONFIG_PROPERTIES_DUPLICATE.getProperty(ExternalPropertiesKey.STORAGE_PATH))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
+    // This method performs the move of all files from old directory to new directory.
+    private static void transferStorage() throws IOException{
+        
+        Path oldPath = Paths.get(EXT_APP_CONFIG_PROPERTIES.getProperty(ExternalPropertiesKey.STORAGE_PATH)).resolve("Medical-Glossary");
+        Path newPath = Paths.get(EXT_APP_CONFIG_PROPERTIES_DUPLICATE.getProperty(ExternalPropertiesKey.STORAGE_PATH)).resolve("Medical-Glossary");
+        
+        
+        // Check if the source directory exists
+        if (Files.exists(oldPath)) {
+            // Perform the atomic move
+            Files.move(oldPath, newPath, StandardCopyOption.ATOMIC_MOVE);
+            System.out.println("Directory moved successfully.");
+        } else {
+            System.out.println("Source directory does not exist.");
+        }
+        
+    }
+    
+    /**
+     * Gets the "search depth" setting.
+     * <p>
+     * The method retrieves the search depth from the in-memory configuration properties.
+     * It handles cases where the property is missing, empty, or an invalid value,
+     * in which case it defaults to {@code SearchTermAlgorithm.SearchType.DEEP_SEARCH}.
+     * </p>
+     * @return The {@code SearchTermAlgorithm.SearchType} representing the default search depth.
+     */
+    public static final SearchTermAlgorithm.SearchType getSearchDepth(){
+        String searchType = EXT_APP_CONFIG_PROPERTIES.getProperty(ExternalPropertiesKey.SEARCH_DEPTH);
+        
+        if(searchType == null || searchType.isEmpty()){
+            System.err.println("Empty Search Depth Type found. \nFallback to default value: DEEP_SEARCH");
+            return SearchTermAlgorithm.SearchType.DEEP_SEARCH;
+        }
+        
+        try{
+            SearchTermAlgorithm.SearchType stype = SearchTermAlgorithm.SearchType.valueOf(searchType);
+            return stype;
+            
+        }catch (IllegalArgumentException e){
+            System.err.println("Inavlid Search Depth Type: '" + searchType + "' \nFallback to default value: DEEP_SEARCH");
+            return SearchTermAlgorithm.SearchType.DEEP_SEARCH;
+        }
+        
+    }
+    
+    /**
+     * Sets the "search depth" for the term search.
+     * <p>
+     * This method updates the search depth in the in-memory configuration properties.
+     * The changes will not be saved to the file until {@link #storeUserPropertiesToFile()} is called.
+     * </p>
+     * @param searchDepth The {@code SearchTermAlgorithm.SearchType} to set as the default search depth.
+     */
 
+    public static final void setSearchDepth(SearchTermAlgorithm.SearchType searchDepth){
+        String toSet = "undefined";
+        switch (searchDepth) {
+            case DEEP_SEARCH -> {
+                toSet = searchDepth.name();
+            }
+            
+            case BALANCED_SEARCH -> {
+                toSet = searchDepth.name();
+            }
+            
+            case SHALLOW_SEARCH -> {
+                toSet = searchDepth.name();
+            }
+        }
+        
+        EXT_APP_CONFIG_PROPERTIES_DUPLICATE.setProperty(ExternalPropertiesKey.SEARCH_DEPTH, toSet);
+    }
+    
+    /** Checks if the Search Depth properties stored was changed.
+     *
+     * @return true if it was changed or false otherwise.
+     */
+    public static boolean searchDepthPropertyChanged(){
+        
+        if(EXT_APP_CONFIG_PROPERTIES.getProperty(ExternalPropertiesKey.SEARCH_DEPTH).equals(EXT_APP_CONFIG_PROPERTIES_DUPLICATE.getProperty(ExternalPropertiesKey.SEARCH_DEPTH))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
+    
+    /**
+     * Resets the in-memory user properties to the original state loaded from the configuration file.
+     * <p>
+     * This discards any unsaved changes made during the application's runtime.
+     * </p>
+     */
+    public static void resetUserProperties(){
+        EXT_APP_CONFIG_PROPERTIES_DUPLICATE.putAll(EXT_APP_CONFIG_PROPERTIES);
+    }
+    
+    /**
+     * Saves the in-memory user properties to the external configuration file and moves any files contained in old directory to new directory if the changes to that property were made.
+     * <p>
+     * This method saves all changes made to the configuration during the application's runtime.
+     * </p>
+     */
+    public static void storeUserPropertiesToFile() throws IOException{
+        if(storageLocationPropertyChanged()){
+            transferStorage();
+        }
+        
+        setExternalConfiguration(EXT_APP_CONFIG_PROPERTIES_DUPLICATE);
+        
+        
+        EXT_APP_CONFIG_PROPERTIES.putAll(EXT_APP_CONFIG_PROPERTIES_DUPLICATE);
+    }
+    
+    /** 
+     * Returns copy of Original Properties loaded from external file.
+     *
+     * @param prop Input Properties (Preferably Empty) which will be returned after copying the Original properties.
+     * @return
+     */
+    public static Properties getOriginal(Properties prop){
+        
+        prop.putAll(EXT_APP_CONFIG_PROPERTIES);
+        return prop;
+    }
+    
+    /**
+     * Returns copy of duplicate of Original Properties loaded from external file (whose state might have changed).
+     * The duplicate of original properties is used to register any changes (via setters) while original Properties is read-only (via getters)
+     *
+     * @param prop
+     * @return
+     */
+    public static Properties getDuplicate(Properties prop){
+        
+        prop.putAll(EXT_APP_CONFIG_PROPERTIES_DUPLICATE);
+        return prop;
+    }
     /** The main method of program.
      * 
      * @param args Command-line arguments.

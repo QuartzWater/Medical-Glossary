@@ -4,7 +4,9 @@
  */
 package frontend;
 
+import backend.AppConfig;
 import backend.ColorScheme;
+import backend.eventadapter.GranularMouseAdapter;
 import book.bookpicker.Book;
 import book.bookpicker.BookConstructor;
 import java.awt.Color;
@@ -18,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import legacy.AfterEventCode;
 
@@ -32,6 +35,7 @@ public class bookPickerController {
     private int currentYear = 1;
     
     private bookPickerFrame bpf;
+    private ColorScheme settingsButtonColorScheme;
     
     // **** DECLARATION OF GUI VARIABLES **** //
     
@@ -41,6 +45,8 @@ public class bookPickerController {
     private JLabel ordinalNumber;
     private JLabel ordinalIndicator;
     private JLabel yearLabel;
+    private SVGIconPanel settingsIcon;
+    private RoundedButton settingsButton;
     
     // ********* END OF DECLARATION ********* //
     
@@ -62,8 +68,12 @@ public class bookPickerController {
         this.ordinalNumber = bpf.getOrdinalNumberLabel();
         this.ordinalIndicator = bpf.getOrdinalIndicatorLabel();
         this.yearLabel = bpf.getYearLabel();
+        this.settingsButton = bpf.getSettingsButton();
+        this.settingsIcon = bpf.getSettingsIconPanel();
         
         // *** END OF INIT *** //
+        
+        this.settingsButtonColorScheme = new ColorScheme(new Color(44,62,80), new Color(57,75,92), Color.WHITE, new Color(44,62,80));
         
         rdbMAdaptMap = new LinkedHashMap<>();
         rdbActListenMap = new LinkedHashMap<>();
@@ -73,7 +83,7 @@ public class bookPickerController {
         addNavigationFunctionality();
         
         initializeMaps(currentYear);
-        
+        addSettingsButtonFunctionality();
     }
     
     public static void initializeController(bookPickerFrame bpf){
@@ -270,5 +280,45 @@ public class bookPickerController {
         
         numberLabel.setText(numberString);
         indicatorLabel.setText(indicator);
+    }
+    
+    private void addSettingsButtonFunctionality(){
+        
+        ActionListener settingsButtonActListen = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SettingsFrame settings = SettingsFrame.generateInstance(bpf);
+                settings.setVisible(true);
+            }
+        };
+        
+        settingsButton.addActionListener(settingsButtonActListen);
+        
+        GranularMouseAdapter settingsMAdapt = new GranularMouseAdapter() {
+            @Override
+            public void actOnMouseEntry(MouseEvent e){
+                settingsButton.setCurrentColor(settingsButtonColorScheme.getHoverColor());
+            }
+            
+            @Override
+            public void actOnMouseExit(MouseEvent e){
+                settingsButton.setCurrentColor(settingsButtonColorScheme.getDefaultColor());
+                settingsButton.setForeground(settingsButtonColorScheme.getPressedColor());
+            }
+            
+            @Override
+            public void actOnMousePress(MouseEvent e){
+                settingsButton.setCurrentColor(settingsButtonColorScheme.getPressedColor());
+                settingsButton.setForeground(settingsButtonColorScheme.getDefaultColor());
+            }
+            
+            @Override
+            public void actOnMouseRelease(MouseEvent e){
+                settingsButton.setCurrentColor(settingsButtonColorScheme.getHoverColor());
+                settingsButton.setForeground(settingsButtonColorScheme.getPressedColor());
+            }
+        };
+        
+        settingsButton.addMouseListener(settingsMAdapt);
     }
 }

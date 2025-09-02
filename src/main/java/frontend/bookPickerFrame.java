@@ -129,6 +129,16 @@ public class bookPickerFrame extends javax.swing.JFrame {
         return yearLabel;
     }
     
+    protected RoundedButton getSettingsButton(){
+        
+        return settingsButton;
+    }
+    
+    protected SVGIconPanel getSettingsIconPanel(){
+        
+        return settingsIconPanel;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,7 +162,8 @@ public class bookPickerFrame extends javax.swing.JFrame {
         yearLabel = new javax.swing.JLabel();
         ordinalNumberLabel = new javax.swing.JLabel();
         leftRotateLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        settingsIconPanel = new frontend.SVGIconPanel();
+        settingsButton = new frontend.RoundedButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Medical Glossary - Choose A Book");
@@ -222,9 +233,21 @@ public class bookPickerFrame extends javax.swing.JFrame {
         leftRotateLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(leftRotateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, 80));
 
-        jLabel1.setForeground(java.awt.Color.white);
-        jLabel1.setText("> Settings (Not Implemented Yet)");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
+        try {
+            settingsIconPanel.set_SVG_URL_String("/images/icons/settings.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        settingsIconPanel.setIconPosition(frontend.SVGIconPanel.iconPosition.CENTER);
+        settingsIconPanel.setIconSquarePadding(7.0);
+        jPanel1.add(settingsIconPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 30, 30));
+
+        settingsButton.setText("Settings");
+        settingsButton.setArcSize(15);
+        settingsButton.setCurrentColor(new java.awt.Color(44, 62, 80));
+        settingsButton.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        settingsButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel1.add(settingsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
 
@@ -238,7 +261,6 @@ public class bookPickerFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel leftRotateLabel;
     private javax.swing.JLabel ordinalIndicatorLabel;
@@ -250,6 +272,8 @@ public class bookPickerFrame extends javax.swing.JFrame {
     private frontend.RoundedButton selectionButton4;
     private frontend.RoundedButton selectionButton5;
     private frontend.RoundedButton selectionButton6;
+    private frontend.RoundedButton settingsButton;
+    private frontend.SVGIconPanel settingsIconPanel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel yearLabel;
     // End of variables declaration//GEN-END:variables

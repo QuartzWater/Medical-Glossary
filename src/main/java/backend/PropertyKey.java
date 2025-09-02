@@ -30,6 +30,6 @@ public interface PropertyKey {
     public final String HYPERLINK_6_ENCAP = "hyperlink6encap";
     
     
-    public static final String STORAGE_PATH = "storage.path";
+    
     
 }

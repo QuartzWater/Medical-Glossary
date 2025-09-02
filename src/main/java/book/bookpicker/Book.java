@@ -98,7 +98,7 @@ public enum Book{
     private final AfterEventCode actionCode;
     
     private  TermDataManagement tdm;
-    private final Path rootPath = Paths.get("rep").resolve("MedicalGlossary").resolve("books");;
+    private final Path rootPath = Paths.get("rep").resolve("Medical-Glossary").resolve("books");;
     
     private final ColorScheme colorScheme;
     private final HeadingModel headingModel;
@@ -112,9 +112,9 @@ public enum Book{
         this.actionCode = actionCode;
         this.headingModel = headingModel;
        // TODO: Remove all fluff
-        
+       
         String directory = rootPath.toString();
-        String curatedDir = directory.replace("rep", AppConfig.EXT_CONFIG_PROPERTIES.getProperty(PropertyKey.STORAGE_PATH)); 
+        String curatedDir = directory.replace("rep", AppConfig.getStorageLocation().toString()); 
         rootBookPath = Paths.get(curatedDir).resolve(bookDirectoryName);
         
     }
