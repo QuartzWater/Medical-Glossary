@@ -20,22 +20,17 @@ public class Term {
 
     // Core attributes of the term, now NOT final to allow mutability.
     private String spelling;
+    private String absoluteSpelling;
     private String definition;
     private String superHeadingContent;
     private String middleHeadingContent;
     private String subHeadingContent;
     private int page;
     
-    private String absoluteSpelling;
-    
-
     // A mutable list for hyperlinks, allowing for up to 6 links.
     private List<String> hyperlinks;
     private List<String> hyperlinkEncapsulation;
     
-    
-    
-
     // --- Static Constants for Default Messages ---
     private static final String DEFAULT_DEFINITION_PREFIX = "No definition available for '";
     private static final String DEFAULT_CHAPTER_PREFIX = "No parent chapter is decided for '";
@@ -285,7 +280,7 @@ public class Term {
     public boolean addHyperlink(String hyperlink, String hyperlinkEncapsulation) {
         if (hyperlink != null && hyperlinkEncapsulation != null 
                 && !hyperlink.trim().isEmpty() && !hyperlinkEncapsulation.trim().isBlank()
-                && (this.hyperlinks.size() < 6 || this.hyperlinkEncapsulation.size() < 6)) {
+                && (this.hyperlinks.size() < 6 && this.hyperlinkEncapsulation.size() < 6)) {
             return (this.hyperlinks.add(hyperlink) || this.hyperlinkEncapsulation.add(hyperlinkEncapsulation));
         }
         return false;

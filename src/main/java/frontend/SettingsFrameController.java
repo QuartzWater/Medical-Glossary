@@ -335,12 +335,10 @@ public class SettingsFrameController {
                     }
                     
                 }
-                else if(response == 1){
+                else if(response == 1 || response == -1){ // FIX for v0.5.0: fixed issue where pressing cross upon getting confirmation message for changing storage location would not reset the storage location field.
                     storageLocation.setText(AppConfig.getStorageLocation().toString());
                     AppConfig.setStorageLocation(AppConfig.getStorageLocation());
                 }
-                
-                
             }
         };
         

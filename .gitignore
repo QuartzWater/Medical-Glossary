@@ -6,3 +6,4 @@ gitignore.io help:
 /target/
 /nbactions.xml
 /nbproject/
+/patchnotesv0.5.0/
