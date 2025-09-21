@@ -11,7 +11,16 @@ package backend.v2.term;
 public class IllegalTermStateException extends Exception {
     
     public enum TYPE {
-        UNDEFINED, EMPTY_SPELLING, KEYWORD_NOTFOUND, INVALID_PAIRING, EMPTY_HYPERLINK, EMPTY_ENCAPSULATION, MALFORMED_PROTOCOL, TOO_MANY_ITEMS, INVALID_PATH_EXCEPTION
+        UNDEFINED,
+        EMPTY_SPELLING,
+        KEYWORD_NOTFOUND,
+        INVALID_PAIRING,
+        EMPTY_HYPERLINK,
+        EMPTY_ENCAPSULATION,
+        MALFORMED_PROTOCOL,
+        TOO_MANY_ITEMS,
+        INVALID_PATH_EXCEPTION, 
+        BAD_LOCATION
     }
     
     private TYPE type = TYPE.UNDEFINED;

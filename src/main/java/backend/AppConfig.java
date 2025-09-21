@@ -4,17 +4,23 @@
  */
 package backend;
 
+import backend.v2.search.SearchTermAlgorithm;
+import book.bookpicker.Book;
 import frontend.bookPickerFrame;
+import frontend.v2.state.AppState;
+import frontend.v2.window.BookPicker;
+import frontend.v2.window.Startup;
+import frontend.v2.window.mainFrame;
+import java.awt.Color;
+import java.awt.FontMetrics;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -27,6 +33,8 @@ import javax.swing.JOptionPane;
  * * @author QuartzWater
  */
 public class AppConfig {
+    
+    public static final Color FINAL_SYSTEM_TERM_CREATION_HIGHLIGHT = Color.BLUE;
     
     public static final String POM_PROPERTIES_VIA_CLASSLOADER;
     public static final Properties INT_PROJECT_CONFIG_PROPERTIES;
@@ -51,8 +59,17 @@ public class AppConfig {
     public static final Path DEFAULT_STORAGE_PATH;
     // END OF DEFAULT EXT PROPERTIES
     
-    
+    // don't ask why is everything in the static block. I know its somewhat problematic and can cause subtle problems
+    // but i can NOT be bothered to refactor this rn.....
+    // It works right now as it is supposed to work...
     static {
+        Runtime rt = Runtime.getRuntime();
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("MEMORY ALLOCATION *BEFORE* EVEN MAIN CLASS IS LOADED: ");
+        System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+        System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+        System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+        System.out.println("---------------------------------------------------------------------------------------");
         
         /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -76,6 +93,10 @@ public class AppConfig {
             java.util.logging.Logger.getLogger(bookPickerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        Startup startup = new Startup(null, false);
+        System.out.println("HERES A STARTUP SCREEN THAT ACTUALLY DOES NOT LOAD ANYTHING");
+        startup.setVisible(true);
 
         EXT_APP_CONFIG_HOME = ".medicalglossary";
         EXT_APP_CONFIG_FILE_NAME = "config.properties";
@@ -107,6 +128,8 @@ public class AppConfig {
         else{
             VERSION = "v" + setVersion;
         }
+        
+        startup.setVersion(VERSION);
         
         System.out.println("Application Version: " + VERSION);
         
@@ -187,6 +210,23 @@ public class AppConfig {
         EXT_APP_CONFIG_PROPERTIES = extProp;
         EXT_APP_CONFIG_PROPERTIES_DUPLICATE = new Properties();
         EXT_APP_CONFIG_PROPERTIES_DUPLICATE.putAll(EXT_APP_CONFIG_PROPERTIES);
+        
+        
+        System.out.println("ALL PROPERTIES ARE LOADED AND NOW THREAD WILL SLEEP FOR 2 SECONDS");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            System.getLogger(AppConfig.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        System.out.println("NOW THE STARTUP SCREEN WILL BECOME INVISIBLE");
+        startup.setVisible(false);
+        
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("MEMORY ALLOCATION *AFTER* MAIN CLASS AND RELEVANT PROPERTIES ARE COMPLETELY LOADED: ");
+        System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+        System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+        System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+        System.out.println("---------------------------------------------------------------------------------------");
     }
     
     /** Gets external configuration stored in predetermined configuration location
@@ -424,14 +464,75 @@ public class AppConfig {
      */
     public static void main(String args[]) {
         
-        System.out.println("Welcome to Medical Glossary " + VERSION + "!");
+        // PROBLEM: WHEN PRESSING UP 
+        
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                bookPickerFrame bpf = bookPickerFrame.generateInstance();
-                bpf.setVisible(true);
-                bpf.requestFocusInWindow();
+
+                // bookPickerFrame is from v0.4.0 and prior.
+                //bookPickerFrame bpf = bookPickerFrame.generateInstance();
+                
+                Runtime rt = Runtime.getRuntime();
+
+                System.out.println("Welcome to Medical Glossary " + VERSION + "!");
+                
+                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("MEMORY ALLOCATION *BEFORE* BOOK PICKER FRAME IS CONSTURCTED: ");
+                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+                System.out.println("---------------------------------------------------------------------------------------");
+                
+                // following v0.5.0 BookPicker will be shown first.
+                Book toSetBook = BookPicker.showBookPicker();
+                
+                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("MEMORY ALLOCATION *AFTER* BOOK PICKER FRAME IS CONSTURCTED, SET VISIBLE AND ALL TERMS FROM SELECTED BOOK ARE LOADED: ");
+                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+                System.out.println("---------------------------------------------------------------------------------------");
+                
+                boolean toContinue = true;
+
+                if(toSetBook == null){
+                    System.out.println("Book was null");
+                    toContinue = false;
+                }
+                else{
+                    AppState.changeBook(toSetBook);
+                }
+                
+                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("MEMORY ALLOCATION *BEFORE* MAIN FRAME IS CONSTURCTED: ");
+                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+                System.out.println("---------------------------------------------------------------------------------------");
+                
+                if
+                    (!toContinue) System.exit(0);
+                else 
+                    new mainFrame().setVisible(true);
+                
+                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("MEMORY ALLOCATION *AFTER* MAIN FRAME IS CONSTURCTED AND SET VISIBLE:");
+                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+                System.out.println("---------------------------------------------------------------------------------------");
+
+                //bpf.setVisible(true);
+                //bpf.requestFocusInWindow();
+
+                
+                
             }
         });
+        
+        
     }
     
     /** Basically useful for printing messages onto console while also clearing the previous output on same line.

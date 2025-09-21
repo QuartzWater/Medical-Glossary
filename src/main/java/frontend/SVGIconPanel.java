@@ -4,7 +4,6 @@
  */
 package frontend;
 
-import backend.SVGIconRenderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,12 +13,10 @@ import java.awt.geom.RoundRectangle2D;
 import java.beans.BeanProperty;
 import java.beans.JavaBean;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.SwingContainer;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.bridge.BridgeContext;
@@ -27,6 +24,7 @@ import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgentAdapter;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
 /**
@@ -38,6 +36,7 @@ import org.w3c.dom.svg.SVGDocument;
 public final class SVGIconPanel extends javax.swing.JPanel{
     private SVGDocument svgDocument;
     private GraphicsNode gvtRoot;
+    private BridgeContext bridgeContext;
     private SAXSVGDocumentFactory factory;
     private URL currentURL;
     private String currentURLString;
@@ -56,6 +55,7 @@ public final class SVGIconPanel extends javax.swing.JPanel{
     private double bgPaddingY;
     private double bgSquarepadding;
     
+    private static final Color DEFAULT_COLOR = new Color(0,0,0);
     
     public enum iconPosition{
         
@@ -167,6 +167,7 @@ public final class SVGIconPanel extends javax.swing.JPanel{
         this.iconPaddingX = pad[0];
         this.iconPaddingY = pad[1];
     }
+    
     public void setIconRectangularPadding(double padX, double padY){
         
         this.iconPaddingX = padX;
@@ -198,8 +199,150 @@ public final class SVGIconPanel extends javax.swing.JPanel{
         
     }
     
+    /** Overrides the current fill color of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * <p>
+     * Valid formats for {@code value} are:
+     * <br>- Hexadecimal formats (e.g. "#ff0000" for red, "#008000" for green etc.)</br>
+     * <br>- RGB function (e.g. "rgb(255,255,255)" for white of "rgb(0%, 0%, 100%)" for blue)</br>
+     * <br>- Predefined CSS keywords (e.g. "red", "blue", "transparent" etc.)</br>
+     * </p>
+     * 
+     * 
+     * @param pathID The path ID whose fill color is to be overridden
+     * @param value The new value of color and should follow one of the standard format mentioned above.
+     */
+    public void overrideFillColor(String pathID, String value){
+        
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            return;
+        }
+        element.setAttribute("fill", value);
+        this.repaint();
+    }
+    
+    /** Overrides the current stroke color of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * <p>
+     * Valid formats for {@code value} are:
+     * <br>- Hexadecimal formats (e.g. "#ff0000" for red, "#008000" for green etc.)</br>
+     * <br>- RGB function (e.g. "rgb(255,255,255)" for white of "rgb(0%, 0%, 100%)" for blue)</br>
+     * <br>- Predefined CSS keywords (e.g. "red", "blue", "transparent" etc.)</br>
+     * </p>
+     * 
+     * 
+     * @param pathID The path ID whose stroke color is to be overridden
+     * @param value The new value of color and should follow one of the standard format mentioned above.
+     */
+    public void overrideStrokeColor(String pathID, String value){
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            return;
+        }
+        element.setAttribute("stroke", value);
+        this.repaint();
+    }
     
     
+    /** Overrides the current fill opacity of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * 
+     * @param pathID The path ID whose fill opacity is to be overridden
+     * @param value The new value of opacity between 0.0 (transparent) to 1.0 (opaque)
+     */
+    public void overrideFillOpacity(String pathID, double value){
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            return;
+        }
+        element.setAttribute("fill-opacity", Double.toString(value));
+        this.repaint();
+    }
+    
+    /** Overrides the current stroke opacity of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * @param pathID The path ID whose stroke opacity is to be overridden
+     * @param value The new value of opacity between 0.0 (transparent) to 1.0 (opaque)
+     */
+    public void overrideStrokeOpacity(String pathID, double value){
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            return;
+        }
+        element.setAttribute("stroke-opacity", Double.toString(value));
+        this.repaint();
+    }
+    
+    /** Overrides the current fill attributes (color and opacity) of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * @param pathID The path ID whose fill color is to be overridden
+     * @param color The new value of color (r,g,b,a)
+     */
+    
+    public void overrideFill(String pathID, Color color){
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            System.out.println("nullllllll");
+            return;
+        }
+        String hex = String.format("#%06X", (0xFFFFFF & color.getRGB()));
+        element.setAttributeNS(null, "fill", hex);
+        
+        double opacity = color.getAlpha()/255.0;
+        element.setAttributeNS(null, "fill-opacity", Double.toString(opacity));
+        
+        this.repaint();
+    }
+    
+    /** Overrides the current stroke attributes (color and opacity) of a path contained in the SVG icon.
+     * <p>
+     * If provided {@code pathID} was not found. The method returns immediately.
+     * </p>
+     * 
+     * 
+     * @param pathID The path ID whose stroke color is to be overridden
+     * @param color The new value of color (r,g,b,a)
+     */
+    public void overrideStroke(String pathID, Color color){
+        
+        Element element = svgDocument.getElementById(pathID);
+        
+        if(element == null){
+            return;
+        }
+        String hex = String.format("#%06X", (0xFFFFFF & color.getRGB()));
+        element.setAttribute("stroke", hex);
+        
+        double opacity = color.getAlpha()/255.0;
+        element.setAttribute("stroke-opacity", Double.toString(opacity));
+        this.repaint();
+    }
     
     // ******************** GETTERS **************************** //
     
@@ -282,6 +425,41 @@ public final class SVGIconPanel extends javax.swing.JPanel{
     }
     
     
+    public Color getCurrentFill(String pathID){
+        Element elementById = svgDocument.getElementById(pathID);
+        if(elementById == null){
+            return DEFAULT_COLOR;
+        }
+        
+        String hex = elementById.getAttribute("fill");
+        Color c;
+        try {
+            c = Color.decode(hex);
+        }catch (NumberFormatException e){
+            
+            return DEFAULT_COLOR;
+        }
+        
+        return c;
+    }
+    
+    public Color getCurrentStroke(String pathID){
+        Element elementById = svgDocument.getElementById(pathID);
+        if(elementById == null){
+            return DEFAULT_COLOR;
+        }
+        
+        String hex = elementById.getAttribute("stroke");
+        Color c;
+        try {
+            c = Color.decode(hex);
+        }catch (NumberFormatException e){
+            return DEFAULT_COLOR;
+        }
+        
+        return c;
+    }
+    
     private GraphicsNode buildGVT(SVGDocument doc) {
         
         if(doc == null){
@@ -290,10 +468,11 @@ public final class SVGIconPanel extends javax.swing.JPanel{
         // 1. Create a UserAgent. This object provides information about the
         //    environment for rendering, such as font families and language.
         UserAgentAdapter userAgent = new UserAgentAdapter();
-
+        
         // 2. Create a BridgeContext. This is a crucial part of the Batik rendering
         //    pipeline. It manages how SVG elements are converted to GVT nodes.
-        BridgeContext bridgeContext = new BridgeContext(userAgent);
+        bridgeContext = new BridgeContext(userAgent);
+        bridgeContext.setDynamicState(BridgeContext.DYNAMIC); // HOLY SHIT THIS ADDITION TOOK ME THREE HOURS OF MALDING WITH REDDIT, GEMINI AND CHATGPT. (CHATGPT TOLD ME THIS AFTER THREE RETRIES)
 
         // 3. Create a GVTBuilder. This is the main class that constructs the GVT from
         //    the SVGDocument.
@@ -413,7 +592,7 @@ public final class SVGIconPanel extends javax.swing.JPanel{
     };
     
     @BeanProperty(hidden = true, description
-            = "Not useful method for this class. Use getCurrentColor to get Background of this component.")
+            = "Not useful method for this class. Use setCurrentColor to set Background of this component.")
     @Override
     public void setBackground(Color toSet){
         super.setBackground(toSet);

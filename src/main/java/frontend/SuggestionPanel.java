@@ -6,7 +6,7 @@ package frontend;
 
 import backend.AppConfig;
 import backend.AppConstants;
-import backend.SearchTermAlgorithm;
+import backend.v2.search.SearchTermAlgorithm;
 import backend.Term;
 import backend.TermDataManagement;
 import backend.eventadapter.GranularMouseAdapter;
@@ -76,7 +76,7 @@ public class SuggestionPanel{
     
     public void show(Term term, TermDataManagement tdm, JTextField jtx){
         
-        if(spellJTX == null){
+        if(spellJTX != null){
             spellJTX = jtx;
         }
         

@@ -8,7 +8,6 @@ package legacy;
  *
  * @author BRIN
  */
-import javax.swing.SwingUtilities;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;

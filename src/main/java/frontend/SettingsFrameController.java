@@ -8,7 +8,7 @@ import backend.AppConfig;
 import static backend.AppConfig.VERSION;
 import backend.AppConstants;
 import backend.ColorScheme;
-import backend.SearchTermAlgorithm;
+import backend.v2.search.SearchTermAlgorithm;
 import backend.eventadapter.GranularMouseAdapter;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -129,45 +129,42 @@ public class SettingsFrameController {
     
     private void addChangeButtonBehaviour(){
         
-        ActionListener changeButtonActListen = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser(AppConfig.getStorageLocation().toFile());
+        ActionListener changeButtonActListen = (ActionEvent e) -> {
+            JFileChooser chooser = new JFileChooser(AppConfig.getStorageLocation().toFile());
             
-                Path originalPath = AppConfig.getStorageLocation().resolve("Medical-Glossary");
-                chooser.setFileFilter(new OriginalDirectoryFilter(originalPath));
-                chooser.setDialogTitle("Select the directory where terms will be stored:");
-                chooser.setApproveButtonText("Confirm");
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-                boolean isARoot = true;
-                File[] roots = File.listRoots();
-                while(isARoot){
-                    isARoot = false;
-                    
-                    int option = chooser.showOpenDialog(null);
-
-                    if (option == JFileChooser.APPROVE_OPTION) {
-                        File selectedDir = chooser.getSelectedFile();
-                        for(File f : roots){
-                            if(selectedDir.equals(f)){
-                                isARoot = true;
-                            }
+            Path originalPath = AppConfig.getStorageLocation().resolve("Medical-Glossary");
+            chooser.setFileFilter(new OriginalDirectoryFilter(originalPath));
+            chooser.setDialogTitle("Select the directory where terms will be stored:");
+            chooser.setApproveButtonText("Confirm");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            
+            boolean isARoot = true;
+            File[] roots = File.listRoots();
+            while(isARoot){
+                isARoot = false;
+                
+                int option = chooser.showOpenDialog(null);
+                
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File selectedDir = chooser.getSelectedFile();
+                    for(File f : roots){
+                        if(selectedDir.equals(f)){
+                            isARoot = true;
                         }
-                        
-                        
-                        String storagePath = selectedDir.getAbsolutePath();
-                        Path newPath = Paths.get(storagePath).resolve("Medical-Glossary").resolve("books");
-                        
-                        if(!isARoot){
-                            storageLocation.setText(newPath.toString());
-                            AppConfig.setStorageLocation(Paths.get(storagePath));
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(null, "Selected directory was found to be root directory! This may cause permission issues. Please select another directory");
-                        }
-
                     }
+                    
+                    
+                    String storagePath = selectedDir.getAbsolutePath();
+                    Path newPath = Paths.get(storagePath).resolve("Medical-Glossary").resolve("books");
+                    
+                    if(!isARoot){
+                        storageLocation.setText(newPath.toString());
+                        AppConfig.setStorageLocation(Paths.get(storagePath));
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Selected directory was found to be root directory! This may cause permission issues. Please select another directory");
+                    }
+                    
                 }
             }
         };

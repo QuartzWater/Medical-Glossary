@@ -8,11 +8,12 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -67,13 +68,13 @@ public final class AdvancedTerm {
         
         try {
             StyledDocument DEFAULT_STYLED_DEFINITION;
-            DEFAULT_STYLED_DEFINITION = new JTextPane().getStyledDocument();
+            DEFAULT_STYLED_DEFINITION = new DefaultStyledDocument();
             DEFAULT_STYLED_DEFINITION.insertString(0, DEFAULT_PLAIN_DEFINITION, null);
             this.styledDefinition = DEFAULT_STYLED_DEFINITION;
             
         } catch (BadLocationException ex) {
             System.getLogger(AdvancedTerm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            throw new IllegalTermStateException(ex, IllegalTermStateException.TYPE.UNDEFINED);
+            throw new IllegalTermStateException("Bad Location Exception in the single argument constructor", ex, IllegalTermStateException.TYPE.BAD_LOCATION);
         }
         this.superCategory = DEFAULT_SUPER_HEADING;
         this.middleCategory = DEFAULT_MIDDLE_HEADING;
@@ -98,6 +99,13 @@ public final class AdvancedTerm {
         this.absoluteSpelling = spelling;
         this.spelling = spelling.toLowerCase();
         this.styledDefinition = styledDefinition;
+        try {
+            String plainDefinition = styledDefinition.getText(0, styledDefinition.getLength());
+            checkKeywords(keywords, plainDefinition);
+        } catch (BadLocationException ex) {
+            System.getLogger(AdvancedTerm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            throw new IllegalTermStateException("Provided definition caused a Bad Location Exception.", ex, IllegalTermStateException.TYPE.BAD_LOCATION);
+        }
         this.definitionKeywords.addAll(keywords);
         this.superCategory = superCategory;
         this.middleCategory = middleCategory;
@@ -105,6 +113,25 @@ public final class AdvancedTerm {
         this.page = page;
         
         replaceHyperlinks(hyperlinks);
+    }
+
+    public AdvancedTerm(AdvancedTerm original) {
+        
+        this.spelling = original.spelling;
+        this.absoluteSpelling = original.absoluteSpelling;
+        this.page = original.page;
+        this.superCategory = original.superCategory;
+        this.middleCategory = original.middleCategory;
+        this.subCategory = original.subCategory;
+        this.hyperlinks = new ArrayList<>();
+        
+        for(AdvancedHyperlink advHyper : original.hyperlinks){
+            this.hyperlinks.add(new AdvancedHyperlink(advHyper));
+        }
+        
+        this.definitionKeywords = new ArrayList<>();
+        this.definitionKeywords.addAll(original.definitionKeywords);
+        this.styledDefinition = original.styledDefinition; // Reference copy (TODO: MAKE IT A FULL COPY)
     }
     
     public boolean isDefault(SpellingAttribute atr){
@@ -232,9 +259,14 @@ public final class AdvancedTerm {
             checkKeywords(this.definitionKeywords, definition);
         } catch (BadLocationException ex) {
             System.getLogger(AdvancedTerm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            throw new IllegalTermStateException("Could not get text from styled document associated with this term.", ex, IllegalTermStateException.TYPE.UNDEFINED);
+            throw new IllegalTermStateException("Could not get text from styled document associated with this term.", ex, IllegalTermStateException.TYPE.BAD_LOCATION);
         }
         this.styledDefinition = styledDefinition;
+    }
+    
+    public void setNewDefinition(StyledDocument styledDefinition) throws IllegalTermStateException{
+        this.definitionKeywords.clear();
+        setDefinition(styledDefinition);
     }
     
     public void setDefinitionKeywords(List<String> keywords) throws IllegalTermStateException{
@@ -243,11 +275,12 @@ public final class AdvancedTerm {
             checkKeywords(keywords, definition);
         } catch (BadLocationException ex) {
             System.getLogger(AdvancedTerm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            throw new IllegalTermStateException("Could not get text from styled document associated with this term.", ex, IllegalTermStateException.TYPE.UNDEFINED);
+            throw new IllegalTermStateException("Could not get text from styled document associated with this term.", ex, IllegalTermStateException.TYPE.BAD_LOCATION);
         }
         
         this.definitionKeywords.clear();
         this.definitionKeywords.addAll(keywords);
+        Collections.sort(this.definitionKeywords);
     }
     
     public void setSuperCategory(String superCategory){
@@ -271,7 +304,7 @@ public final class AdvancedTerm {
         if (advHyper.size() > MAX_HYPERLINKS) {
             throw new IllegalTermStateException("Number of hyperlinks exceeds the maximum allowed.", IllegalTermStateException.TYPE.TOO_MANY_ITEMS);
         }
-
+        
         for (int i = 0; i < advHyper.size(); i++) {
             AdvancedHyperlink adv = advHyper.get(i);
             if(adv == null){
@@ -300,6 +333,22 @@ public final class AdvancedTerm {
         }
     }
     
+    public void arrangeHyperlinks(){
+        List<AdvancedHyperlink> toSet = new ArrayList<>();
+        for(AdvancedHyperlink adv : this.hyperlinks){
+            if(!adv.isDefault()){
+                toSet.add(adv);
+            }
+        }
+        
+        this.hyperlinks.clear();
+        this.hyperlinks.addAll(toSet);
+        while (this.hyperlinks.size() < MAX_HYPERLINKS) {
+            this.hyperlinks.add(new AdvancedHyperlink());
+        }
+    }
+    
+    
     private void checkSpelling(String spelling) throws IllegalTermStateException{
         if(spelling == null || spelling.isEmpty()){
             throw new IllegalTermStateException("Spelling can not be empty or null", IllegalTermStateException.TYPE.EMPTY_SPELLING);
@@ -321,7 +370,7 @@ public final class AdvancedTerm {
             }
             
             if(!definition.toLowerCase().contains(keyword.toLowerCase())){
-                throw new IllegalTermStateException("Definition contained in the styled Document assocaited with this term does not contain: '" + keyword + "' keyword. (found at index: " + Integer.toString(index) + ")", IllegalTermStateException.TYPE.KEYWORD_NOTFOUND);
+                throw new IllegalTermStateException("Definition contained in the styled Document associated with this term does not contain: '" + keyword + "' keyword. (found at index: " + Integer.toString(index) + ")", IllegalTermStateException.TYPE.KEYWORD_NOTFOUND);
             }
             index++;
         }

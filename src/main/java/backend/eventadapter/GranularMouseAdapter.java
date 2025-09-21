@@ -24,6 +24,7 @@ public class GranularMouseAdapter extends MouseAdapter{
     private boolean enableMouseWheelMotion = true;
     
     private boolean currentlyInside = false;
+    private boolean toAct = true;
     
     public GranularMouseAdapter(){
         
@@ -75,7 +76,7 @@ public class GranularMouseAdapter extends MouseAdapter{
     
     @Override
     public void mouseEntered(MouseEvent e){
-        if(enableMouseEntry){
+        if(enableMouseEntry && toAct){
             actOnMouseEntry(e);
             currentlyInside = true;
         }
@@ -83,7 +84,7 @@ public class GranularMouseAdapter extends MouseAdapter{
     
     @Override
     public void mouseExited(MouseEvent e){
-        if(enableMouseExit){
+        if(enableMouseExit && toAct){
             actOnMouseExit(e);
             currentlyInside = false;
         }
@@ -91,38 +92,38 @@ public class GranularMouseAdapter extends MouseAdapter{
     
     @Override
     public void mousePressed(MouseEvent e){
-        if(enableMousePress){
+        if(enableMousePress && toAct){
             actOnMousePress(e);
         }
     }
     
     @Override
     public void mouseReleased(MouseEvent e){
-        if(enableMouseRelease && currentlyInside)
+        if(enableMouseRelease && currentlyInside && toAct)
             actOnMouseRelease(e);
     }
     
     @Override
     public void mouseClicked(MouseEvent e){
-        if(enableMouseClick)
+        if(enableMouseClick && toAct)
             actOnMouseClick(e);
     }
     
     @Override
     public void mouseDragged(MouseEvent e){
-        if(enableMouseDrag)
+        if(enableMouseDrag && toAct)
             actOnMouseDrag(e);
     }
     
     @Override
     public void mouseMoved(MouseEvent e){
-        if(enableMouseSimpleMovement)
+        if(enableMouseSimpleMovement && toAct)
             actOnMouseMovement(e);
     }
     
     @Override 
     public void mouseWheelMoved(MouseWheelEvent e){
-        if(enableMouseWheelMotion)
+        if(enableMouseWheelMotion && toAct)
             actOnMouseWheelMovement(e);
     }
     
@@ -163,5 +164,17 @@ public class GranularMouseAdapter extends MouseAdapter{
     public boolean isInside(){
         
         return currentlyInside;
+    }
+    
+    public void switchOff(){
+        toAct = false;
+    }
+    
+    public void switchON(){
+        toAct = true;
+    }
+    
+    public boolean isSwitchedON(){
+        return toAct;
     }
 }

@@ -40,7 +40,6 @@ public class SpellingFilter extends DocumentFilter{
         if (isValidInput(fb, offset, length, text)) {
             super.replace(fb, offset, length, text, attrs);
         }
-       
         //System.out.println("replaced String: " + text);
         //System.out.println(length);
     }

@@ -10,6 +10,7 @@ import backend.ContentConstructor;
 import backend.HeadingModel;
 import backend.PropertyKey;
 import backend.TermDataManagement;
+import backend.v2.data.AdvancedTermDataManagement;
 import legacy.AfterEventCode;
 import legacy.ButtonActionCode;
 import frontend.SourceFrame;
@@ -103,6 +104,7 @@ public enum Book{
     private final ColorScheme colorScheme;
     private final HeadingModel headingModel;
     
+    private final AdvancedTermDataManagement atdm;
 
     private Book(String title, String shortHandTitle, String bookDirectoryName, HeadingModel headingModel, ColorScheme colorScheme, AfterEventCode actionCode){
         
@@ -116,7 +118,7 @@ public enum Book{
         String directory = rootPath.toString();
         String curatedDir = directory.replace("rep", AppConfig.getStorageLocation().toString()); 
         rootBookPath = Paths.get(curatedDir).resolve(bookDirectoryName);
-        
+        atdm = new AdvancedTermDataManagement(rootBookPath.resolve("globalproperties"));
     }
     
     public String getTitle(){
@@ -133,6 +135,11 @@ public enum Book{
         
         this.tdm = new TermDataManagement(this, rootBookPath);
         return this.tdm;
+    }
+    
+    public AdvancedTermDataManagement getATDM(){
+        
+        return this.atdm;
     }
     
     public ColorScheme getColorScheme(){

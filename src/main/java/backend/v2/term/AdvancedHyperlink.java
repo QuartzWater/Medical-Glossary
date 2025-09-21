@@ -48,6 +48,10 @@ public final class AdvancedHyperlink {
         this.encapsulation = encapsulation;
     }
     
+    public boolean isDefault(){
+        return hyperlink.equals(DEFAULT_HYPERLINK_TEXT) && encapsulation.equals(DEFAULT_HYPERLINK_ENCAPSULATION);
+    }
+    
     private void checkHyperlink(String hyperlink) throws  IllegalTermStateException{
         hyperlink = hyperlink.strip();
         if(hyperlink.equals(DEFAULT_HYPERLINK_TEXT)){
