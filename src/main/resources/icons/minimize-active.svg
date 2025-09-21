@@ -23,27 +23,24 @@
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="44.901281"
-     inkscape:cx="8.6523145"
-     inkscape:cy="8.3516549"
+     inkscape:cx="8.6968566"
+     inkscape:cy="8.3293837"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg1" />
-  <g
-     transform="matrix(80.000001,0,0,80.000792,-560.00002,-82893.628)"
-     id="g5"
-     style="stroke-width:0.99999504;stroke-dasharray:none;fill:#1b242d;fill-opacity:1">
-    <path
-       transform="translate(7,1037.36)"
-       d="M 4,0 C 1.784,0 0,1.784 0,4 0,6.216 1.784,8 4,8 6.216,8 8,6.216 8,4 8,1.784 6.216,0 4,0"
-       fill="#da4453"
-       id="path4"
-       style="stroke-width:0.99999504;stroke-dasharray:none;fill:#1b242d;fill-opacity:1" />
-  </g>
+  <path
+     transform="matrix(80,0,0,80.000792,-1.3e-5,95.993589)"
+     d="M 4,0 C 1.784,0 0,1.784 0,4 0,6.216 1.784,8 4,8 6.216,8 8,6.216 8,4 8,1.784 6.216,0 4,0"
+     fill="#1b242d"
+     id="back"
+     
+     inkscape:label="#back" />
   <path
      d="M 144.25197,445.401 V 383.0388 H 495.74803 V 445.401 Z"
-     id="path1"
-     style="stroke-width:0.654314;fill:#ffffff" />
+     id="minimize"
+     fill="#ffffff"
+     inkscape:label="#minimize" />
 </svg>

@@ -18,6 +18,8 @@ import frontend.v2.state.AppStateChangeEvent;
 import frontend.v2.state.AppStateChangeListener;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import javax.swing.JFrame;
 /**
  *
  * @author BRIN
@@ -33,12 +35,22 @@ public class mainFrame extends javax.swing.JFrame {
     private TermInfoContainer TICEventReference;
     SpellingContainer sc;
     SettingsContainer settings;
+    
+    private Color redCrossColor = new Color(218, 68, 83);
+    private Color redCrossColorDarker = new Color(195,57,71);
+    private Color minimizeColor = new Color(27,36,45);
+    private Color minimizeColorDarker = new Color(15,20,25);
+    private Color transparent = new Color(0,0,0,0);
     /**
      * Creates new form mainFrame
      */
     public mainFrame() {
         initComponents();
         versionLabel.setText(AppConfig.VERSION);
+        
+        redCrossIcon.overrideFill("back", transparent);
+        redCrossIcon.overrideFill("cross", redCrossColor);
+        minimizeIcon.overrideFill("back", transparent);
         
         /* Experimental:::
         decor1.definePositionsForLGP(0, 0, 0, decor1.getPreferredSize().height);
@@ -76,6 +88,9 @@ public class mainFrame extends javax.swing.JFrame {
         searchOption.addMouseListener(searchOptionsGran);
         createOption.addMouseListener(createOptionsGRAN);
         settingsOption.addMouseListener(settingsOptionsGRAN);
+        
+        redCrossIcon.addMouseListener(redCrossGran);
+        minimizeIcon.addMouseListener(minimizeGran);
         
         searchOptionsGran.provideRunnable(() -> {
             createOptionsGRAN.switchON();
@@ -269,6 +284,62 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }
     
+    private GranularMouseAdapter redCrossGran = new GranularMouseAdapter(){
+            
+        @Override
+        public void actOnMouseEntry(MouseEvent e){
+            redCrossIcon.overrideFill("back", redCrossColor);
+            redCrossIcon.overrideFill("cross", Color.WHITE);
+        }
+        
+        @Override
+        public void actOnMouseExit(MouseEvent e){
+            redCrossIcon.overrideFill("back", transparent);
+            redCrossIcon.overrideFill("cross", redCrossColor);
+        }
+        
+        @Override
+        public void actOnMousePress(MouseEvent e){
+            redCrossIcon.overrideFill("back", redCrossColorDarker);
+        
+        }
+        
+        @Override
+        public void actOnMouseRelease(MouseEvent e){
+            redCrossIcon.overrideFill("back", redCrossColor);
+            System.exit(0);
+        }
+    };
+    
+    private GranularMouseAdapter minimizeGran = new GranularMouseAdapter(){
+            
+        @Override
+        public void actOnMouseEntry(MouseEvent e){
+            
+            minimizeIcon.overrideFill("back", minimizeColor);
+        }
+        
+        @Override
+        public void actOnMouseExit(MouseEvent e){
+            
+            minimizeIcon.overrideFill("back", transparent);
+        }
+        
+        @Override
+        public void actOnMousePress(MouseEvent e){
+            
+            minimizeIcon.overrideFill("back", minimizeColorDarker);
+            
+        }
+        
+        @Override
+        public void actOnMouseRelease(MouseEvent e){
+            
+            minimizeIcon.overrideFill("back", minimizeColor);
+            setState(JFrame.ICONIFIED);
+        }
+    };
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -292,6 +363,8 @@ public class mainFrame extends javax.swing.JFrame {
         createOption = new frontend.RoundedPanel();
         createOptionLabel = new javax.swing.JLabel();
         sVGIconPanel2 = new frontend.SVGIconPanel();
+        redCrossIcon = new frontend.SVGIconPanel();
+        minimizeIcon = new frontend.SVGIconPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Medical Glossary " + AppConfig.VERSION);
@@ -306,6 +379,7 @@ public class mainFrame extends javax.swing.JFrame {
         decor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         decor2Contain.setOpaque(false);
+        decor2Contain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         decor2.add(decor2Contain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1300, 610));
 
         decor1.add(decor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 1300, 620));
@@ -378,9 +452,24 @@ public class mainFrame extends javax.swing.JFrame {
 
         decor1.add(createOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 630, 160, 60));
 
+        try {
+            redCrossIcon.set_SVG_URL_String("/icons/red-cross-active.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        decor1.add(redCrossIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(1355, 15, 40, 40));
+
+        try {
+            minimizeIcon.set_SVG_URL_String("/icons/minimize-active.svg");
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
+        }
+        decor1.add(minimizeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(1355, 60, 40, 40));
+
         getContentPane().add(decor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 700));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -389,6 +478,8 @@ public class mainFrame extends javax.swing.JFrame {
     private frontend.RoundedPanel decor1;
     private frontend.RoundedPanel decor2;
     private javax.swing.JPanel decor2Contain;
+    private frontend.SVGIconPanel minimizeIcon;
+    private frontend.SVGIconPanel redCrossIcon;
     private frontend.SVGIconPanel sVGIconPanel1;
     private frontend.SVGIconPanel sVGIconPanel2;
     private frontend.SVGIconPanel sVGIconPanel3;
