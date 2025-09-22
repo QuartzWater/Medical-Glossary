@@ -206,7 +206,7 @@ public class TermInfoContainerController {
                                 allContainers[currentIndex].setEditable();
                                 backButton.setVisible(false);
                                 nextButton.setText("Next");
-                                scc.setTextQuietly("");
+                                scc.setTextLoudly("");
                                 scc.enableSpellingBox();
                                 tc.getDC().getDefinitionPane().setStyledDocument(new DefaultStyledDocument());
                                 // DO NOT IN THE GOD DAMN HELL USE .setText() HERE!! IT'LL CLEAR EVERYTHING STORED IN-MEMORY

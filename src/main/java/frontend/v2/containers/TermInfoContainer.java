@@ -346,7 +346,6 @@ public class TermInfoContainer extends javax.swing.JPanel {
         editIcon = new frontend.SVGIconPanel();
         nextBtn = new frontend.RoundedButton();
         backBtn = new frontend.RoundedButton();
-        jLabel1 = new javax.swing.JLabel();
 
         roundedButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,9 +427,6 @@ public class TermInfoContainer extends javax.swing.JPanel {
         backBtn.setArcSize(15);
         backBtn.setCurrentColor(new java.awt.Color(15, 20, 25));
         add(backBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 480, -1, -1));
-
-        jLabel1.setText("TEST LABEL");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 500, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void roundedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundedButton1ActionPerformed
@@ -469,7 +465,6 @@ public class TermInfoContainer extends javax.swing.JPanel {
     private javax.swing.JLabel headerLabel;
     private frontend.SVGIconPanel hyperlinkIcon;
     private javax.swing.JPanel iconContainer;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private frontend.RoundedButton nextBtn;
     private frontend.SVGIconPanel referenceIcon;

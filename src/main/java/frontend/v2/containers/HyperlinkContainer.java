@@ -174,6 +174,10 @@ public non-sealed class HyperlinkContainer extends javax.swing.JPanel implements
         for(int i = 0; i < 6; i++){
             hyperlinkList.add(new AdvancedHyperlink());
         }
+        
+        activatedTrashIcons.clear();
+        activatedEditButtons.clear();
+        activatedEditButtons.add(edit1);
     }
     
     @Override

@@ -316,4 +316,8 @@ public class SpellingContainerController {
         spellingBox.setText(toSet);
         docListen.switchON();
     }
+    
+    public void setTextLoudly(String toSet){
+        spellingBox.setText(toSet);
+    }
 }

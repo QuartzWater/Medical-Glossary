@@ -4,6 +4,7 @@
  */
 package frontend.v2.containers;
 
+import backend.HeadingModel;
 import backend.v2.data.TermDataIOException;
 import backend.v2.term.AdvancedTerm;
 import backend.v2.term.IllegalTermStateException;
@@ -83,6 +84,11 @@ public non-sealed class ReferenceContainer extends javax.swing.JPanel implements
         BookInfoArea.setText(newBook.getTitle());
         BookInfoArea.setForeground(newBook.getColorScheme().getHoverColor());
         BookInfoArea.repaint();
+        
+        HeadingModel headingModel = newBook.getHeadingModel();
+        superHeadingHeader.setText(headingModel.getSuperHeading() + ":");
+        middleHeadingHeader.setText(headingModel.getMiddleHeading() + ":");
+        subHeadingHeader.setText(headingModel.getSubHeading() + ":");
     }
     
     public void changeBook(Book book){

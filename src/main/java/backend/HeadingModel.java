@@ -15,9 +15,9 @@ public class HeadingModel {
     private final String subHeading;
 
     public HeadingModel(String superHeading, String middleHeading, String subHeading) {
-        this.superHeading = superHeading;
-        this.middleHeading = middleHeading;
-        this.subHeading = subHeading;
+        this.superHeading = superHeading.toUpperCase();
+        this.middleHeading = middleHeading.toUpperCase();
+        this.subHeading = subHeading.toUpperCase();
     }
 
     public String getSuperHeading() {
