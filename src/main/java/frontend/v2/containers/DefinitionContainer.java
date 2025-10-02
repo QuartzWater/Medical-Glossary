@@ -21,6 +21,7 @@ import java.awt.Cursor;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
@@ -87,6 +88,8 @@ public non-sealed class DefinitionContainer extends javax.swing.JPanel implement
         underlineIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         colorIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         fontFaceIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        
         
         definitionScroll.setVisible(false);
         editorPanel.setVisible(false);

@@ -198,7 +198,7 @@ public class TermInfoContainerController {
                         else {
 
                             try {
-                                tc.getATDM().flush(null, tc.extractContent());
+                                AppState.getCurrentBook().getATDM().flush(null, tc.extractContent());
                                 allPanels[currentIndex].setVisible(false);
                                 allContainers[currentIndex].setNonEditable();
                                 currentIndex = 0;

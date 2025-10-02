@@ -155,8 +155,8 @@ public class TermInfoContainer extends javax.swing.JPanel {
         });
         
         ReferenceContainerController.addActionsWhenValidPageFound(() -> {
+            isReferencePageInvalid = false;
             if(AppState.getCurrentState() == AppState.Type.CREATE){
-                isReferencePageInvalid = false;
                 nextBtn.setEnabled(true);
             }
         });

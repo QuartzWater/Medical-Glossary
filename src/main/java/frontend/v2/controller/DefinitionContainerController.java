@@ -7,9 +7,14 @@ package frontend.v2.controller;
 import backend.eventadapter.GranularMouseAdapter;
 import frontend.SVGIconPanel;
 import frontend.v2.containers.DefinitionContainer;
+import frontend.v2.specialcomponent.QuickAccess;
 import frontend.v2.window.ColorPicker;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -48,11 +53,13 @@ public class DefinitionContainerController {
     
     JTextPane definitionPane;
     
+    QuickAccess popupMenu;
+    
     private Color fgOnCurrentCaret = new Color(255,255,255);
     private Color bgOnCurrentCaret = null;
     
     private int currentCaretDot = 0;
-    private int currentCaretMark = 0;
+        private int currentCaretMark = 0;
     
     public DefinitionContainerController(DefinitionContainer dc) {
         this.dc = dc;
@@ -70,8 +77,7 @@ public class DefinitionContainerController {
         
         doc = definitionPane.getStyledDocument();
         
-        
-        
+        popupMenu = new QuickAccess();
         
         this.boldIcon.addMouseListener(boldGran);
         this.italicIcon.addMouseListener(italicGran);
@@ -382,7 +388,7 @@ public class DefinitionContainerController {
                 if (newBG != null) StyleConstants.setBackground(set, newBG);
                 else set.removeAttribute(StyleConstants.Background);
 
-                doc.setCharacterAttributes(start, end - start, set, false);
+                doc.setCharacterAttributes(start, end - start, set, true);
             }
             else {
                 
@@ -496,6 +502,21 @@ public class DefinitionContainerController {
             currentCaretMark = e.getMark(); // the place where selection (if any) starts.
             
             System.out.println("CURRENT CARET DOT :" + currentCaretDot);
+            
+            /**
+            try {
+                
+                if(definitionPane.isShowing() && definitionPane.getSelectedText() != null){
+                    
+                    int begin = Math.min(currentCaretDot, currentCaretMark);
+                    Rectangle rect = definitionPane.modelToView2D(begin).getBounds();
+                    popupMenu.updateSelection(definitionPane.getSelectedText());
+                    popupMenu.show(definitionPane, rect.x - 20, rect.y - popupMenu.getPreferredSize().height - 5);
+                }
+            } catch (BadLocationException ex) {
+                System.getLogger(DefinitionContainerController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            */
             
             // if selection is from left to right then currentCaretDot > currentCaretMark.
             // if selection is from right to left then currentCaretDot < currentCaretMark.

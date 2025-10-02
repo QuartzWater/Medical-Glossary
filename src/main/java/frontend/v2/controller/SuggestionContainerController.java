@@ -14,6 +14,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,10 +38,10 @@ import javax.swing.KeyStroke;
 public class SuggestionContainerController {
     
     
-    private static final Color EXACT_MATCH_COLOR = Color.BLUE;
-    private static final Color SELECTION_COLOR = Color.GREEN;
+    public static final Color SELECTION_COLOR = new Color(255,102,102);
+    public static final Color SELECTION_COLOR_PRESSED = new Color(255,51,51);
     
-    private final FontMetrics fm;
+    
     
     private Map<String, RoundedButton> btnMap;
     private Map<RoundedButton, SuggestionElement> btnElementMap;
@@ -144,20 +146,31 @@ public class SuggestionContainerController {
     private Action enterAction = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("BUTTON ELEMENT MAP SIZE: " + btnElementMap.size());
-            try {
-                AdvancedTerm newTerm = AppState.getCurrentBook().getATDM().get(btnElementMap.get(currentlyHighlighted).suggestionString());
-                if(newTerm == null){
-                    AppState.changeState(AppState.Type.CREATE);
-                }
-                AppState.changeActiveSearchedTerm(newTerm);
-            } catch (IllegalTermStateException ex) {
-                System.getLogger(SuggestionContainerController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                System.out.println("AN ERROR OCCURED WHEN TRYING TO FIRE ADVANCED TERM CHANGE EVENT IN SuggestionContainerController.");
-            }
-            sc.setVisible(false);
+            enterActionRunnable();
         }
     };
+    
+    public void enterActionRunnable(){
+        System.out.println("BUTTON ELEMENT MAP SIZE: " + btnElementMap.size());
+        simulateEnterAction(btnElementMap.get(currentlyHighlighted).suggestionString());
+        sc.setVisible(false);
+    }
+    
+    public void simulateEnterAction(String string){
+        try {
+            AdvancedTerm newTerm = AppState.getCurrentBook().getATDM().get(string);
+            AppState.setTermFound();
+            if(newTerm == null){
+                AppState.changeState(AppState.Type.CREATE);
+                AppState.setTermNotFound();
+            }
+            AppState.changeActiveSearchedTerm(newTerm);
+
+        } catch (IllegalTermStateException ex) {
+            System.getLogger(SuggestionContainerController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println("AN ERROR OCCURED WHEN TRYING TO FIRE ADVANCED TERM CHANGE EVENT IN SuggestionContainerController.");
+        }
+    }
 
     // ---------------------------------
             
@@ -167,8 +180,21 @@ public class SuggestionContainerController {
         this.sc = sc;
         inputMap = sc.getInputMap(JComponent.WHEN_FOCUSED);
         actionMap = sc.getActionMap();
-        RoundedButton dummyButton = new RoundedButton();
-        fm = dummyButton.getFontMetrics(dummyButton.getFont());
+        
+        sc.addFocusListener(new FocusAdapter() {
+            
+            @Override
+            public void focusLost(FocusEvent e){
+                System.out.println("FOCUS LOSTTTTTT !!!!!!!!!!!!!!!!!");
+                if(currentlyHighlighted != null){
+                    currentlyHighlighted.setCurrentColor(previousColor);
+                    currentlyHighlighted.repaint();
+                }
+                currentlyHighlighted = null;
+                currentXID = 0;
+                currentYID = 0;
+            }
+        });
         
         addEventRunnable(() -> {
             currentXID = 1;
@@ -177,6 +203,10 @@ public class SuggestionContainerController {
             sc.requestFocusInWindow();
             activateKeyboardNavigation();
         });
+    }
+    
+    public void setCurrentlyHighlighted(RoundedButton toSet){
+        this.currentlyHighlighted = toSet;
     }
     
     public void provideMap(Map<String,RoundedButton> btnMap, Map<RoundedButton, SuggestionElement> btnElementMap, Map<Integer, Integer> btnNumberPerRow){

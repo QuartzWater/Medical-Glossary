@@ -13,6 +13,8 @@ import frontend.v2.window.Startup;
 import frontend.v2.window.mainFrame;
 import java.awt.Color;
 import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +36,7 @@ import javax.swing.JOptionPane;
  */
 public class AppConfig {
     
-    public static final Color FINAL_SYSTEM_TERM_CREATION_HIGHLIGHT = Color.BLUE;
+    public static final Color FINAL_SYSTEM_TERM_CREATION_HIGHLIGHT = new Color(0,102,255);
     
     public static final String POM_PROPERTIES_VIA_CLASSLOADER;
     public static final Properties INT_PROJECT_CONFIG_PROPERTIES;
@@ -62,7 +64,7 @@ public class AppConfig {
     // don't ask why is everything in the static block. I know its somewhat problematic and can cause subtle problems
     // but i can NOT be bothered to refactor this rn.....
     // It works right now as it is supposed to work...
-    static {
+    static {     
         Runtime rt = Runtime.getRuntime();
         System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("MEMORY ALLOCATION *BEFORE* EVEN MAIN CLASS IS LOADED: ");
@@ -464,9 +466,6 @@ public class AppConfig {
      */
     public static void main(String args[]) {
         
-        // PROBLEM: WHEN PRESSING UP 
-        
-        
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -495,7 +494,15 @@ public class AppConfig {
                 System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
                 System.out.println("---------------------------------------------------------------------------------------");
                 
+                System.out.println("---------------------------------------------------------------------------------------");
+                System.out.println("MEMORY ALLOCATION *BEFORE* MAIN FRAME IS CONSTURCTED: ");
+                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
+                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
+                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
+                System.out.println("---------------------------------------------------------------------------------------");
+                
                 boolean toContinue = true;
+                mainFrame mf = new mainFrame();
 
                 if(toSetBook == null){
                     System.out.println("Book was null");
@@ -505,17 +512,10 @@ public class AppConfig {
                     AppState.changeBook(toSetBook);
                 }
                 
-                System.out.println("---------------------------------------------------------------------------------------");
-                System.out.println("MEMORY ALLOCATION *BEFORE* MAIN FRAME IS CONSTURCTED: ");
-                System.out.println("Max heap: " + rt.maxMemory() / (1024*1024) + " MB (Its ~25% of your maximum System Memory)");
-                System.out.println("Total heap: " + rt.totalMemory() / (1024*1024) + " MB");
-                System.out.println("Free heap: " + rt.freeMemory() / (1024*1024) + " MB");
-                System.out.println("---------------------------------------------------------------------------------------");
-                
                 if
                     (!toContinue) System.exit(0);
                 else 
-                    new mainFrame().setVisible(true);
+                    mf.setVisible(true);
                 
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println("MEMORY ALLOCATION *AFTER* MAIN FRAME IS CONSTURCTED AND SET VISIBLE:");

@@ -5,6 +5,7 @@
 package frontend.v2.containers;
 
 import backend.AppConfig;
+import backend.eventadapter.GranularMouseAdapter;
 import backend.v2.data.AdvancedTermDataManagement;
 import backend.v2.search.SearchTermAlgorithm;
 import backend.v2.search.SuggestionElement;
@@ -24,6 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import frontend.v2.state.InputTermChangeListener;
+import frontend.v2.state.QuickAccessEvent;
+import frontend.v2.state.QuickAccessListener;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -36,7 +43,7 @@ public class SuggestionContainer extends javax.swing.JPanel {
     private static final String SPELLING_ALREADY_EXISTS_IN_CREATE_MODE = "Specified spelling already exists";
     
     
-    private static final int MAX_STRING_WIDTH_WITHOUT_RESIZE = 168;
+    private static final int MAX_STRING_WIDTH_WITHOUT_RESIZE = 140;
     private static final int NORMAL_BUTTON_WIDTH = 200;
     private static final int NORMAL_BUTTON_HEIGHT = 40;
     private final FontMetrics fm;
@@ -52,6 +59,7 @@ public class SuggestionContainer extends javax.swing.JPanel {
      */
     public SuggestionContainer() {
         initComponents();
+        setFocusable(true);
         RoundedButton dummyButton = new RoundedButton();
         fm = dummyButton.getFontMetrics(dummyButton.getFont());
         this.sta = new SearchTermAlgorithm(AppConfig.getSearchDepth(), 45);
@@ -126,6 +134,13 @@ public class SuggestionContainer extends javax.swing.JPanel {
                 getMyself().repaint();
             }
         });
+        
+        AppState.addQuickAccessListener(new QuickAccessListener() {
+            @Override
+            public void menuSelected(QuickAccessEvent e) {
+                scc.simulateEnterAction(e.getSelection());
+            }
+        });
     }
     
     private SuggestionContainer getMyself(){
@@ -134,6 +149,8 @@ public class SuggestionContainer extends javax.swing.JPanel {
     
     
     public void buildSuggestions(String toBuildFor){
+        
+        
         
         List<SuggestionElement> suggestionElements = new ArrayList<>();
         if(!toBuildFor.isBlank()){
@@ -164,7 +181,7 @@ public class SuggestionContainer extends javax.swing.JPanel {
         for(SuggestionElement suggest : suggestionElements){
             
             RoundedButton rdb = new RoundedButton(suggest.suggestionString());
-            
+            rdb.setArcSize(20);
             Color c = suggest.specialColor();
             if(c != null){
                 rdb.setCurrentColor(c);
@@ -187,17 +204,22 @@ public class SuggestionContainer extends javax.swing.JPanel {
                 xid = 1;
                 yid++;
             }
-             
+            
+            rdb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            rdb.addMouseListener(selectionMouseGran);
+            
+            System.out.println("ACTIVE CURSOR: " + rdb.getCursor());
             btnMap.put(getKey(xid, yid), rdb);
             suggestionBtns.add(rdb);
             buttnElementMap.put(rdb, suggest);
-            this.add(rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(paddingX, paddingY, toSet, rdb.getPreferredSize().height));
+            this.add(rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(paddingX, paddingY, toSet, rdb.getPreferredSize().height), 0);
             
             paddingX += toSet + separation;
             
             btnNumberPerRow.put(yid, xid);
             xid++;
         }
+        
         this.revalidate();
         this.repaint();
         this.setVisible(true);
@@ -206,7 +228,38 @@ public class SuggestionContainer extends javax.swing.JPanel {
         scc.activateKeyboardNavigation();
     }
     
-    
+    private GranularMouseAdapter selectionMouseGran = new GranularMouseAdapter(){
+            
+        Color prevColor;
+      
+        @Override
+        public void actOnMouseEntry(MouseEvent e){
+            RoundedButton rdb = (RoundedButton) e.getSource();
+            prevColor = rdb.getCurrentColor();
+            rdb.setCurrentColor(SuggestionContainerController.SELECTION_COLOR);
+            rdb.repaint();
+        }
+        
+        @Override
+        public void actOnMouseExit(MouseEvent e){
+            RoundedButton rdb = (RoundedButton) e.getSource();
+            rdb.setCurrentColor(prevColor);
+            rdb.repaint();
+        }
+        
+        @Override
+        public void actOnMousePress(MouseEvent e){
+            RoundedButton rdb = (RoundedButton) e.getSource();
+            rdb.setCurrentColor(SuggestionContainerController.SELECTION_COLOR_PRESSED);
+            rdb.repaint();
+        }
+        
+        @Override
+        public void actOnMouseRelease(MouseEvent e){
+            scc.setCurrentlyHighlighted((RoundedButton) e.getSource());
+            scc.enterActionRunnable();
+        }
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.

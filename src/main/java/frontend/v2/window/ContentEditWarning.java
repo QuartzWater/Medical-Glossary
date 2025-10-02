@@ -36,8 +36,6 @@ public class ContentEditWarning extends javax.swing.JDialog {
         invalid.setVisible(false);
     }
     
-    
-    
     public static Response showDialog(){
         ContentEditWarning contentEditWarning = new ContentEditWarning();
         contentEditWarning.setVisible(true);

@@ -20,6 +20,12 @@ public class AppState {
     // THE ORDER IN WHICH LIST IS ITERATED TO CALL ALL REGISTERED LISTENERS IS VERY IMPORTANT TO AVOID SUBTLE BUGS
     // DO NOT CHANGE THE ITERATION ORDER IN FUTURE UNLESS YOU HAVE REVIEWED ALL REGISTERING CLASSES.
     
+    public static void fireQuickAccessEvent(Object source, String selection, QuickAccessEvent.TYPE type){
+        for(QuickAccessListener l : quickAccessListeners){
+            l.menuSelected(new QuickAccessEvent(source, selection, type));
+        }
+    }
+    
     public static void fireEditModeStatusChanged(boolean isEditActive, TermInfoContainer reference, ContentProcessor activePanel){
         for(TICEditModeListener l :TICEventListener){
             l.editModeStatusChanged(new TICEditModeEvent(new AppState(), isEditActive, reference, activePanel));
@@ -84,6 +90,14 @@ public class AppState {
     public enum Type {
         SEARCH,
         CREATE
+    }
+    
+    public static void addQuickAccessListener(QuickAccessListener l){
+        quickAccessListeners.add(l);
+    }
+    
+    public static void removeQuickAccessListener(QuickAccessListener l){
+        quickAccessListeners.remove(l);
     }
     
     public static void addTICEventListener(TICEditModeListener l){
@@ -158,6 +172,7 @@ public class AppState {
     private static final List<InputTermChangeListener> inputTermChangeListeners = new ArrayList<>();
     private static final List<ActiveSearchedTermChangeListener> activeSearchedTermChangeListeners = new ArrayList<>();
     private static final List<TICEditModeListener> TICEventListener = new ArrayList<>();
+    private static final List<QuickAccessListener> quickAccessListeners = new ArrayList<>();
     
     private AppState(){}
     

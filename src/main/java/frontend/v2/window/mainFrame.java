@@ -72,9 +72,9 @@ public class mainFrame extends javax.swing.JFrame {
         sc = new SpellingContainer(tic);
         settings = new SettingsContainer();
         
-        decor2Contain.add(sc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, sc.getPreferredSize().width, sc.getPreferredSize().height));
-        decor2Contain.add(sugC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, sugC.getPreferredSize().width, sugC.getPreferredSize().height));
-        decor2Contain.add(tic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, tic.getPreferredSize().width, tic.getPreferredSize().height));
+        decor2Contain.add(sc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, sc.getPreferredSize().width, sc.getPreferredSize().height));
+        decor2Contain.add(sugC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, sugC.getPreferredSize().width, sugC.getPreferredSize().height));
+        decor2Contain.add(tic, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, tic.getPreferredSize().width, tic.getPreferredSize().height));
         decor2.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, settings.getPreferredSize().width, settings.getPreferredSize().height));
         
         settings.setVisible(false);
